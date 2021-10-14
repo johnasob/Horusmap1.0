@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Horusmap1.0</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="empty_msj">No dejes este espacio vacío</string>
+    <string name="email">Correo electrónico</string>
+    <string name="validm">invalido</string>
+    <string name="validf">invalida</string>
+    <string name="acept_terms">Debes aceptar los terminos y condiciones para continuar</string>
+    <string name="in_msg">Ingresa</string>
+    <string name="disease_msg">Tipo de discapcidad visual</string>
+    <string name="terms_button"><u>Aceptar Términos y Condiciones</u></string>
+    <string name="register_button"><u>Regístrate</u></string>
+    <string name="valid_password"><u>Las contraseñas coinciden</u></string>
+    <string name="invalid_password"><u>Las contraseñas no coinciden</u></string>
+    <string name="terms_validate">Debes aceptar términos y condiciones</string>
+    <string name="lorem_text">El Lorem Ipsum fue concebido como un texto de relleno, formateado de una
+        cierta manera para permitir la presentación de elementos gráficos en documentos, sin necesidad
+        de una copia formal. El uso de Lorem Ipsum permite a los diseñadores reunir los diseños y la
+        forma del contenido antes de que el contenido se haya creado, dando al diseño y al proceso de
+        producción más libertad.
+        Se cree ampliamente que la historia de Lorem Ipsum se origina con Cicerón en el siglo I aC y su
+        texto De Finibus bonorum et malorum. Esta obra filosófica, también conocida como En los extremos
+        del bien y del mal, se dividió en cinco libros. El Lorem Ipsum que conocemos hoy se deriva de
+        partes del primer libro Liber Primus y su discusión sobre el hedonismo, cuyas palabras habían
+        sido alteradas, añadidas y eliminadas para convertirlas en un latín sin sentido e impropio. No
+        se sabe exactamente cuándo el texto recibió su forma tradicional actual. Sin embargo, las referencias
+        a la frase "Lorem Ipsum" se pueden encontrar en la Edición de la Biblioteca Clásica Loeb de 1914
+        del De Finibus en las secciones 32 y 33. Fue en esta edición del De Finibus en la que H. Rackman
+        tradujo el texto. El siguiente fragmento se selecciona de la sección 32</string>
+    <string-array name="diseases">
+        <item>Ceguera</item>
+        <item>Deterioro visual leve</item>
+        <item>Deterioro visual moderado</item>
+        <item>Deterioro visula grave</item>
+    </string-array>
+</resources>
