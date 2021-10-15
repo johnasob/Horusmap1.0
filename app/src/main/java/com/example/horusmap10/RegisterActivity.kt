@@ -11,10 +11,16 @@ import androidx.core.util.PatternsCompat
 import com.example.horusmap10.databinding.ActivityRegisterBinding
 import java.util.regex.Pattern
 import java.util.regex.Pattern.compile
+import RESTClient
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class RegisterActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityRegisterBinding
+    lateinit var restClient: RESTClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -118,12 +124,46 @@ class RegisterActivity : AppCompatActivity() {
         }else if(!binding.checkBox.isChecked) {
             Toast.makeText(this, getString(R.string.terms_validate), Toast.LENGTH_SHORT).show()
         }else {
+            registerUser()
             val home = Intent(this, HomeActivity::class.java)
             startActivity(home)
             finish()
-            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun registerUser(){
+        val name= binding.userRegister.editText?.text.toString()
+        val key= binding.password1Register.editText?.text.toString()
+        val email=binding.emailRegister.editText?.text.toString()
+        val vision=binding.diseaseRegister.editText?.text.toString()
+        restClient.httpPostAsync("/create/user", "user=$name&password=$key&email=$email&vision=$vision")
+        //"user=John&password=3125&email=jasolanob@uqvirtual.edu.co&vision=low" http://localhost:8080/create/user
+        GlobalScope.launch {
+            var response = restClient.wait()
+
+            runOnUiThread {
+
+                if (response == "User already exists") {
+                    val toast1 = Toast.makeText(
+                        applicationContext,
+                        "User is already registered", Toast.LENGTH_LONG
+                    )
+                    toast1.show()
+
+                } else {
+                    val toast2 = Toast.makeText(
+                        applicationContext,
+                        "$name was registered...api:$response", Toast.LENGTH_LONG
+                    )
+                    toast2.show()
+
+                    }
+                }
+            }
+
+            //POST /create/user -> parameters: user and password , response: API key (auth) for this user if it does not exists or "User already exists" otherwise
+
+
+        }
 
     override fun finish() {
         super.finish()
