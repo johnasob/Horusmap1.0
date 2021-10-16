@@ -1,22 +1,24 @@
 package com.example.horusmap10
 
+
+import RESTClient
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.horusmap10.databinding.ActivityMainBinding
-import android.view.View;
-import RESTClient
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.net.Authenticator
 import java.net.PasswordAuthentication
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var restClient: RESTClient
-    lateinit var thisActivity: MainActivity
+    private lateinit var restClient: RESTClient
+    private lateinit var thisActivity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -24,12 +26,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity=this
-        val ip = "192.168.1.17"
+        val ip = "192.168.1.17:8080"
         //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
         restClient = RESTClient("http://$ip/")
 
         // Boton login
         binding.loginButton.setOnClickListener(){
+            validUser()
             validation()
         }
         // Boton regístrate
@@ -69,8 +72,7 @@ class MainActivity : AppCompatActivity() {
         if (false in result){
             return
         }else {
-            validUser()
-            finish()
+
         }
     }
 
@@ -80,8 +82,8 @@ class MainActivity : AppCompatActivity() {
         Authenticator.setDefault(object : Authenticator() {
             override fun getPasswordAuthentication(): PasswordAuthentication {
                 return PasswordAuthentication(
-                    name!!,
-                    key!!
+                    name,
+                    key
                 )
             }
         })
@@ -89,10 +91,8 @@ class MainActivity : AppCompatActivity() {
         restClient.httpGetAsync("/auth")
 
         GlobalScope.launch {
-
-            var response = restClient.wait()
+            val response = restClient.wait()
             runOnUiThread {
-
                 if (response == "ERROR 404") {
                     val toast1 = Toast.makeText(
                         applicationContext,
@@ -108,9 +108,10 @@ class MainActivity : AppCompatActivity() {
                     toast2.show()
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
-                    home.putExtra("apikey", response)
+                    //home.putExtra("apikey", response)
                     startActivity(home)
                 }
+
             }
 
         }

@@ -1,3 +1,5 @@
+import android.widget.Toast
+import com.example.horusmap10.R
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -20,7 +22,7 @@ class RESTClient(private var apiurl: String) {
             var response: String
             //Creates HTTP connection
 
-            var conn = url.openConnection() as HttpURLConnection
+            val conn = url.openConnection() as HttpURLConnection
 
             try {
                 conn.readTimeout = 10000
@@ -72,7 +74,7 @@ class RESTClient(private var apiurl: String) {
             var response: String
             //Creates HTTP connection
             try {
-            var conn= url.openConnection() as HttpURLConnection
+            val conn= url.openConnection() as HttpURLConnection
 
 
                 conn.readTimeout = 10000
@@ -120,7 +122,7 @@ class RESTClient(private var apiurl: String) {
             var response: String
             //Creates HTTP connection
             try {
-                var conn = url.openConnection() as HttpURLConnection
+                val conn = url.openConnection() as HttpURLConnection
 
 
                 //Objects to manage response from server

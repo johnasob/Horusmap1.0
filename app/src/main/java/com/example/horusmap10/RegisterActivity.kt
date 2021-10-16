@@ -20,11 +20,16 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     lateinit var restClient: RESTClient
+    private lateinit var thisActivity: RegisterActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        thisActivity= this
+        val ip = "192.168.1.17:8080"
+        //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
+        restClient = RESTClient("http://$ip/")
 
         val diseases= resources.getStringArray(R.array.diseases)
         val arrayAdapter= ArrayAdapter(this, R.layout.dropdown_menu, diseases)
@@ -125,9 +130,9 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.terms_validate), Toast.LENGTH_SHORT).show()
         }else {
             registerUser()
-            val home = Intent(this, HomeActivity::class.java)
-            startActivity(home)
-            finish()
+            //val home = Intent(this, HomeActivity::class.java)
+            //startActivity(home)
+
         }
     }
     private fun registerUser(){
@@ -138,7 +143,7 @@ class RegisterActivity : AppCompatActivity() {
         restClient.httpPostAsync("/create/user", "user=$name&password=$key&email=$email&vision=$vision")
         //"user=John&password=3125&email=jasolanob@uqvirtual.edu.co&vision=low" http://localhost:8080/create/user
         GlobalScope.launch {
-            var response = restClient.wait()
+            val response = restClient.wait()
 
             runOnUiThread {
 
@@ -155,6 +160,10 @@ class RegisterActivity : AppCompatActivity() {
                         "$name was registered...api:$response", Toast.LENGTH_LONG
                     )
                     toast2.show()
+                    val home = Intent()
+                    home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
+                    //home.putExtra("apikey", response)
+                    startActivity(home)
 
                     }
                 }

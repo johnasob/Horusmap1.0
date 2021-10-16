@@ -111,6 +111,7 @@
         android:id="@+id/register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
         android:background="@color/transparent"
         android:text="@string/register_button"
         android:textAlignment="textEnd"
@@ -124,11 +125,14 @@
 
     <ImageButton
         android:id="@+id/facebook_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="42dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="130dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="@color/gray2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/register_button"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/register_button"
@@ -136,8 +140,10 @@
 
     <ImageButton
         android:id="@+id/google_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
         android:backgroundTint="@color/gray2"
         app:layout_constraintBottom_toBottomOf="@+id/facebook_button"
         app:layout_constraintEnd_toEndOf="@+id/register_button"
