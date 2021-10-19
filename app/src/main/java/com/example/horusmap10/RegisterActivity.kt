@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity= this
-        val ip = "192.168.1.17:8080"
+        val ip = "192.168.1.13:8080"
         //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
         restClient = RESTClient("http://$ip/")
 
@@ -148,11 +148,7 @@ class RegisterActivity : AppCompatActivity() {
             runOnUiThread {
 
                 if (response == "User already exists") {
-                    val toast1 = Toast.makeText(
-                        applicationContext,
-                        "User is already registered", Toast.LENGTH_LONG
-                    )
-                    toast1.show()
+                    binding.userRegister.error = getString(R.string.user_exist)
 
                 } else {
                     val toast2 = Toast.makeText(
@@ -160,22 +156,15 @@ class RegisterActivity : AppCompatActivity() {
                         "$name was registered...api:$response", Toast.LENGTH_LONG
                     )
                     toast2.show()
+                    binding.userRegister.error = null
+                    // Se lanza la actividad home
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
                     //home.putExtra("apikey", response)
                     startActivity(home)
-
-                    }
+                    finish()
                 }
             }
-
-            //POST /create/user -> parameters: user and password , response: API key (auth) for this user if it does not exists or "User already exists" otherwise
-
-
         }
-
-    override fun finish() {
-        super.finish()
     }
-
 }

@@ -3,29 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray2"
-    android:backgroundTint="@color/gray2"
+    android:theme="@style/Theme.register"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:theme="@style/Theme.register"
-    style="@style/Theme.register"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/greenhorus"
     tools:context=".RegisterActivity">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="210dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_horus_eye_edit" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="210dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_horus_eye_edit" />
 
         <TextView
             android:id="@+id/textView2"
@@ -100,31 +96,31 @@
         app:layout_constraintStart_toStartOf="@+id/user_register"
         app:layout_constraintTop_toBottomOf="@+id/user_register" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password1_register"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="4"
-        app:endIconMode="password_toggle"
-        app:errorEnabled="true"
-        app:errorIconDrawable="@null"
-        app:errorTextColor="@color/red"
-        app:helperText="Escriba una pin facíl de recordar"
-        app:layout_constraintEnd_toEndOf="@+id/user_register"
-        app:layout_constraintStart_toStartOf="@+id/user_register"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:startIconDrawable="@drawable/ic_lock">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password1_register"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_imput"
-            android:hint="@string/password"
-            android:inputType="numberPassword"
-            android:maxLength="4" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="4dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="4"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            app:errorTextColor="@color/red"
+            app:helperText="Escriba una pin facíl de recordar"
+            app:layout_constraintEnd_toEndOf="@+id/user_register"
+            app:layout_constraintStart_toStartOf="@+id/user_register"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:startIconDrawable="@drawable/ic_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_imput"
+                android:hint="@string/password"
+                android:inputType="numberPassword"
+                android:maxLength="4" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textView5"
@@ -201,18 +197,18 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:fontFamily="@font/quicksand_light"
-        android:text="Tipo de discapacidad visual (si aplica)"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/email_register"
-        app:layout_constraintTop_toBottomOf="@+id/email_register" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/quicksand_light"
+            android:text="Tipo de discapacidad visual (si aplica)"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/email_register"
+            app:layout_constraintTop_toBottomOf="@+id/email_register" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -278,6 +274,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/checkBox"
+            app:layout_constraintEnd_toEndOf="@+id/disease_register"
             app:layout_constraintStart_toEndOf="@+id/checkBox"
             app:layout_constraintTop_toTopOf="@+id/checkBox" />
     </androidx.constraintlayout.widget.ConstraintLayout>

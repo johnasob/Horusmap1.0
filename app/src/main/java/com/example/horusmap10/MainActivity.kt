@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity=this
-        val ip = "192.168.1.17:8080"
+        val ip = "192.168.1.13:8080"
         //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
         restClient = RESTClient("http://$ip/")
 
@@ -94,30 +94,23 @@ class MainActivity : AppCompatActivity() {
             val response = restClient.wait()
             runOnUiThread {
                 if (response == "ERROR 404") {
-                    val toast1 = Toast.makeText(
-                        applicationContext,
-                        "No existe un usuario llamado $name", Toast.LENGTH_LONG
-                    )
+                    val toast1 = Toast.makeText(applicationContext, "No existe un usuario llamado $name o ingreso una contraseña erronea", Toast.LENGTH_LONG)
                     toast1.show()
-
+                    binding.userLogin.error = getString(R.string.user) +" "+ getString(R.string.validm)
                 } else {
-                    val toast2 = Toast.makeText(
-                        applicationContext,
-                        "Access granted ...", Toast.LENGTH_LONG
-                    )
+                    binding.userLogin.error = null
+                    val toast2 = Toast.makeText(applicationContext, "Acceso exitoso, $name", Toast.LENGTH_LONG)
                     toast2.show()
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
                     //home.putExtra("apikey", response)
                     startActivity(home)
+                    finish()
                 }
 
             }
 
         }
-    }
-    override fun finish() {
-        super.finish()
     }
 }
 

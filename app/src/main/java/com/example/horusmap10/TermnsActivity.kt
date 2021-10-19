@@ -18,9 +18,4 @@ class TermnsActivity : AppCompatActivity() {
             finish()
         }
     }
-
-    override fun finish() {
-        super.finish()
-    }
-
 }

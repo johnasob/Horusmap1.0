@@ -29,10 +29,19 @@
         del De Finibus en las secciones 32 y 33. Fue en esta edición del De Finibus en la que H. Rackman
         tradujo el texto. El siguiente fragmento se selecciona de la sección 32</string>
     <string name="Logo_horus">TODO</string>
+    <string name="name"><u>Nombre</u></string>
+    <string name="name_d">Nombre generico</string>
+    <string name="email_u"><u>Correo electrónico</u></string>
+    <string name="email_d">correo@gmail.com</string>
+    <string name="vision"><u>Vision</u></string>
+    <string name="vision_d">Vision estandar</string>
+    <string name="log_out">Cerrar Sesión</string>
+    <string name="name2">Nombre completo</string>
+    <string name="user_exist">El usuario ya existe</string>
     <string-array name="diseases">
         <item>Ceguera</item>
         <item>Deterioro visual leve</item>
-        <item>Deterioro visual moderado</item>
+        <item>Deterioro visual moder ado</item>
         <item>Deterioro visula grave</item>
     </string-array>
 </resources>

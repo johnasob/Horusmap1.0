@@ -18,7 +18,8 @@ class HomeActivity : AppCompatActivity() {
             startActivity(routes)
         }
         binding.settingsButton.setOnClickListener(){
-            val settings = Intent(this, SettingsActivity::class.java)
+            //Como prueba meti profile pero va settings
+            val settings = Intent(this, ProfileActivity::class.java)
             startActivity(settings)
         }
         binding.logoutButton.setOnClickListener(){
@@ -33,7 +34,4 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun finish() {
-        super.finish()
-    }
 }
