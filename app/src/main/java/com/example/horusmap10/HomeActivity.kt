@@ -12,6 +12,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var apikey = intent.getStringExtra("apikey")
 
         binding.routesButton.setOnClickListener(){
             val routes = Intent(this, StartRouteActivity::class.java)
@@ -20,6 +21,7 @@ class HomeActivity : AppCompatActivity() {
         binding.settingsButton.setOnClickListener(){
             //Como prueba meti profile pero va settings
             val settings = Intent(this, ProfileActivity::class.java)
+            settings.putExtra("apikey", apikey)
             startActivity(settings)
         }
         binding.logoutButton.setOnClickListener(){

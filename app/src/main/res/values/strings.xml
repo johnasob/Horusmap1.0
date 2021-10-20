@@ -29,7 +29,8 @@
         del De Finibus en las secciones 32 y 33. Fue en esta edición del De Finibus en la que H. Rackman
         tradujo el texto. El siguiente fragmento se selecciona de la sección 32</string>
     <string name="Logo_horus">TODO</string>
-    <string name="name"><u>Nombre</u></string>
+    <string name="finish_edit">Edición finalizada con exito</string>
+    <string name="name"><u>Nombre de usuario</u></string>
     <string name="name_d">Nombre generico</string>
     <string name="email_u"><u>Correo electrónico</u></string>
     <string name="email_d">correo@gmail.com</string>

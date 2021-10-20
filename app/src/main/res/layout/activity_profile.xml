@@ -1,258 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@android:style/Widget.DeviceDefault.Light.ScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/greenhorus">
+    android:layout_height="wrap_content"
+    tools:context=".ProfileActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="80dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="180dp"
+        android:layout_marginBottom="550dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_horus_eye_edit" />
+
+    <TextView
+        android:id="@+id/textView_perfil"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:context=".ProfileActivity">
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="80dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="Perfil"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="80dp"
-            android:layout_height="78dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="42dp"
-            android:layout_marginEnd="180dp"
-            android:layout_marginBottom="550dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_horus_eye_edit" />
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="54dp"
+        android:background="@drawable/custom_imput"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_perfil"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/textView_perfil"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="80dp"
-            android:fontFamily="@font/quicksand_light"
-            android:text="Perfil"
-            android:textColor="@color/black"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="262dp"
+        android:layout_marginBottom="400dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/ic_person"
+        tools:ignore="ContentDescription" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="48dp"
-            android:background="@drawable/custom_imput"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_perfil"
-            app:layout_constraintVertical_bias="0.0" />
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="90dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/name"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="39dp"
-            android:layout_marginEnd="262dp"
-            android:layout_marginBottom="378dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view"
-            app:srcCompat="@drawable/ic_person"
-            tools:ignore="ContentDescription" />
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="275dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:srcCompat="@drawable/ic_email_dark"
+        tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="64dp"
-            android:fontFamily="@font/quicksand_light"
-            android:text="@string/name"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="@+id/imageView5" />
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="104dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/email_u"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/email_profile1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="80dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/email_d"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="140dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:srcCompat="@drawable/ic_horus_eye_edit"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="196dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/vision"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/vision_profile1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/vision_d"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <Button
+        android:id="@+id/loguot_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/transparent"
+        android:backgroundTint="@color/transparent"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/log_out"
+        android:textAllCaps="false"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:icon="@drawable/ic_logout_red"
+        app:iconPadding="16sp"
+        app:iconTint="@color/red"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/back_button"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="70dp"
+        android:backgroundTint="@color/transparent"
+        app:icon="@drawable/ic_back"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/edit_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="70dp"
+        android:backgroundTint="@color/transparent"
+        app:icon="@drawable/ic_edit"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name_profile1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="64dp"
+        android:background="@color/transparent"
+        android:enabled="false"
+        android:fontFamily="@font/quicksand_light"
+        android:text="@string/user"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/greenhorus"
+        android:fontFamily="@font/quicksand_light"
+        android:text="Terminar"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/loguot_button"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/loguot_button"
+        app:strokeColor="@color/orange" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/user_profile2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:visibility="invisible"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:errorTextColor="@color/red"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/name_profile1"
+        app:layout_constraintTop_toTopOf="@+id/name_profile1">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textView11"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="64dp"
             android:background="@drawable/custom_imput"
-            android:backgroundTint="@color/transparent"
-            android:fontFamily="@font/quicksand_light"
-            android:hint="@string/name_d"
-            android:textAlignment="textStart"
-            android:enabled="false"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toStartOf="@+id/textView10"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            android:hint="@string/user"
+            android:inputType="textPersonName"
+            android:maxLength="15"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="263dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/imageView5"
-            app:layout_constraintStart_toStartOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:srcCompat="@drawable/ic_email_dark"
-            tools:ignore="ContentDescription" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_profile2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:errorTextColor="@color/red"
+        app:layout_constraintEnd_toEndOf="@+id/user_profile2"
+        app:layout_constraintStart_toStartOf="@+id/email_profile1"
+        app:layout_constraintTop_toBottomOf="@+id/textView12">
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="64dp"
-            android:fontFamily="@font/quicksand_light"
-            android:text="@string/email_u"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+            android:background="@drawable/custom_imput"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vision_profile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        app:boxBackgroundMode="filled"
+        android:layout_width="0dp"
+        app:startIconDrawable="@drawable/ic_accessibility"
+        android:layout_height="wrap_content"
+        app:endIconMode="dropdown_menu"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/email_profile2"
+        app:layout_constraintStart_toStartOf="@+id/vision_profile1"
+        app:layout_constraintTop_toTopOf="@+id/vision_profile1">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_profile"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="64dp"
-            android:fontFamily="@font/quicksand_light"
-            android:text="@string/email_d"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="150dp"
-            app:layout_constraintBottom_toBottomOf="@id/view"
-            app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6"
-            app:layout_constraintVertical_bias="0.693"
-            app:srcCompat="@drawable/ic_horus_eye_edit"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginEnd="64dp"
-            android:fontFamily="@font/quicksand_light"
-            android:text="@string/vision"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toTopOf="@+id/imageView7" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="64dp"
-            android:fontFamily="@font/quicksand_light"
-            android:text="@string/vision_d"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView14"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-        <Button
-            android:id="@+id/loguot_button"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginBottom="26dp"
-            android:background="@color/transparent"
-            android:backgroundTint="@color/transparent"
-            android:fontFamily="@font/quicksand_light"
-            android:text="@string/log_out"
-            android:textAllCaps="false"
-            android:textColor="@color/red"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:icon="@drawable/ic_logout_red"
-            app:iconPadding="32sp"
-            app:iconTint="@color/red"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
-
-        <Button
-            android:id="@+id/back_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginBottom="80dp"
-            android:backgroundTint="@color/transparent"
-            app:icon="@drawable/ic_back"
-            app:iconTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/view"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/edit_button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="80dp"
-            android:backgroundTint="@color/transparent"
-            app:icon="@drawable/ic_edit"
-            app:iconTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/custom_imput"
+            android:hint="@string/disease_msg"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

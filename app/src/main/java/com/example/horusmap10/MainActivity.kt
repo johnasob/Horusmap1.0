@@ -71,8 +71,6 @@ class MainActivity : AppCompatActivity() {
         val result = arrayOf(validateUser(),validatePassword())
         if (false in result){
             return
-        }else {
-
         }
     }
 
@@ -103,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                     toast2.show()
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
-                    //home.putExtra("apikey", response)
+                    home.putExtra("apikey", response)
                     startActivity(home)
                     finish()
                 }
