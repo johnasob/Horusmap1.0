@@ -37,7 +37,9 @@
     <string name="vision"><u>Vision</u></string>
     <string name="vision_d">Vision estandar</string>
     <string name="log_out">Cerrar Sesión</string>
+    <string name="change"><u>Dale click para cambiar tipo de discapacidad visual</u></string>
     <string name="name2">Nombre completo</string>
+    <string name="nothing">Ninguna discapacidad visual</string>
     <string name="user_exist">El usuario ya existe</string>
     <string-array name="diseases">
         <item>Ceguera</item>

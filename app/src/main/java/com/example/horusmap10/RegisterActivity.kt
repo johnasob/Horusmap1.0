@@ -153,14 +153,14 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     val toast2 = Toast.makeText(
                         applicationContext,
-                        "$name was registered...api:$response", Toast.LENGTH_LONG
+                        "el usuario: $name fue creado exitosamente", Toast.LENGTH_LONG
                     )
                     toast2.show()
                     binding.userRegister.error = null
                     // Se lanza la actividad home
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
-                    //home.putExtra("apikey", response)
+                    home.putExtra("apikey", response)
                     startActivity(home)
                     finish()
                 }
