@@ -47,4 +47,5 @@
         <item>Deterioro visual moder ado</item>
         <item>Deterioro visula grave</item>
     </string-array>
+    <string name="title_activity_start_route">StartRouteActivity</string>
 </resources>

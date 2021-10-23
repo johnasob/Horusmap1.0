@@ -22,17 +22,20 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_lock_focused.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_logout.xml" value="0.18552631578947368" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_logout_red.xml" value="0.2203125" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_mic.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_person.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_routes.xml" value="0.18552631578947368" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_settings.xml" value="0.18552631578947368" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_sos.xml" value="0.18552631578947368" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_user.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_user_focused.xml" value="0.2203125" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_home.xml" value="0.21" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_register.xml" value="0.2857142857142857" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_settings.xml" value="0.17192982456140352" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_start_route.xml" value="0.33" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_termns.xml" value="0.2" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/dropdown_menu.xml" value="0.21" />
       </map>
