@@ -1,10 +1,9 @@
 package com.example.horusmap10
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.horusmap10.databinding.ActivityHomeBinding
-import com.example.horusmap10.databinding.ActivityRegisterBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -16,6 +15,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.routesButton.setOnClickListener(){
             val routes = Intent(this, StartRouteActivity::class.java)
+            routes.putExtra("apikey", apikey)
             startActivity(routes)
         }
         binding.settingsButton.setOnClickListener(){

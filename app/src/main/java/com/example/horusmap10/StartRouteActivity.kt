@@ -1,68 +1,76 @@
 package com.example.horusmap10
 
-import android.location.Location
-import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
+
+import RESTClient
 import android.os.Bundle
-import android.util.Log
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.horusmap10.databinding.ActivityStartRouteBinding
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 
-class StartRouteActivity : AppCompatActivity(), OnMapReadyCallback {
+class StartRouteActivity : AppCompatActivity() {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityStartRouteBinding
-    private var locationManager : LocationManager? = null
-    private lateinit var posicion: String
+    private lateinit var restClient: RESTClient
+   // private lateinit var binding: ActivityStartRouteBinding
+    private lateinit var thisActivity: StartRouteActivity
+    private var apikey: String = ""
+    private var name: String = ""
+    private var password: String = "3125"
+    private var email: String = ""
+    private var vision: String = ""
+    //lateinit var back: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //binding = ActivityStartRouteBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_start_route)
+        //setContentView(binding.root)
+        //back = findViewById(R.id.back)
 
-        binding = ActivityStartRouteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        thisActivity=this
+        val ip = "192.168.1.4:8080"
+        restClient = RESTClient("http://$ip/")
+        apikey = intent.getStringExtra("apikey").toString()
+        //update()
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val navController = findNavController(R.id.fragmentContainerView)
+        bottomNavigationView.setupWithNavController(navController)
+
+
+        /*back.setOnClickListener(){
+
+            val home = Intent(this, HomeActivity::class.java)
+            home.putExtra("apikey", apikey)
+            startActivity(home)
+            finish()
+        }*/
 
 
 
-        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+    }
 
-        //Listener for button
-        binding.button.setOnClickListener { view ->
-            try {
-                // Request location updates from network and gps
 
-            } catch(ex: SecurityException) {
-                Log.d("myTag", "Security Exception, no location available")
-            }
+    private fun update(){
+        restClient.httpGetAsync("/user/info?auth=$apikey")
+
+
+        //Se busca acceder a la información actual del servidor
+        GlobalScope.launch {
+            val myUserInfo = restClient.wait()
+
+            val list = JSONObject(myUserInfo)
+            name = list.getString("Name: ")
+            password = list.getString("Password: ")
+            email = list.getString("Email: ")
+            vision = list.getString("Vision: ")
         }
-
     }
-
-    fun onLocationChanged(location: Location) {
-        posicion = arrayOf(location.longitude,location.latitude).toString()
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        // Add a marker in Sydney and move the camera
-        val pos_actual = LatLng(posicion[2].code.toDouble(), posicion[1].code.toDouble())
-        //mMap.addMarker(MarkerOptions().position(pos_actual).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pos_actual))
-    }
-
-    fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-    fun onProviderEnabled(provider: String) {}
-    fun onProviderDisabled(provider: String) {}
 }
 
 

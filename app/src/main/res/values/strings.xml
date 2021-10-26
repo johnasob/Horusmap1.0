@@ -48,4 +48,12 @@
         <item>Deterioro visula grave</item>
     </string-array>
     <string name="title_activity_start_route">StartRouteActivity</string>
+    <string name="questions">Preguntas frecuentes</string>
+    <string name="settings">Configuración</string>
+    <string name="profile">Perfíl</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="map">Navegación</string>
+    <string name="navegation_out">Navegación Exterior</string>
+    <string name="choice_route">Escoje una ruta</string>
 </resources>

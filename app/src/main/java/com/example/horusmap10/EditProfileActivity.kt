@@ -2,11 +2,11 @@ package com.example.horusmap10
 
 import RESTClient
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.PatternsCompat
 import com.example.horusmap10.databinding.ActivityEditProfileBinding
 import kotlinx.coroutines.GlobalScope
@@ -33,7 +33,7 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         thisActivity=this
 
-        val ip = "192.168.1.9:8080"
+        val ip = "192.168.1.4:8080"
         restClient = RESTClient("http://$ip/")
         apikey = intent.getStringExtra("apikey").toString()
         update()

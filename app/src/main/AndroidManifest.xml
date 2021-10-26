@@ -2,14 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.horusmap10">
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- Include only if your app benefits from precise location access. -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -22,10 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.login"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".EditProfileActivity"
-            android:theme="@style/Theme.register"
-            android:exported="false" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,12 +43,16 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.register" />
+        <activity
             android:name=".StartRouteActivity"
+            android:allowBackup="true"
             android:exported="false"
             android:label="@string/title_activity_start_route"
             android:supportsRtl="true"
-            android:theme="@style/Theme.register"
-            android:allowBackup="true"/>
+            android:theme="@style/Theme.register" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false"

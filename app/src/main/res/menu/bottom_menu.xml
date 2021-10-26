@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/routesFragment"
+        android:title="@string/map"
+        android:icon="@drawable/ic_map"/>
+    <item
+        android:id="@+id/questionsFragment"
+        android:title="@string/questions"
+        android:icon="@drawable/ic_help"/>
+    <item
+        android:id="@+id/settingsFragmentt"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"/>
+    <item
+        android:id="@+id/profileFragment"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_user" />
+
+</menu>
