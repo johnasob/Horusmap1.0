@@ -41,12 +41,59 @@
     <string name="name2">Nombre completo</string>
     <string name="nothing">Ninguna discapacidad visual</string>
     <string name="user_exist">El usuario ya existe</string>
+
+
     <string-array name="diseases">
         <item>Ceguera</item>
         <item>Deterioro visual leve</item>
         <item>Deterioro visual moder ado</item>
         <item>Deterioro visula grave</item>
     </string-array>
+    <string-array name="comand_confi">
+        <item>confi</item>
+        <item>configuración</item>
+        <item>presiona configuración</item>
+        <item>presione configuración</item>
+        <item>ir a configuración</item>
+    </string-array>
+    <string-array name="comand_route">
+        <item>route</item>
+        <item>iniciar ruta</item>
+        <item>presiona iniciar ruta</item>
+        <item>presione iniciar ruta</item>
+        <item>ir a iniciar ruta</item>
+    </string-array>
+    <string-array name="comand_logout">
+        <item>cerrar sesión</item>
+        <item>presiona cerrar sesión</item>
+        <item>presione cerrar sesión</item>
+        <item>ir a cerrar sesión</item>
+        <item>cierra sesión</item>
+    </string-array>
+    <string-array name="comand_sos">
+        <item>emergencia</item>
+        <item>presiona emergencia</item>
+        <item>presione emergencia</item>
+        <item>ir a emergencia</item>
+        <item>ayuda</item>
+        <item>necesito ayuda</item>
+        <item>Necesito ayuda</item>
+        <item>tengo una emergencia</item>
+    </string-array>
+    <string-array name="comand_back">
+        <item>volver</item>
+        <item>presiona volver</item>
+        <item>presione volver</item>
+        <item>ir a pantalla anterior</item>
+    </string-array>
+    <string-array name="comand_off">
+        <item>off</item>
+        <item>cerrar aplicación</item>
+        <item>presiona cerrar aplicación</item>
+        <item>presione cerrar aplicación</item>
+        <item>cierra esta aplicación</item>
+    </string-array>
+
     <string name="title_activity_start_route">StartRouteActivity</string>
     <string name="questions">Preguntas frecuentes</string>
     <string name="settings">Configuración</string>
