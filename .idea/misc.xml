@@ -35,7 +35,7 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_sos.xml" value="0.18552631578947368" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_user.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_user_focused.xml" value="0.2203125" />
-        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_edit_profile.xml" value="0.18532818532818532" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_home.xml" value="0.21" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_profile.xml" value="0.1" />
@@ -47,6 +47,7 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_blank.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_profile.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_questions.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_route.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_routes.xml" value="0.25" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_routes2.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_settings.xml" value="0.18931159420289856" />

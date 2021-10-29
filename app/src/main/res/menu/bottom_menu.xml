@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/routesFragment"
+        android:id="@+id/routes_fragment"
         android:title="@string/map"
         android:icon="@drawable/ic_map"/>
     <item
-        android:id="@+id/questionsFragment"
+        android:id="@+id/questions_fragment"
         android:title="@string/questions"
         android:icon="@drawable/ic_help"/>
     <item
-        android:id="@+id/settingsFragmentt"
+        android:id="@+id/settings_fragment"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings"/>
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/profile_fragment"
         android:title="@string/profile"
         android:icon="@drawable/ic_user" />
 

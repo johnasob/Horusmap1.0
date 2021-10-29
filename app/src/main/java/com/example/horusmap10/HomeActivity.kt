@@ -134,9 +134,6 @@ class HomeActivity : AppCompatActivity() {
                 onDestroy()
             }
         }
-
-
-
     }
 
 

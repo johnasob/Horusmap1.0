@@ -26,26 +26,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:navGraph="@navigation/my_nav"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="54dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

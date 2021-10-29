@@ -55,6 +55,7 @@
         <item>presiona configuración</item>
         <item>presione configuración</item>
         <item>ir a configuración</item>
+        <item>pantalla de configuración</item>
     </string-array>
     <string-array name="comand_route">
         <item>route</item>
@@ -92,6 +93,25 @@
         <item>presiona cerrar aplicación</item>
         <item>presione cerrar aplicación</item>
         <item>cierra esta aplicación</item>
+    </string-array>
+    <string-array name="comand_profile">
+        <item>perfíl</item>
+        <item>Perfíl</item>
+        <item>ir a perfíl</item>
+        <item>pantalla de perfíl</item>
+        <item>presiona perfil</item>
+        <item>opción perfíl</item>
+    </string-array>
+    <string-array name="comand_question">
+        <item>Preguntas frecuentes</item>
+        <item>preguntas frecuentes</item>
+        <item>ir a preguntas frecuentes</item>
+        <item>pantalla de preguntas</item>
+        <item>pantalla de preguntas frecuentes</item>
+        <item>presiona preguntas frecuentes</item>
+        <item>tengo una duda</item>
+        <item>necesito información</item>
+        <item>preguntas</item>
     </string-array>
 
     <string name="title_activity_start_route">StartRouteActivity</string>
