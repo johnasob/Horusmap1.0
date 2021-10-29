@@ -115,7 +115,7 @@
     </string-array>
 
     <string name="title_activity_start_route">StartRouteActivity</string>
-    <string name="questions">Preguntas frecuentes</string>
+    <string name="questions">¿Preguntas?</string>
     <string name="settings">Configuración</string>
     <string name="profile">Perfíl</string>
     <!-- TODO: Remove or change this placeholder text -->

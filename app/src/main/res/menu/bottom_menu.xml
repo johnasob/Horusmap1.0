@@ -4,18 +4,27 @@
     <item
         android:id="@+id/routes_fragment"
         android:title="@string/map"
+        android:iconTint="@color/black"
         android:icon="@drawable/ic_map"/>
     <item
         android:id="@+id/questions_fragment"
         android:title="@string/questions"
+        android:iconTint="@color/black"
         android:icon="@drawable/ic_help"/>
+    <item
+        android:id="@+id/nothing"
+        android:enabled="false"
+        android:iconTint="@color/transparent"
+        android:title="" />
     <item
         android:id="@+id/settings_fragment"
         android:title="@string/settings"
+        android:iconTint="@color/black"
         android:icon="@drawable/ic_settings"/>
     <item
         android:id="@+id/profile_fragment"
         android:title="@string/profile"
+        android:iconTint="@color/black"
         android:icon="@drawable/ic_user" />
 
 </menu>

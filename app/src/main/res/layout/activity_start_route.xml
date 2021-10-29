@@ -1,40 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.start"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/greenhorus"
-    tools:context=".ProfileActivity">
-
-    <ImageView
-        android:id="@+id/back_routes"
-        android:layout_width="wrap_content"
-        android:layout_height="54dp"
-        app:layout_constraintStart_toStartOf="@id/fragmentContainerView"
-        app:layout_constraintTop_toTopOf="@id/fragmentContainerView"
-        app:srcCompat="@drawable/ic_back" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:menu="@menu/bottom_menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:backgroundTintMode="screen"
+    android:foregroundTintMode="screen"
+    tools:context=".StartRouteActivity">
 
     <FrameLayout
         android:id="@+id/fragmentContainerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_app_bar">
+
+    </FrameLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:foregroundTint="@color/white"
+        android:foregroundTintMode="add"
+        app:backgroundTint="@color/white"
+        app:fabAlignmentMode="center"
+        app:fabCradleMargin="6dp"
+        app:fabCradleRoundedCornerRadius="30dp"
+        app:fabCradleVerticalOffset="6dp"
+        app:navigationIconTint="@color/white">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:backgroundTint="@color/transparent"
+            android:backgroundTintMode="src_over"
+            android:focusable="auto"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconTint="@color/gray_dark"
+            app:itemPaddingBottom="12dp"
+            app:itemTextColor="@color/greenhorus_dark"
+            app:menu="@menu/bottom_menu" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/microfono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_micro"
+        android:theme="@style/Theme.start"
+        app:fabCustomSize="@dimen/micro_size"
+        app:layout_anchor="@id/bottom_app_bar"
+        app:maxImageSize="@dimen/micro_size" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

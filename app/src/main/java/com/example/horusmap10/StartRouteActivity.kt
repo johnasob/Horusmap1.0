@@ -4,11 +4,13 @@ package com.example.horusmap10
 import RESTClient
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -34,6 +36,7 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
     private val settingsFragment = SettingsFragment()
     private val profileFragment = ProfileFragment()
     private var navegation: BottomNavigationView? = null
+    private var microfono: FloatingActionButton? = null
     //lateinit var back: Button
 
 
@@ -47,7 +50,8 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         thisActivity=this
         val ip = "192.168.1.4:8080"
         restClient = RESTClient("http://$ip/")
-        apikey = intent.getStringExtra("apikey").toString()
+        //apikey = intent.getStringExtra("apikey").toString()
+        val apikey = "61718e0887d4577337a2b329"
         //update()
 
         /** PARTE BOTTOMNAVEGATION CON EL MY_NAV
@@ -70,7 +74,7 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         routesFragment.arguments = bundle
         replaceFragment(routesFragment)
         navegation = findViewById(R.id.bottomNavigationView)
-
+        navegation!!.setBackgroundColor(Color.TRANSPARENT)
         navegation?.setOnItemSelectedListener {
 
             when(it.itemId){
@@ -85,6 +89,11 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
                 R.id.profile_fragment -> replaceFragment(profileFragment)
             }
             true
+        }
+        microfono = findViewById<FloatingActionButton>(R.id.microfono)
+
+        microfono?.setOnClickListener {
+           askSpeechInput()
         }
 
 
@@ -122,7 +131,6 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
             val result: ArrayList<String>? = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             val input = result?.get(0).toString()
             voice_option(input)
-
         }
     }
     private fun askSpeechInput() {
@@ -144,17 +152,21 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         val list5 = resources.getStringArray(R.array.comand_back)
         val list6 = resources.getStringArray(R.array.comand_off)
         val list7 = resources.getStringArray(R.array.comand_question)
-
         //start routes
         for (i in list1.indices) {
             if (input == list1[i]) {
-               // replaceFragment(routesFragment)
+               replaceFragment(routesFragment)
+
+            }else{
+                return
             }
         }
         //star settings
         for (i in list2.indices) {
             if (input == list2[i]) {
 
+            }else{
+                return
             }
         }
         //start logout
