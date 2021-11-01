@@ -1,19 +1,16 @@
 package com.example.horusmap10
 
+import RESTClient
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.PatternsCompat
 import com.example.horusmap10.databinding.ActivityRegisterBinding
-import java.util.regex.Pattern
-import java.util.regex.Pattern.compile
-import RESTClient
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -27,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity= this
-        val ip = "192.168.1.9:8080"
+        val ip = "192.168.1.11:8080"
         //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
         restClient = RESTClient("http://$ip/")
 

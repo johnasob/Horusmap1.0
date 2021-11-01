@@ -7,30 +7,21 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.util.*
-
-
-
+import android.widget.Toast.makeText as makeText1
 
 
 class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
     private val  RQ_SPEECH_REC = 102
     private lateinit var restClient: RESTClient
-    //private lateinit var binding: ActivityStartRouteBinding
     private lateinit var thisActivity: StartRouteActivity
-    private var apikey: String = ""
-    private var name: String = ""
-    private var password: String = "3125"
-    private var email: String = ""
-    private var vision: String = ""
-    private var micButton: Boolean? = false
+    private var apikey: String? = null
+    private var ip: String? = null
     private val routesFragment = RoutesFragment()
     private val questionsFragment = QuestionsFragment()
     private val settingsFragment = SettingsFragment()
@@ -42,32 +33,16 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = ActivityStartRouteBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_start_route)
-        //setContentView(binding.root)
-        //back = findViewById(R.id.back)
+
 
         thisActivity=this
-        val ip = "192.168.1.4:8080"
+        ip = intent.getStringExtra("ip").toString()
         restClient = RESTClient("http://$ip/")
-        //apikey = intent.getStringExtra("apikey").toString()
-        val apikey = "61718e0887d4577337a2b329"
-        //update()
+        apikey = intent.getStringExtra("apikey").toString()
 
-        /** PARTE BOTTOMNAVEGATION CON EL MY_NAV
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val navController = findNavController(R.id.fragmentContainerView)
 
-        bottomNavigationView.setupWithNavController(navController)
-        Toast.makeText(this,findNavController(R.id.fragmentContainerView).graph.toString(), Toast.LENGTH_LONG).show()
-         */
-        /*back.setOnClickListener(){
 
-            val home = Intent(this, HomeActivity::class.java)
-            home.putExtra("apikey", apikey)
-            startActivity(home)
-            finish()
-        }*/
         var bundle=  Bundle()
         bundle.putString("temp","mandado")
         bundle.putString("temp2","mandado2")
@@ -86,7 +61,13 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
                 }
                 R.id.questions_fragment -> replaceFragment(questionsFragment)
                 R.id.settings_fragment -> replaceFragment(settingsFragment)
-                R.id.profile_fragment -> replaceFragment(profileFragment)
+                R.id.profile_fragment -> {
+                    var bundle=  Bundle()
+                    bundle.putString("ip",ip)
+                    bundle.putString("apikey",apikey)
+                    profileFragment.arguments = bundle
+                    replaceFragment(profileFragment)
+                }
             }
             true
         }
@@ -108,23 +89,6 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         }
     }
 
-
-    private fun update(){
-        restClient.httpGetAsync("/user/info?auth=$apikey")
-
-
-        //Se busca acceder a la información actual del servidor
-        GlobalScope.launch {
-            val myUserInfo = restClient.wait()
-
-            val list = JSONObject(myUserInfo)
-            name = list.getString("Name: ")
-            password = list.getString("Password: ")
-            email = list.getString("Email: ")
-            vision = list.getString("Vision: ")
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RQ_SPEECH_REC && resultCode == Activity.RESULT_OK){
@@ -143,7 +107,7 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
 
     }
 
-    private  fun  voice_option(input: String) {
+    private  fun  voice_option(imput: String) {
 
         val list1 = resources.getStringArray(R.array.comand_route)
         val list2 = resources.getStringArray(R.array.comand_confi)
@@ -152,32 +116,30 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         val list5 = resources.getStringArray(R.array.comand_back)
         val list6 = resources.getStringArray(R.array.comand_off)
         val list7 = resources.getStringArray(R.array.comand_question)
-        //start routes
-        for (i in list1.indices) {
-            if (input == list1[i]) {
-               replaceFragment(routesFragment)
 
-            }else{
-                return
+        navegation = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        makeText1(thisActivity, "input= "+imput+" list1= "+list2[1], Toast.LENGTH_SHORT).show()
+        //Iniciar ruta
+        for (i in list1.indices) {
+            if (imput == list1[i]) {
+                replaceFragment(profileFragment)
             }
         }
         //star settings
         for (i in list2.indices) {
-            if (input == list2[i]) {
-
-            }else{
-                return
+            if (imput == list2[i]) {
+                replaceFragment(settingsFragment)
             }
         }
         //start logout
         for (i in list3.indices) {
-            if (input == list3[i]) {
+            if (imput == list3[i]) {
                // replaceFragment(profileFragment)
             }
         }
         //SOS
         for (i in list4.indices) {
-            if (input == list4[i]) {
+            if (imput == list4[i]) {
                 val intent = Intent(this, SosActivity::class.java)
                 intent.putExtra("apikey", apikey)
                 startActivity(intent)
@@ -185,7 +147,7 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         }
         // VOLVER
         for (i in list5.indices) {
-            if (input == list5[i]) {
+            if (imput == list5[i]) {
                 val intent = Intent(this, HomeActivity::class.java)
                 intent.putExtra("apikey", apikey)
                 startActivity(intent)
@@ -194,13 +156,13 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         }
         //CERRAR APP
         for (i in list6.indices) {
-            if (input == list6[i]) {
+            if (imput == list6[i]) {
                 finish()
             }
         }
         //PREGUNTAS FRECUENTES
         for (i in list7.indices) {
-            if (input == list6[i]) {
+            if (imput == list6[i]) {
                 //replaceFragment(questionsFragment)
             }
         }

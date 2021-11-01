@@ -14,7 +14,8 @@ class HomeActivity : AppCompatActivity() {
 
     private val  RQ_SPEECH_REC = 102
     private lateinit var binding: ActivityHomeBinding
-    private var apikey: String = ""
+    private var apikey: String? = null
+    private var ip: String? = null
     private lateinit var thisActivity: HomeActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val ip = intent.getStringExtra("ip").toString()
         /*Se recibe el apykey del usuario*/
         apikey = intent.getStringExtra("apikey").toString()
 
@@ -30,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
         binding.routesButton.setOnClickListener {
             val routes = Intent(this, StartRouteActivity::class.java)
             routes.putExtra("apikey", apikey)
+            routes.putExtra("ip",ip)
             startActivity(routes)
         }
 
@@ -37,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
             //Como prueba meti profile pero va settings
             val settings = Intent(this, ProfileActivity::class.java)
             settings.putExtra("apikey", apikey)
+            settings.putExtra("ip",ip)
             startActivity(settings)
         }
         binding.logoutButton.setOnClickListener {

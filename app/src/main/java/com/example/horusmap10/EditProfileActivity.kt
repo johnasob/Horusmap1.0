@@ -33,7 +33,7 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         thisActivity=this
 
-        val ip = "192.168.1.4:8080"
+        val ip = "192.168.1.11:8080"
         restClient = RESTClient("http://$ip/")
         apikey = intent.getStringExtra("apikey").toString()
         update()

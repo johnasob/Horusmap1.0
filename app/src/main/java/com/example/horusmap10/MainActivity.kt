@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity=this
-        val ip = "192.168.1.4:8080"
+        val ip = "192.168.1.11:8080"
         //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
         restClient = RESTClient("http://$ip/")
 
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         // Boton regístrate
         binding.registerButton.setOnClickListener(){
             val register = Intent(this, RegisterActivity::class.java)
+            register.putExtra("ip",ip)
             startActivity(register)
         }
 
@@ -100,6 +101,8 @@ class MainActivity : AppCompatActivity() {
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
                     home.putExtra("apikey", response)
+                    val ip = "192.168.1.11:8080"
+                    home.putExtra("ip", ip)
                     startActivity(home)
                     finish()
                 }
