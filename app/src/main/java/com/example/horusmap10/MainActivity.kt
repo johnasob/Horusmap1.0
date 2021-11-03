@@ -6,12 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.net.Authenticator
 import java.net.PasswordAuthentication
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -24,8 +24,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity=this
-        val ip = "192.168.1.11:8080"
-        //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
+
+        /** VERIFICACIÓN DE LOGIN */
+        if(prefs.getApikey().isNotEmpty()){
+            val home = Intent(this, HomeActivity::class.java)
+            startActivity(home)
+            finish()
+        }
+        val ip = prefs.getIp()
         restClient = RESTClient("http://$ip/")
 
         // Boton login
@@ -96,13 +102,12 @@ class MainActivity : AppCompatActivity() {
                     binding.userLogin.error = getString(R.string.user) +" "+ getString(R.string.validm)
                 } else {
                     binding.userLogin.error = null
+                    //Guarda la apikey recibida
+                    prefs.saveApikey(response)
                     val toast2 = Toast.makeText(applicationContext, "Acceso exitoso, $name", Toast.LENGTH_LONG)
                     toast2.show()
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
-                    home.putExtra("apikey", response)
-                    val ip = "192.168.1.11:8080"
-                    home.putExtra("ip", ip)
                     startActivity(home)
                     finish()
                 }
@@ -111,5 +116,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
+
 }
 

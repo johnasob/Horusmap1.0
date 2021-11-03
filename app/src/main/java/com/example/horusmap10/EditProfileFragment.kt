@@ -1,45 +1,50 @@
 package com.example.horusmap10
 
 import RESTClient
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.PatternsCompat
-import com.example.horusmap10.databinding.ActivityEditProfileBinding
+import androidx.fragment.app.Fragment
+import com.example.horusmap10.Horusmap1.Horusmap
+import com.example.horusmap10.databinding.FragmentEditProfileBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.regex.Pattern
 
 
-class EditProfileActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityEditProfileBinding
+class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
+    private lateinit var _binding: FragmentEditProfileBinding
+    private val binding get() = _binding!!
     private lateinit var restClient: RESTClient
-    private lateinit var thisActivity: EditProfileActivity
-    private var apikey: String = ""
-    private var name: String = ""
+    private lateinit var apikey: String
+    private lateinit var ip: String
+    private lateinit var name: String
     private var password: String = "3125"
-    private var email: String = ""
-    private var vision: String = ""
+    private lateinit var email: String
+    private lateinit var vision: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        binding = ActivityEditProfileBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        thisActivity=this
+    }
 
-        val ip = "192.168.1.11:8080"
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentEditProfileBinding.inflate(layoutInflater, container,false )
+        ip = Horusmap.prefs.getIp()
+        apikey = Horusmap.prefs.getApikey()
         restClient = RESTClient("http://$ip/")
-        apikey = intent.getStringExtra("apikey").toString()
         update()
-
         binding.finishButton.setOnClickListener(){
-            validation()
+             validation()
         }
 
         binding.changeButton.setOnClickListener(){
@@ -48,13 +53,12 @@ class EditProfileActivity : AppCompatActivity() {
 
             //Se coloca la lista de enfermedades
             val diseases= resources.getStringArray(R.array.diseases)
-            val arrayAdapter= ArrayAdapter(this, R.layout.dropdown_menu, diseases)
+            val arrayAdapter= ArrayAdapter(requireContext(), R.layout.dropdown_menu, diseases)
             with(binding.autoProfile){
                 setAdapter(arrayAdapter)
             }
         }
-
-
+        return binding.root
     }
 
 
@@ -95,43 +99,22 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun validation(){
-        val result = arrayOf(validateUser(),validateEmail())
-        if (false in result){
+    private fun validation() {
+        val result = arrayOf(validateUser(), validateEmail())
+        if (false in result) {
             return
-        }else{
+        } else {
             //si no existe errores finalza el la edición
-            if( !binding.visionEdit.editText?.text.toString().isEmpty()) {
+            if (!binding.visionEdit.editText?.text.toString().isEmpty()) {
                 vision = binding.visionEdit.editText?.text.toString()
 
             }
+            Toast.makeText(requireContext(),"name=$name",Toast.LENGTH_LONG).show()
             restClient.httpPutAsync("/update/user?auth=$apikey", "user=$name&password=$password&email=$email&vision=$vision")
-            var profile = Intent(this, ProfileActivity::class.java)
             GlobalScope.launch {
                 var response = restClient.wait()
-                runOnUiThread() {
-                    if(response == "200") {
-
-                        val toast1 = Toast.makeText(
-                            applicationContext,
-                            "actualización exitosa",
-                            Toast.LENGTH_LONG
-                        )
-                        toast1.show()
-                        profile.putExtra("apikey", apikey)
-                        startActivity(profile)
-                        finish()
-
-                    }else{
-
-                        val toast1 = Toast.makeText(
-                            applicationContext,
-                            response,
-                            Toast.LENGTH_LONG
-                        )
-                        toast1.show()
-
-                    }
+               if (response == "200") {
+                   actividadContenedora!!.devolverDato2(true)
                 }
             }
         }
@@ -153,4 +136,23 @@ class EditProfileActivity : AppCompatActivity() {
             vision = list.getString("Vision: ")
         }
     }
+    interface ComunicadorFragments2 {
+        fun devolverDato2(dato: Boolean)
+    }
+    private var actividadContenedora : ComunicadorFragments2? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if ( context is ComunicadorFragments2)
+            actividadContenedora = context
+        else throw  RuntimeException(context.toString()+"debe implementar comunicador de fragments")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        actividadContenedora  = null
+    }
+
+
+
 }

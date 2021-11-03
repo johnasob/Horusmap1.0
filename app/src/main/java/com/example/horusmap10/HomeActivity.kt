@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import androidx.appcompat.app.AppCompatActivity
+import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.databinding.ActivityHomeBinding
 import java.util.*
 
@@ -15,7 +16,6 @@ class HomeActivity : AppCompatActivity() {
     private val  RQ_SPEECH_REC = 102
     private lateinit var binding: ActivityHomeBinding
     private var apikey: String? = null
-    private var ip: String? = null
     private lateinit var thisActivity: HomeActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,31 +23,30 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val ip = intent.getStringExtra("ip").toString()
+        val ip = prefs.getIp()
         /*Se recibe el apykey del usuario*/
-        apikey = intent.getStringExtra("apikey").toString()
+        apikey = prefs.getApikey()
 
-        /**Opciones del menu principal y home de la app*/
+        /**INICIAR RUTA*/
         binding.routesButton.setOnClickListener {
             val routes = Intent(this, StartRouteActivity::class.java)
-            routes.putExtra("apikey", apikey)
-            routes.putExtra("ip",ip)
             startActivity(routes)
         }
 
+        /**SETTINGS*/
         binding.settingsButton.setOnClickListener {
-            //Como prueba meti profile pero va settings
-            val settings = Intent(this, ProfileActivity::class.java)
-            settings.putExtra("apikey", apikey)
-            settings.putExtra("ip",ip)
-            startActivity(settings)
+
+
         }
+        /**CERRAR SESIÓN*/
         binding.logoutButton.setOnClickListener {
             //Inicia login
             val login = Intent(this, MainActivity::class.java)
+            prefs.clearAll()
             startActivity(login)
             finish()
         }
+        /**EMERGENCIA*/
         binding.emergencyButton.setOnClickListener {
             val sos = Intent(this, SosActivity::class.java)
             startActivity(sos)
@@ -60,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
-
+    // VERIFICACIÓN DE ENTRADA DE AUDIO
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RQ_SPEECH_REC && resultCode == Activity.RESULT_OK){
@@ -70,6 +69,7 @@ class HomeActivity : AppCompatActivity() {
 
         }
     }
+    // LECTURA DE AUDIO
     private fun askSpeechInput() {
 
             val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -80,6 +80,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    // RECONOCIMIENTO DE COMANDOS DE VOZ
     private  fun  voice_option(input: String) {
 
         val list1 = resources.getStringArray(R.array.comand_route)
@@ -100,9 +101,9 @@ class HomeActivity : AppCompatActivity() {
         //star settings
         for (i in list2.indices) {
             if (input == list2[i]) {
-                val intent = Intent(this, ProfileActivity::class.java)
+                /*val intent = Intent(this, ProfileActivity::class.java)
                 intent.putExtra("apikey", apikey)
-                startActivity(intent)
+                startActivity(intent)*/
             }
         }
         //start logout

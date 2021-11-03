@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Horusmap1.0</string>
+    <string name="app_name">Horusmap</string>
     <string name="user">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="empty_msj">No dejes este espacio vacío</string>
@@ -46,8 +46,8 @@
     <string-array name="diseases">
         <item>Ceguera</item>
         <item>Deterioro visual leve</item>
-        <item>Deterioro visual moder ado</item>
-        <item>Deterioro visula grave</item>
+        <item>Deterioro visual moderado</item>
+        <item>Deterioro visual grave</item>
     </string-array>
     <string-array name="comand_confi">
         <item>confi</item>

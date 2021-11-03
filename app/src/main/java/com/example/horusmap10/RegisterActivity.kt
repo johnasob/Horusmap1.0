@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.PatternsCompat
+import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,14 +19,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     lateinit var restClient: RESTClient
     private lateinit var thisActivity: RegisterActivity
+    lateinit var ip: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity= this
-        val ip = "192.168.1.11:8080"
-        //sharedPreferences.getString("ipaddress", "192.168.1.4:8080")""
+
+        ip = prefs.getIp()
         restClient = RESTClient("http://$ip/")
 
         val diseases= resources.getStringArray(R.array.diseases)
@@ -33,9 +35,11 @@ class RegisterActivity : AppCompatActivity() {
         with(binding.autoRegister){
             setAdapter(arrayAdapter)
         }
+        // botón de continuar
         binding.continueButton.setOnClickListener(){
             validation()
         }
+        //botón de terminos y condiciones
         binding.termsButton.setOnClickListener(){
             val terms = Intent(this, TermnsActivity::class.java)
             startActivity(terms)
@@ -157,7 +161,8 @@ class RegisterActivity : AppCompatActivity() {
                     // Se lanza la actividad home
                     val home = Intent()
                     home.setClassName(thisActivity, "com.example.horusmap10.HomeActivity")
-                    home.putExtra("apikey", response)
+                    prefs.saveApikey(response)
+                    val ip = prefs.getIp()
                     startActivity(home)
                     finish()
                 }

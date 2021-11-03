@@ -23,6 +23,7 @@
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_horusicon"
         android:label="@string/app_name"
+        android:name=".Horusmap1.Horusmap"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.login"

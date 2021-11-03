@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,12 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class RoutesFragment extends Fragment implements LocationListener {
 
-    private ImageButton micButton;
     private View vista;
-    private Boolean micro = false;
-    private String temp;
-    private String temp2;
-    private  RoutesMetodos activityContenedora = null;
     private double latitud;
     private double longitud;
 
@@ -48,14 +43,13 @@ public class RoutesFragment extends Fragment implements LocationListener {
         public void onMapReady(GoogleMap googleMap) {
             LatLng sydney = new LatLng(latitud, longitud);
             googleMap.addMarker(new MarkerOptions().position(sydney).title("Tu ubicación"));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney,17),1700,null);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney,18),200,null);
         }
     };
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-            activityContenedora = (RoutesFragment.RoutesMetodos) context;
     }
 
     @Nullable
@@ -71,10 +65,7 @@ public class RoutesFragment extends Fragment implements LocationListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
-            temp = getArguments().getString("temp", "nada");
-            temp2 = getArguments().getString("temp2", "nada");
-        }
+
         // Asks for location service
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
@@ -100,9 +91,6 @@ public class RoutesFragment extends Fragment implements LocationListener {
         }
     }
 
-    public interface RoutesMetodos {
-        public void microButton(Boolean click);
-    }
 
 
 }

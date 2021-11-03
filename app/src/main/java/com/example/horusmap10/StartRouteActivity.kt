@@ -10,13 +10,15 @@ import android.speech.RecognizerIntent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_start_route.*
 import java.util.*
 import android.widget.Toast.makeText as makeText1
 
 
-class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
+class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2{
     private val  RQ_SPEECH_REC = 102
     private lateinit var restClient: RESTClient
     private lateinit var thisActivity: StartRouteActivity
@@ -26,6 +28,7 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
     private val questionsFragment = QuestionsFragment()
     private val settingsFragment = SettingsFragment()
     private val profileFragment = ProfileFragment()
+    private val editProfileFragment = EditProfileFragment()
     private var navegation: BottomNavigationView? = null
     private var microfono: FloatingActionButton? = null
     //lateinit var back: Button
@@ -37,32 +40,21 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
 
 
         thisActivity=this
-        ip = intent.getStringExtra("ip").toString()
+        ip = prefs.getIp()
+        apikey = prefs.getApikey()
         restClient = RESTClient("http://$ip/")
-        apikey = intent.getStringExtra("apikey").toString()
 
-
-
-        var bundle=  Bundle()
-        bundle.putString("temp","mandado")
-        bundle.putString("temp2","mandado2")
-        routesFragment.arguments = bundle
         replaceFragment(routesFragment)
         navegation = findViewById(R.id.bottomNavigationView)
         navegation!!.setBackgroundColor(Color.TRANSPARENT)
         navegation?.setOnItemSelectedListener {
 
             when(it.itemId){
-                R.id.routes_fragment -> {
-                    var bundle=  Bundle()
-                    bundle.putString("temp","mandado")
-                    routesFragment.arguments = bundle
-                    replaceFragment(routesFragment)
-                }
+                R.id.routes_fragment -> replaceFragment(routesFragment)
                 R.id.questions_fragment -> replaceFragment(questionsFragment)
                 R.id.settings_fragment -> replaceFragment(settingsFragment)
                 R.id.profile_fragment -> {
-                    var bundle=  Bundle()
+                    val bundle=  Bundle()
                     bundle.putString("ip",ip)
                     bundle.putString("apikey",apikey)
                     profileFragment.arguments = bundle
@@ -77,6 +69,9 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
            askSpeechInput()
         }
 
+        back_home_button.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 
@@ -168,11 +163,27 @@ class StartRouteActivity : AppCompatActivity(), RoutesFragment.RoutesMetodos{
         }
     }
 
-    override fun microButton(click: Boolean?) {
-        if(click == true) {
-            askSpeechInput()
+    override fun devolverDato(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(editProfileFragment)
         }
     }
+
+    override fun finishSesion(dato: Boolean) {
+        if (dato==true) {
+            val login = Intent(this, MainActivity::class.java)
+            prefs.clearAll()
+            startActivity(login)
+            finish()
+        }
+    }
+
+    override fun devolverDato2(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(profileFragment)
+        }
+    }
+
 }
 
 
