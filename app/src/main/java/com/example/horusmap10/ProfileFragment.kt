@@ -62,7 +62,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val vision: String = list.getString("Vision: ")
             val vision_t: TextView = requireView().findViewById(R.id.vision_profile1)
             vision_t.text = vision
-
         }
     }
 

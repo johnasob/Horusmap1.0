@@ -20,6 +20,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="98dp"
             android:layout_marginEnd="12dp"
+            android:layout_marginBottom="64dp"
             android:backgroundTint="@color/greenhorus_dark"
             app:layout_constraintBottom_toBottomOf="@id/constraint2"
             app:layout_constraintEnd_toEndOf="@id/constraint2"

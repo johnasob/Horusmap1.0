@@ -21,7 +21,7 @@
     <application
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:icon="@mipmap/ic_horusicon"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:name=".Horusmap1.Horusmap"
         android:roundIcon="@mipmap/ic_launcher_round"
