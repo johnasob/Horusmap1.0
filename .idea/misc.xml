@@ -11,6 +11,7 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/custon_lock.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/dropdown_menu.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_alert.xml" value="0.2203125" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_artes.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_back.xml" value="0.2203125" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.18552631578947368" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/drawable/ic_biblioteca.xml" value="0.2203125" />
@@ -60,6 +61,7 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/dropdown_menu.xml" value="0.21" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_blank.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1634963768115942" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_maps.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_questions.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_route.xml" value="0.1638888888888889" />
@@ -68,6 +70,7 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_settings.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/menu-v26/bottom_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/menu/bottom_menu.xml" value="0.33" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/mipmap-anydpi-v26/ic_horusicon_round.xml" value="0.2203125" />
       </map>
     </option>
   </component>

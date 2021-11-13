@@ -70,7 +70,9 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         }
 
         back_home_button.setOnClickListener {
-            onBackPressed()
+            val home = Intent(this, HomeActivity::class.java)
+            startActivity(home)
+            finish()
         }
 
     }

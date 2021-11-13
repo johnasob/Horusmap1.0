@@ -66,7 +66,6 @@ class HomeActivity : AppCompatActivity() {
             val result: ArrayList<String>? = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             val input = result?.get(0).toString()
             voice_option(input)
-
         }
     }
     // LECTURA DE AUDIO
@@ -77,7 +76,6 @@ class HomeActivity : AppCompatActivity() {
             i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Dí algo")
             startActivityForResult(i,RQ_SPEECH_REC)
-
     }
 
     // RECONOCIMIENTO DE COMANDOS DE VOZ
