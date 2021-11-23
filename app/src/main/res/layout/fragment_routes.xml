@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:id="@+id/constraint2"
         android:layout_height="match_parent"
         android:background="@color/greenhorus">
 
@@ -18,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="98dp"
+            android:layout_marginTop="120dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="64dp"
             android:backgroundTint="@color/greenhorus_dark"
-            app:layout_constraintBottom_toBottomOf="@id/constraint2"
-            app:layout_constraintEnd_toEndOf="@id/constraint2"
-            app:layout_constraintStart_toStartOf="@id/constraint2"
-            app:layout_constraintTop_toTopOf="@id/autoCompleteTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navegation_textView"
             tools:context=".StartRouteActivity"
             tools:ignore="MissingConstraints" />
 
@@ -39,17 +38,18 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/constraint2"
-            app:layout_constraintStart_toStartOf="@id/constraint2"
-            app:layout_constraintTop_toTopOf="@id/constraint2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="54dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/custom_imput"
             android:drawableStart="@drawable/ic_marker"
             android:fontFamily="@font/quicksand_light"
@@ -59,10 +59,11 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/constraint2"
-            app:layout_constraintStart_toStartOf="@id/constraint2"
+            app:layout_constraintBottom_toTopOf="@+id/map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/navegation_textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</FrameLayout>

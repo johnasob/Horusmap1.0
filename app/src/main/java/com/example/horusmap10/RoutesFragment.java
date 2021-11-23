@@ -2,12 +2,6 @@ package com.example.horusmap10;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,14 +32,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.location.LocationRequest;
 
 
 public class RoutesFragment extends Fragment implements LocationListener {
 
-
-    private double latitud;
-    private double longitud;
+    View vista;
+    Activity actividad;
+    Context context;
+    //String[] items = {"Portería a la facultad de ingeniería","facultad de ingeniería a la portería"};
+    //AutoCompleteTextView chose_route;
+    //ArrayAdapter<String> adapterItems;
     private static final int COLOR_BLACK_ARGB = 0xFF2E512D;
     private static final int PRIORITY_HIGH_ACCURACY = 100;
     private static final int PORTERIA = 0;
@@ -60,7 +63,6 @@ public class RoutesFragment extends Fragment implements LocationListener {
     private final LatLng maria = new LatLng(4.5564872, -75.6593398);
     private LatLng position;
     private GoogleMap mMap;
-
     public void onLocationChanged(Location location) {
         position = new LatLng(location.getLatitude(), location.getLongitude());
     }
@@ -69,6 +71,8 @@ public class RoutesFragment extends Fragment implements LocationListener {
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
+
+            getLocationPermision();
             mMap = googleMap;
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
@@ -80,10 +84,10 @@ public class RoutesFragment extends Fragment implements LocationListener {
                 @Override
                 public void onLocationChanged(Location location) {
                     mMap.clear();
-                    LatLng miUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(miUbicacion));
-                    //mMap.addMarker(new MarkerOptions().position(miUbicacion).title("Tu ubicación"));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion,18),2000,null);
+                    position = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+                   // mMap.addMarker(new MarkerOptions().position(position).title("mi posición").icon(BitmapDescriptorFactory.fromBitmap(unos)));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,16),2000,null);
                     mMap.getUiSettings().setZoomControlsEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
                     showmarkers(mMap);
@@ -111,7 +115,9 @@ public class RoutesFragment extends Fragment implements LocationListener {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_routes, container, false);
+        vista =  inflater.inflate(R.layout.fragment_routes, container, false);
+        this.mMap = mMap;
+        this.context =  context;
         return vista;
     }
 
@@ -132,6 +138,7 @@ public class RoutesFragment extends Fragment implements LocationListener {
             Log.d("myTag", "Security Exception, no location available");
         }
 
+
     }
 
     @Override
@@ -142,7 +149,8 @@ public class RoutesFragment extends Fragment implements LocationListener {
         if (mapFragment != null) {
            mapFragment.getMapAsync(callback);
         }
-        getLocationPermision();
+
+
 
     }
 
@@ -175,6 +183,24 @@ public class RoutesFragment extends Fragment implements LocationListener {
         googleMap.addMarker(new MarkerOptions().position(maria).title("Laboratorio al aire libre Maria Cano"));
     }
 
+
+
+    private void creatRoute(LatLng start){
+        //¿Donde estoy?
+        int closePoint = closerPoint(start);
+        //Porteria bloque de ingeniería
+
+        //Ingeniería portería
+    }
+    private void sayRoute(){
+
+    }
+    private  void navegation(){
+
+    }
+    private void searchProblems(){
+
+    }
     /**Metodo que encuentra la distancia entre dos coordenadas*/
     private double getDistance(LatLng start, LatLng finish){
         //Inicializa el locationrequest que se usa para encontrar la distancia
@@ -242,24 +268,6 @@ public class RoutesFragment extends Fragment implements LocationListener {
                 return 7;
         }
     }
-
-    private void creatRoute(LatLng start){
-        //¿Donde estoy?
-        closePoint(start);
-        //Porteria bloque de ingeniería
-
-        //Ingeniería portería
-    }
-    private void sayRoute(){
-
-    }
-    private  void navegation(){
-
-    }
-    private void searchProblems(){
-
-    }
-
 
 
 }
