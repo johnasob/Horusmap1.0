@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,26 +25,26 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.horusmap10.Rutas.line;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 
-public class RoutesFragment extends Fragment implements LocationListener {
+public class RoutesFragment extends Fragment implements LocationListener, AdapterView.OnItemSelectedListener {
 
     View vista;
     Activity actividad;
     Context context;
-    //String[] items = {"Portería a la facultad de ingeniería","facultad de ingeniería a la portería"};
-    //AutoCompleteTextView chose_route;
-    //ArrayAdapter<String> adapterItems;
+
+    private String ruta_selected;
+    private Spinner spinner;
     private static final int COLOR_BLACK_ARGB = 0xFF2E512D;
     private static final int PRIORITY_HIGH_ACCURACY = 100;
     private static final int PORTERIA = 0;
@@ -63,8 +66,9 @@ public class RoutesFragment extends Fragment implements LocationListener {
     private final LatLng maria = new LatLng(4.5564872, -75.6593398);
     private LatLng position;
     private GoogleMap mMap;
+    private line marker = new line(mMap);
     public void onLocationChanged(Location location) {
-        position = new LatLng(location.getLatitude(), location.getLongitude());
+        //position = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -84,13 +88,17 @@ public class RoutesFragment extends Fragment implements LocationListener {
                 @Override
                 public void onLocationChanged(Location location) {
                     mMap.clear();
-                    position = new LatLng(location.getLatitude(), location.getLongitude());
+                    position = new LatLng(4.556286, -75.658436);
+                    //position = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
                    // mMap.addMarker(new MarkerOptions().position(position).title("mi posición").icon(BitmapDescriptorFactory.fromBitmap(unos)));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,16),2000,null);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,20),2000,null);
                     mMap.getUiSettings().setZoomControlsEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    showmarkers(mMap);
+                    showmarkers(mMap,position);
+
+
+
                 }
             };
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
@@ -116,6 +124,13 @@ public class RoutesFragment extends Fragment implements LocationListener {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         vista =  inflater.inflate(R.layout.fragment_routes, container, false);
+        spinner = vista.findViewById(R.id.options);
+        spinner.setOnItemSelectedListener(this);
+        String[] route = vista.getResources().getStringArray(R.array.routes);
+        ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item,route);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         this.mMap = mMap;
         this.context =  context;
         return vista;
@@ -124,12 +139,9 @@ public class RoutesFragment extends Fragment implements LocationListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Asks for location service
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-
         //Listener for button
-
         try {
             // Request location updates from network and gps
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, this);
@@ -137,8 +149,6 @@ public class RoutesFragment extends Fragment implements LocationListener {
         } catch(SecurityException ex) {
             Log.d("myTag", "Security Exception, no location available");
         }
-
-
     }
 
     @Override
@@ -149,38 +159,16 @@ public class RoutesFragment extends Fragment implements LocationListener {
         if (mapFragment != null) {
            mapFragment.getMapAsync(callback);
         }
-
-
-
     }
 
     /**Metodo que muestra los marcadores y el camino predeterminado de la porteria 2 a ingeniería*/
-    private void showmarkers(GoogleMap googleMap){
-
-        Polyline Ruta1 = googleMap.addPolyline(new PolylineOptions().clickable(true).add(
-                new LatLng(4.556286,-75.658436),//porteria//De la portería se sigue recto hasta encontrar un desnivel
-                new LatLng(4.556307,-75.658565),//Continúa unos 8pasos/4m y sube una pequeña rampa para empezar la acera podotáctil en la cual continúa hasta el segundo desnivel terminando de pasar por F. Medicina
-                new LatLng(4.5564818,-75.6591256),//del desnivel 2 son unos 2.5m y se retoma la acera al subir una pequeña rampa, hasta que justo frente a las escalera de mariacano se llega a un punto de giro.
-                new LatLng(4.5564872,-75.6593398),//se gira hacia la izquiera y se avanza 5 baldosas y se retoma a el camino al girar a la derecha hasta llegar al punto de giro para rodear la biblioteca, este punto queda en
-                new LatLng(4.5565437,-75.6595571),//Se gira hacia la derecha por 10 aceras y se retoma hacia la izquierda hasta llegar a CRAI
-                new LatLng(4.5565694,-75.6596335),// Se encuentra un pequeño desnivel en
-                new LatLng(4.5565697,-75.6596845),// Se continúa por 17 aceras hasta llegar al desnivel por entrada del primer parqueadero de la biblioteca
-                new LatLng(4.5565554,-75.6597871),//El desnivel termina en
-                new LatLng(4.5565139,-75.6598236),//Camina por 21 aceras y se encuentra un desnivel por el segundo parqueadero de la biblioteca
-                new LatLng(4.5564454,-75.6599095),//El desnivel termina en
-                new LatLng(4.5564083,-75.6599665),//Sigue caminando  hasta que ya se encuentra las escaleras de la entrada de ingeniería, las cuales estan en
-                new LatLng(4.5562205,-75.6602367),//Pero sigue derecho hasta
-                new LatLng(4.5561025,-75.6603852),//Donde gira unos 100° y se encuentra con un desnivel
-                new LatLng(4.5560962,-75.6602427),//y continúa por la acera podotactil hasta la entrada de ing
-                new LatLng(4.5560932,-75.6601713)));
+    private void showmarkers(GoogleMap googleMap,LatLng myLocation){
+        // Crea la ruta de navegación inicial
+        Polyline Ruta1 = googleMap.addPolyline(marker.lineRoute(myLocation));
+        // Cambia el color de la ruta a negro
         Ruta1.setColor(COLOR_BLACK_ARGB);
-        Ruta1.setJointType(JointType.BEVEL);
-        googleMap.addMarker(new MarkerOptions().position(porteria).title("Portería 2 de la Universidad del Quindío"));
-        googleMap.addMarker(new MarkerOptions().position(ingenieria).title("Facultad de ingeniería"));
-        googleMap.addMarker(new MarkerOptions().position(escaleras).title("Escaleras"));
-        googleMap.addMarker(new MarkerOptions().position(biblioteca).title("Biblioteca"));
-        googleMap.addMarker(new MarkerOptions().position(medicina).title("Facultad de medicina"));
-        googleMap.addMarker(new MarkerOptions().position(maria).title("Laboratorio al aire libre Maria Cano"));
+        // Agrega los marcadores de los punto estrategicos de la ruta porteria-ingeniería
+        googleMap = marker.addMarkers(googleMap);
     }
 
 
@@ -270,4 +258,19 @@ public class RoutesFragment extends Fragment implements LocationListener {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (parent.getId() == R.id.options){
+            String ruta_selected2 = parent.getItemAtPosition(position).toString();
+            if (!ruta_selected2.equals("DALE CLICK PARA ELEGIR UNA DE LAS RUTAS")) {
+                ruta_selected = ruta_selected2;
+                Toast.makeText(requireContext(), ruta_selected, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
