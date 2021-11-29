@@ -25,25 +25,14 @@ public class line {
     public final LatLng capilla = new LatLng(4.55642, -75.65933);
     public final LatLng escaleras = new LatLng(4.55630, -75.65995);
     public final LatLng maria = new LatLng(4.5564872, -75.6593398);
-    public PolylineOptions lineRoute(LatLng myLocation ){
-         PolylineOptions Ruta1 = new PolylineOptions().add(
-                 myLocation,
-                new LatLng(4.556286,-75.658436),//porteria//De la portería se sigue recto hasta encontrar un desnivel
-                new LatLng(4.556307,-75.658565),//Continúa unos 8pasos/4m y sube una pequeña rampa para empezar la acera podotáctil en la cual continúa hasta el segundo desnivel terminando de pasar por F. Medicina
-                new LatLng(4.5564818,-75.6591256),//del desnivel 2 son unos 2.5m y se retoma la acera al subir una pequeña rampa, hasta que justo frente a las escalera de mariacano se llega a un punto de giro.
-                new LatLng(4.5564872,-75.6593398),//se gira hacia la izquiera y se avanza 5 baldosas y se retoma a el camino al girar a la derecha hasta llegar al punto de giro para rodear la biblioteca, este punto queda en
-                new LatLng(4.5565437,-75.6595571),//Se gira hacia la derecha por 10 aceras y se retoma hacia la izquierda hasta llegar a CRAI
-                new LatLng(4.5565694,-75.6596335),// Se encuentra un pequeño desnivel en
-                new LatLng(4.5565697,-75.6596845),// Se continúa por 17 aceras hasta llegar al desnivel por entrada del primer parqueadero de la biblioteca
-                new LatLng(4.5565554,-75.6597871),//El desnivel termina en
-                new LatLng(4.5565139,-75.6598236),//Camina por 21 aceras y se encuentra un desnivel por el segundo parqueadero de la biblioteca
-                new LatLng(4.5564454,-75.6599095),//El desnivel termina en
-                new LatLng(4.5564083,-75.6599665),//Sigue caminando  hasta que ya se encuentra las escaleras de la entrada de ingeniería, las cuales estan en
-                new LatLng(4.5562205,-75.6602367),//Pero sigue derecho hasta
-                new LatLng(4.5561025,-75.6603852),//Donde gira unos 100° y se encuentra con un desnivel
-                new LatLng(4.5560962,-75.6602427),//y continúa por la acera podotactil hasta la entrada de ing
-                new LatLng(4.5560932,-75.6601713));
-        return Ruta1;
+    public PolylineOptions lineRoute(LatLng myLocation, int stations){
+        if (stations == 1) {
+            PolylineOptions Ruta1 = new PolylineOptions().add(myLocation,cajero,medicina,biblioteca,escaleras,ingenieria);
+            return Ruta1;
+        }else{
+            PolylineOptions Ruta1 = new PolylineOptions().add(myLocation,porteria,cajero,medicina,biblioteca,escaleras,ingenieria);
+            return Ruta1;
+        }
     }
     public GoogleMap addMarkers(GoogleMap googleMap){
         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_porteria)).position(porteria).title("Portería 2 de la Universidad del Quindío"));

@@ -12,6 +12,7 @@ import androidx.core.util.PatternsCompat
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap
 import com.example.horusmap10.databinding.FragmentEditProfileBinding
+
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
