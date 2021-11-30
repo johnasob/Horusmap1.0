@@ -124,7 +124,7 @@
     <string name="navegation_out">Navegación Exterior</string>
     <string name="choice_route">Escoje una ruta</string>
     <string-array name="routes">
-        <item>  *   Porteria a Facultad de ingenieria</item>
-        <item>  *   Facultad de ingenieroa a porteria </item>
+        <item>Porteria a Facultad de ingenieria</item>
+        <item>Facultad de ingenieria a porteria</item>
     </string-array>
 </resources>

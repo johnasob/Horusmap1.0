@@ -47,6 +47,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     View vista;
     Activity actividad;
     Context context;
+    int mostrador = 0;
     private FragmentRoutesBinding _binding;
     private String ruta_selected;
     private AutoCompleteTextView spinner;
@@ -68,7 +69,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private final LatLng capilla = new LatLng(4.55642, -75.65933);
     private final LatLng escaleras = new LatLng(4.55630, -75.65995);
     private final LatLng maria = new LatLng(4.5564872, -75.6593398);
-    public LatLng myPosition = new LatLng(4.5557, -75.6573);
+    public LatLng myPosition = new LatLng(4.5563, -75.6584);
     public int stations = 0;
     private GoogleMap mMap;
     private line marker = new line(mMap);
@@ -101,13 +102,8 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition,20),1500,null);
                     mMap.getUiSettings().setZoomControlsEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    Toast.makeText(requireContext(), _binding.options.getText(), Toast.LENGTH_SHORT).show();
-                    if (_binding.options.getTouchables().isEmpty()){
-                        Toast.makeText(requireContext(), "vació", Toast.LENGTH_SHORT).show();
-                    }
+                    choiseOption();
                     //closerPoint(myPosition);
-
-
                 }
             };
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
@@ -186,33 +182,72 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
 
     private void creatRoutePorteria(LatLng start){
-        Toast.makeText(requireContext(), "Esta entrando" , Toast.LENGTH_SHORT).show();
+
         //¿Donde estoy?
-      /*  closerPoint(myPosition);
+        //myPosition = porteria;
+        closerPoint(myPosition);
+        int distance=0;
         switch (closePoint.name()){
-            case "ingenieria":
-                stations = 0;
+           case "porteria":
+               distance = (int) getDistance(start, closePoint.coor());
+               if(mostrador == 0) {
+                   Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
+                   mostrador =1;
+               }
+               stations = 0;
+               break;
+           case "porteria exacto":
+               distance = (int) getDistance(myPosition, cajero);
+               if((mostrador == 0)||(mostrador ==2)) {
+                   Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
+                   mostrador =3;
+               }
+               stations = 1;
+               break;
+           case "cajero":
+               distance = (int) getDistance(myPosition, cajero);
+                   Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
+                   mostrador = 3;
+               stations = 1;
+               break;
+           case "cajero exacto":
+               distance = (int) getDistance(myPosition, biblioteca);
+               stations = 2;
+               break;
+               default:
+                   distance = (int) getDistance(myPosition, porteria);
+                   stations = 8;
+                   break;
+       }
+        switch (stations){
+            case 0:
+                showmarkers(mMap,myPosition);
+                if (distance >= 30) {
+                    if(distance == 1) {
+                        Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
+                                "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if(distance == 1) {
+                        sayRoute(distance, closePoint);
+                        Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
+                        mostrador =2;
+                    }
+                }
                 break;
-            default:
-                stations = 8;
-                Toast.makeText(requireContext(), "Estas demaciado lejos de la universidad", Toast.LENGTH_SHORT).show();
+            case 1:
+                //mMap.clear();
+                showmarkers(mMap,myPosition);
+                if (mostrador == 3) {
+                    Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con el cajero davivienda", Toast.LENGTH_SHORT).show();
+                }
         }
-        if (stations == 0) {
-            closerPoint(start);
-            int distance = (int) getDistance(start, closePoint.coor());
-            if (distance >= 30) {
-                Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
-                        "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
-            } else {
-                sayRoute(distance, closePoint);
-            }
-        }
-*/
+
+
 
     }
     private void sayRoute(int distance, Point closePoint){
         Toast.makeText(requireContext(), "Camina  "+distance+" metros y te encontraras con "+closePoint.name(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(requireContext(),"Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
     }
     private  void navegation(){
 
@@ -256,64 +291,81 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                 pos = i;
             }
         }
-        if(distance[pos] >= 50){
+        if(distance[pos] >= 80){
             pos = 7;
         }
         switch (pos){
             case PORTERIA:
-                closePoint = new Point(porteria,"porteria");
+                if(distance[pos] <=3){
+                    closePoint = new Point(porteria, "porteria exacto");
+                }else {
+                    closePoint = new Point(porteria, "porteria");
+                }
                 break;
             case CAJERO:
-                closePoint = new Point(cajero,"cajero");
+                if(distance[pos] <=3){
+                    closePoint = new Point(cajero, "cajero exacto");
+                }else {
+                    closePoint = new Point(cajero, "cajero");
+                }
                 break;
             case MEDICINA:
-               closePoint = new Point(medicina,"medicina");
+                if(distance[pos] <=3){
+                    closePoint = new Point(medicina, "medicina exacto");
+                }else {
+                    closePoint = new Point(medicina, "medicina");
+                }
                 break;
             case CAPILLA:
-                closePoint = new Point(capilla,"capilla");
+                if(distance[pos] <=3){
+                    closePoint = new Point(capilla, "capilla exacto");
+                }else {
+                    closePoint = new Point(capilla, "capilla");
+                }
                 break;
             case BIBLIOTECA:
-                closePoint = new Point(biblioteca,"biblioteca");
+                if(distance[pos] <=3){
+                    closePoint = new Point(biblioteca, "biblioteca exacto");
+                }else {
+                    closePoint = new Point(biblioteca, "biblioteca");
+                }
                 break;
             case ESCALERAS:
-                closePoint = new Point(escaleras,"escaleras");
+                if(distance[pos] <=3){
+                    closePoint = new Point(escaleras, "escaleras exacto");
+                }else {
+                    closePoint = new Point(escaleras, "escaleras");
+                }
                 break;
             case INGENIERIA:
-                closePoint = new Point(ingenieria,"ingenieria");
+                if(distance[pos] <=3){
+                    closePoint = new Point(ingenieria, "ingenieria exacto");
+                }else {
+                    closePoint = new Point(ingenieria, "ingenieria");
+                }
                 break;
             default:
                 LatLng nulo = new LatLng(0,0);
-                closePoint= new Point(nulo,"nulo");
+                closePoint= new Point(nulo,"estas demasiado lejos");
                 break;
+        }
+    }
+    private void choiseOption(){
+
+        if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
+             creatRoutePorteria(myPosition);
+        }
+        if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
+
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        /*String text = _binding.options.getText().toString();
-        Toast.makeText(requireContext(), text+ "es este", Toast.LENGTH_SHORT).show();
-        if (parent.getId() == R.id.options){
-            String ruta_selected2 = parent.getItemAtPosition(position).toString();
-            if (!ruta_selected2.equals("DALE CLICK PARA ELEGIR UNA DE LAS RUTAS")) {
-                ruta_selected = ruta_selected2;
-                Toast.makeText(requireContext(), "Usted ha seleccionado la ruta: "+ruta_selected, Toast.LENGTH_SHORT).show();
-                if ( ruta_selected =="  *   Porteria a Facultad de ingenieria"){
-                    finishPoint = ingenieria;
-                    creatRoutePorteria(myPosition);
-                }else if (ruta_selected == "  *   Facultad de ingenieroa a porteria "){
-                    finishPoint = porteria;
-                }else if (ruta_selected == "DALE CLICK PARA ELEGIR UNA DE LAS RUTAS"){
-                    Toast.makeText(requireContext(), "Seleccione una ruta", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }*/
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
 
