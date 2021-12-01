@@ -2,6 +2,7 @@ package com.example.horusmap10;
 
 import static android.content.Context.LOCATION_SERVICE;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,10 +37,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.Places;
-
-import java.math.MathContext;
-
 
 public class RoutesFragment extends Fragment implements LocationListener, AdapterView.OnItemSelectedListener {
 
@@ -131,6 +129,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
         _binding =FragmentRoutesBinding.inflate(getLayoutInflater());
         vista =  _binding.getRoot();
         Places.initialize(requireContext(),"AIzaSyDDkCY1iJggF0pzjtRnYN41TQSejTh3XQE");
+
         spinner = _binding.options;
         spinner.setOnItemSelectedListener(this);
         String[] route = vista.getResources().getStringArray(R.array.routes);
@@ -185,29 +184,24 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
         //¿Donde estoy?
         //myPosition = porteria;
+
+        Toast.makeText(requireContext(),"entro ",Toast.LENGTH_LONG).show();
         closerPoint(myPosition);
         int distance=0;
         switch (closePoint.name()){
            case "porteria":
                distance = (int) getDistance(start, closePoint.coor());
-               if(mostrador == 0) {
                    Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
-                   mostrador =1;
-               }
                stations = 0;
                break;
            case "porteria exacto":
                distance = (int) getDistance(myPosition, cajero);
-               if((mostrador == 0)||(mostrador ==2)) {
                    Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
-                   mostrador =3;
-               }
                stations = 1;
                break;
            case "cajero":
                distance = (int) getDistance(myPosition, cajero);
                    Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
-                   mostrador = 3;
                stations = 1;
                break;
            case "cajero exacto":
@@ -223,24 +217,17 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
             case 0:
                 showmarkers(mMap,myPosition);
                 if (distance >= 30) {
-                    if(distance == 1) {
                         Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
                                 "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
-                    }
                 } else {
-                    if(distance == 1) {
                         sayRoute(distance, closePoint);
                         Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
-                        mostrador =2;
-                    }
                 }
                 break;
             case 1:
                 //mMap.clear();
                 showmarkers(mMap,myPosition);
-                if (mostrador == 3) {
                     Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con el cajero davivienda", Toast.LENGTH_SHORT).show();
-                }
         }
 
 
@@ -353,7 +340,8 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private void choiseOption(){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-             creatRoutePorteria(myPosition);
+          Toast.makeText(requireContext(),"probandoo",Toast.LENGTH_LONG).show();
+          creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
 
