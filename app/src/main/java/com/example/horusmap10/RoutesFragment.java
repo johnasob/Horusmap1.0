@@ -184,14 +184,15 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
         //¿Donde estoy?
         //myPosition = porteria;
-
-        Toast.makeText(requireContext(),"entro ",Toast.LENGTH_LONG).show();
         closerPoint(myPosition);
         int distance=0;
         switch (closePoint.name()){
            case "porteria":
                distance = (int) getDistance(start, closePoint.coor());
+               if(mostrador==0) {
                    Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
+                   mostrador =1;
+               }
                stations = 0;
                break;
            case "porteria exacto":
@@ -340,7 +341,6 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private void choiseOption(){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-          Toast.makeText(requireContext(),"probandoo",Toast.LENGTH_LONG).show();
           creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
