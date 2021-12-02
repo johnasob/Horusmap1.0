@@ -183,48 +183,32 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
         //¿Donde estoy?
         myPosition = new LatLng(4.5565,-75.6595);
-        mostrador=4;
         closerPoint(myPosition);
         int distance=0;
         switch (closePoint.name()){
            case "porteria":
                distance = (int) getDistance(start, closePoint.coor());
-               if(mostrador==0) {
-                   Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
-                   mostrador =1;
-               }
+               Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
                stations = 0;
                break;
            case "porteria exacto":
                distance = (int) getDistance(myPosition, biblioteca);
-               if((mostrador==0)||(mostrador==2)) {
-                   Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
-                   mostrador=3;
-               }
+               Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
                    stations = 1;
                break;
            case "cajero":
                distance = (int) getDistance(myPosition, cajero);
-               if(mostrador==4) {
-                   Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
-                   mostrador=5;
-               }
+               Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
                stations = 2;
                break;
            case "cajero exacto":
                distance = (int) getDistance(myPosition, biblioteca);
-               if(mostrador==6){
-                   Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
-                   mostrador=7;
-               }
+               Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                stations = 2;
                break;
             case "biblioteca":
                 distance=(int)getDistance(myPosition,biblioteca);
-                if(mostrador==4){
-                    Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
-                    mostrador=5;
-                }
+                Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 stations=2;
                 break;
                default:
@@ -236,40 +220,25 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
             case 0:
                 showmarkers(mMap,myPosition);
                 if (distance >= 30) {
-                    if(mostrador==1) {
-                        Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
+                    Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
                                 "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
-                        mostrador=2;
-                    }
                 } else {
-                    if(mostrador==1) {
-                        sayRoute(distance, closePoint);
-                        Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
-                        mostrador=2;
-                    }
+                    sayRoute(distance, closePoint);
+                    Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
                 }
                 break;
             case 1:
                 //mMap.clear();
                 showmarkers(mMap,myPosition);
-                if(mostrador==3) {
-                    Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada de la biblioteca", Toast.LENGTH_SHORT).show();
-                    mostrador=4;
-                }
+                Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada de la biblioteca", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 showmarkers(mMap,myPosition);
-                if(mostrador==5||mostrador==7) {
-                    Toast.makeText(requireContext(), "estas a: " + distance + " metros de la entrada a la facultad de medicina", Toast.LENGTH_SHORT).show();
-                    mostrador=8;
-                }
+                Toast.makeText(requireContext(), "estas a: " + distance + " metros de la entrada a la facultad de medicina", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 showmarkers(mMap,myPosition);
-                if(mostrador==4){
-                    Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
-                    mostrador=5;
-                }
+                Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -385,6 +354,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
             if(mostrador==0){
                 Toast.makeText(requireContext(),"Has seleccionado la ruta: Porteria a Facultad de ingenieria",Toast.LENGTH_LONG).show();
+                mostrador=1;
             }
          creatRoutePorteria(myPosition);
         }
