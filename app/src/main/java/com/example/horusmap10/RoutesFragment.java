@@ -129,7 +129,6 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
         _binding =FragmentRoutesBinding.inflate(getLayoutInflater());
         vista =  _binding.getRoot();
         Places.initialize(requireContext(),"AIzaSyDDkCY1iJggF0pzjtRnYN41TQSejTh3XQE");
-
         spinner = _binding.options;
         spinner.setOnItemSelectedListener(this);
         String[] route = vista.getResources().getStringArray(R.array.routes);
@@ -183,7 +182,8 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private void creatRoutePorteria(LatLng start){
 
         //¿Donde estoy?
-        //myPosition = porteria;
+        myPosition = new LatLng(4.5565,-75.6595);
+        mostrador=4;
         closerPoint(myPosition);
         int distance=0;
         switch (closePoint.name()){
@@ -196,19 +196,37 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                stations = 0;
                break;
            case "porteria exacto":
-               distance = (int) getDistance(myPosition, cajero);
+               distance = (int) getDistance(myPosition, biblioteca);
+               if((mostrador==0)||(mostrador==2)) {
                    Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
-               stations = 1;
+                   mostrador=3;
+               }
+                   stations = 1;
                break;
            case "cajero":
                distance = (int) getDistance(myPosition, cajero);
-                   Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
-               stations = 1;
+               if(mostrador==4) {
+                   Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
+                   mostrador=5;
+               }
+               stations = 2;
                break;
            case "cajero exacto":
                distance = (int) getDistance(myPosition, biblioteca);
+               if(mostrador==6){
+                   Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                   mostrador=7;
+               }
                stations = 2;
                break;
+            case "biblioteca":
+                distance=(int)getDistance(myPosition,biblioteca);
+                if(mostrador==4){
+                    Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                    mostrador=5;
+                }
+                stations=2;
+                break;
                default:
                    distance = (int) getDistance(myPosition, porteria);
                    stations = 8;
@@ -218,17 +236,41 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
             case 0:
                 showmarkers(mMap,myPosition);
                 if (distance >= 30) {
+                    if(mostrador==1) {
                         Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
                                 "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
+                        mostrador=2;
+                    }
                 } else {
+                    if(mostrador==1) {
                         sayRoute(distance, closePoint);
                         Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
+                        mostrador=2;
+                    }
                 }
                 break;
             case 1:
                 //mMap.clear();
                 showmarkers(mMap,myPosition);
-                    Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con el cajero davivienda", Toast.LENGTH_SHORT).show();
+                if(mostrador==3) {
+                    Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada de la biblioteca", Toast.LENGTH_SHORT).show();
+                    mostrador=4;
+                }
+                break;
+            case 2:
+                showmarkers(mMap,myPosition);
+                if(mostrador==5||mostrador==7) {
+                    Toast.makeText(requireContext(), "estas a: " + distance + " metros de la entrada a la facultad de medicina", Toast.LENGTH_SHORT).show();
+                    mostrador=8;
+                }
+                break;
+            case 3:
+                showmarkers(mMap,myPosition);
+                if(mostrador==4){
+                    Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
+                    mostrador=5;
+                }
+                break;
         }
 
 
@@ -341,7 +383,10 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private void choiseOption(){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-          creatRoutePorteria(myPosition);
+            if(mostrador==0){
+                Toast.makeText(requireContext(),"Has seleccionado la ruta: Porteria a Facultad de ingenieria",Toast.LENGTH_LONG).show();
+            }
+         creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
 
