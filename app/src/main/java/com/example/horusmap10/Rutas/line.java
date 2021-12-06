@@ -1,5 +1,10 @@
 package com.example.horusmap10.Rutas;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.horusmap10.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -26,13 +31,31 @@ public class line {
     public final LatLng escaleras = new LatLng(4.55630, -75.65995);
     public final LatLng maria = new LatLng(4.5564872, -75.6593398);
     public PolylineOptions lineRoute(LatLng myLocation, int stations){
-        if (stations == 1) {
-            PolylineOptions Ruta1 = new PolylineOptions().add(myLocation,cajero,medicina,biblioteca,escaleras,ingenieria);
-            return Ruta1;
-        }else{
-            PolylineOptions Ruta1 = new PolylineOptions().add(myLocation,porteria,cajero,medicina,biblioteca,escaleras,ingenieria);
-            return Ruta1;
+        PolylineOptions Ruta1;
+        switch (stations){
+            case 0:
+               Ruta1 = new PolylineOptions().add(myLocation,porteria,cajero,medicina,biblioteca,escaleras,ingenieria);
+               break;
+            case 1:
+               Ruta1 = new PolylineOptions().add(myLocation,cajero,medicina,biblioteca,escaleras,ingenieria);
+               break;
+            case 2:
+                Ruta1 = new PolylineOptions().add(myLocation,medicina,biblioteca,escaleras,ingenieria);
+                break;
+            case 3:
+                Ruta1 = new PolylineOptions().add(myLocation,biblioteca,escaleras,ingenieria);
+                break;
+            case 4:
+                Ruta1 = new PolylineOptions().add(myLocation,escaleras,ingenieria);
+                break;
+            case 5:
+               Ruta1 = new PolylineOptions().add(myLocation,ingenieria);
+                break;
+            default:
+                Ruta1 = new PolylineOptions().add(porteria,cajero,medicina,biblioteca,escaleras,ingenieria);
+                break;
         }
+         return Ruta1;
     }
     public GoogleMap addMarkers(GoogleMap googleMap){
         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_porteria)).position(porteria).title("Portería 2 de la Universidad del Quindío"));

@@ -3,6 +3,8 @@ package com.example.horusmap10;
 import static android.content.Context.LOCATION_SERVICE;
 
 
+import static java.lang.Thread.sleep;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -67,7 +69,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private final LatLng capilla = new LatLng(4.55642, -75.65933);
     private final LatLng escaleras = new LatLng(4.55630, -75.65995);
     private final LatLng maria = new LatLng(4.5564872, -75.6593398);
-    public LatLng myPosition = new LatLng(4.5563, -75.6584);
+    public LatLng myPosition =new LatLng(4.55638, -75.65871);
     public int stations = 0;
     private GoogleMap mMap;
     private line marker = new line(mMap);
@@ -94,6 +96,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                 @Override
                 public void onLocationChanged(Location location) {
                     mMap.clear();
+                    mMap = marker.addMarkers(mMap);
                     //position = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
                     mMap.addMarker(new MarkerOptions().position(myPosition).title("mi posición"));
@@ -101,7 +104,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                     mMap.getUiSettings().setZoomControlsEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
                     choiseOption();
-                    //closerPoint(myPosition);
+
                 }
             };
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
@@ -168,12 +171,11 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     }
 
     /**Metodo que muestra los marcadores y el camino predeterminado de la porteria 2 a ingeniería*/
-    private void showmarkers(GoogleMap googleMap,LatLng myLocation){
+    private void showmarkers(GoogleMap googleMap,LatLng myLocation,int stations){
         // Crea la ruta de navegación inicial
         Polyline Ruta1 = googleMap.addPolyline(marker.lineRoute(myLocation,stations));
         // Cambia el color de la ruta a negro
         Ruta1.setColor(COLOR_BLACK_ARGB);
-        // Agrega los marcadores de los punto estrategicos de la ruta porteria-ingeniería
         googleMap = marker.addMarkers(googleMap);
     }
 
@@ -181,8 +183,6 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
     private void creatRoutePorteria(LatLng start){
 
-        //¿Donde estoy?
-        myPosition = new LatLng(4.5565,-75.6595);
         closerPoint(myPosition);
         int distance=0;
         switch (closePoint.name()){
@@ -199,26 +199,61 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
            case "cajero":
                distance = (int) getDistance(myPosition, cajero);
                Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
-               stations = 2;
+               stations = 1;
                break;
            case "cajero exacto":
                distance = (int) getDistance(myPosition, biblioteca);
                Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                stations = 2;
                break;
+            case "medicina":
+                Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                distance=(int) getDistance(myPosition, biblioteca);
+                stations=2;
+                break;
+            case "medicina exacto":
+                Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(),"continua caminando para llegar a la biblioteca",Toast.LENGTH_LONG).show();
+                distance=(int) getDistance(myPosition, biblioteca);
+                stations =3;
+                break;
             case "biblioteca":
                 distance=(int)getDistance(myPosition,biblioteca);
                 Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
-                stations=2;
+                stations=3;
+                break;
+            case "biblioteca exacto":
+                distance=(int)getDistance(myPosition,escaleras);
+                Toast.makeText(requireContext(), "Haz llegado a la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                stations=4;
+                break;
+            case "escaleras":
+                distance=(int)getDistance(myPosition,escaleras);
+                Toast.makeText(requireContext(), "Estas llegando a las escaleras cercanas a al bloque de ingenieria", Toast.LENGTH_SHORT).show();
+                stations=4;
+                break;
+            case "escaleras exacto":
+                distance=(int)getDistance(myPosition,ingenieria);
+                Toast.makeText(requireContext(), "Haz llegado a las escaleras de ingenieria", Toast.LENGTH_SHORT).show();
+                stations=5;
+                break;
+            case "ingenieria":
+                distance=(int)getDistance(myPosition,ingenieria);
+                stations=5;
+                break;
+            case "ingenieria exacto":
+                Toast.makeText(requireContext(), "Haz llegado a la facultad de ingenieria", Toast.LENGTH_SHORT).show();
+                stations=6;
                 break;
                default:
                    distance = (int) getDistance(myPosition, porteria);
                    stations = 8;
                    break;
        }
-        switch (stations){
+       //showmarkers(mMap,myPosition,stations);
+
+       switch (stations){
             case 0:
-                showmarkers(mMap,myPosition);
                 if (distance >= 30) {
                     Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
                                 "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
@@ -226,20 +261,34 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                     sayRoute(distance, closePoint);
                     Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
                 }
+                moment();
                 break;
             case 1:
                 //mMap.clear();
-                showmarkers(mMap,myPosition);
-                Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada de la biblioteca", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada al bloque de salud", Toast.LENGTH_SHORT).show();
+                moment();
                 break;
             case 2:
-                showmarkers(mMap,myPosition);
-                Toast.makeText(requireContext(), "estas a: " + distance + " metros de la entrada a la facultad de medicina", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca, pasando el bloque de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
+                moment();
                 break;
             case 3:
-                showmarkers(mMap,myPosition);
                 Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
+                moment();
                 break;
+           case 4:
+               Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
+                       "del bloque de ingenieria", Toast.LENGTH_SHORT).show();
+               moment();
+               break;
+           case 5:
+               Toast.makeText(requireContext(), "En :"+distance+" metros, estaras llegando a la entrada de la facultad de ingenieria", Toast.LENGTH_SHORT).show();
+               moment();
+               break;
+           case 6:
+               Toast.makeText(requireContext()," Tu recorrido a terminado",Toast.LENGTH_LONG).show();
+               moment();
+               break;
         }
 
 
@@ -247,15 +296,6 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     }
     private void sayRoute(int distance, Point closePoint){
         Toast.makeText(requireContext(), "Camina  "+distance+" metros y te encontraras con "+closePoint.name(), Toast.LENGTH_SHORT).show();
-    }
-    private  void navegation(){
-
-    }
-    private void searchProblems(){
-
-    }
-    private void closeTofar(LatLng start, LatLng finishPoint){
-
     }
     /**Metodo que encuentra la distancia entre dos coordenadas*/
     private double getDistance(LatLng start, LatLng finish){
@@ -284,7 +324,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
         double min = distance[0];
         int pos = 0;
 
-        for (int i = 0; i < distance.length-1; i++) {
+        for (int i = 0; i < distance.length; i++) {
             if (distance[i] <= min) {
                 min = distance[i];
                 pos = i;
@@ -352,10 +392,8 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private void choiseOption(){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-            if(mostrador==0){
                 Toast.makeText(requireContext(),"Has seleccionado la ruta: Porteria a Facultad de ingenieria",Toast.LENGTH_LONG).show();
                 mostrador=1;
-            }
          creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
@@ -369,6 +407,13 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+    public void moment(){
+        try {
+            sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
