@@ -13,6 +13,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,14 +71,15 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private final LatLng capilla = new LatLng(4.55642, -75.65933);
     private final LatLng escaleras = new LatLng(4.55630, -75.65995);
     private final LatLng maria = new LatLng(4.5564872, -75.6593398);
-    public LatLng myPosition =new LatLng(4.55638, -75.65871);
+    public LatLng myPosition = new LatLng(4.556286, -75.658436);
     public int stations = 0;
     private GoogleMap mMap;
     private line marker = new line(mMap);
+    private LocationManager location;
 
 
     public void onLocationChanged(Location location) {
-        //position = new LatLng(location.getLatitude(), location.getLongitude());
+        //myPosition = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -96,14 +99,28 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                 @Override
                 public void onLocationChanged(Location location) {
                     mMap.clear();
+                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    mMap.setMyLocationEnabled(true);
+                    myPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap = marker.addMarkers(mMap);
-                    //position = new LatLng(location.getLatitude(), location.getLongitude());
+
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
                     mMap.addMarker(new MarkerOptions().position(myPosition).title("mi posición"));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition,20),1500,null);
-                    mMap.getUiSettings().setZoomControlsEnabled(true);
-                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    choiseOption();
+                    choiseOption(myPosition);
 
                 }
             };
@@ -185,6 +202,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
 
         closerPoint(myPosition);
         int distance=0;
+        int distanceFinish = (int)getDistance(myPosition,ingenieria);
         switch (closePoint.name()){
            case "porteria":
                distance = (int) getDistance(start, closePoint.coor());
@@ -203,6 +221,8 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                break;
            case "cajero exacto":
                distance = (int) getDistance(myPosition, biblioteca);
+               Polyline Ruta1;
+               Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,medicina,biblioteca,escaleras,ingenieria));
                Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                stations = 2;
                break;
@@ -250,7 +270,6 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                    stations = 8;
                    break;
        }
-       //showmarkers(mMap,myPosition,stations);
 
        switch (stations){
             case 0:
@@ -261,6 +280,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                     sayRoute(distance, closePoint);
                     Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
                 }
+                showmarkers(mMap,myPosition,stations);
                 moment();
                 break;
             case 1:
@@ -270,19 +290,23 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                 break;
             case 2:
                 Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca, pasando el bloque de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
+                showmarkers(mMap,myPosition,stations);
                 moment();
                 break;
             case 3:
                 Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
+                showmarkers(mMap,myPosition,stations);
                 moment();
                 break;
            case 4:
                Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
                        "del bloque de ingenieria", Toast.LENGTH_SHORT).show();
+               showmarkers(mMap,myPosition,stations);
                moment();
                break;
            case 5:
                Toast.makeText(requireContext(), "En :"+distance+" metros, estaras llegando a la entrada de la facultad de ingenieria", Toast.LENGTH_SHORT).show();
+               showmarkers(mMap,myPosition,stations);
                moment();
                break;
            case 6:
@@ -290,7 +314,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                moment();
                break;
         }
-
+        Toast.makeText(requireContext(), "Usted se encuentra a: "+distanceFinish+" metros del bloque de Ingeniería", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -389,12 +413,11 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                 break;
         }
     }
-    private void choiseOption(){
+    private void choiseOption(LatLng myPosition){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
                 Toast.makeText(requireContext(),"Has seleccionado la ruta: Porteria a Facultad de ingenieria",Toast.LENGTH_LONG).show();
-                mostrador=1;
-         creatRoutePorteria(myPosition);
+                creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
 
@@ -409,11 +432,7 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     public void onNothingSelected(AdapterView<?> parent) {
     }
     public void moment(){
-        try {
-            sleep(20000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
