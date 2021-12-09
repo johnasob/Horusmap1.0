@@ -201,27 +201,31 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
     private void creatRoutePorteria(LatLng start){
 
         closerPoint(myPosition);
+        Polyline Ruta1;
         int distance=0;
         int distanceFinish = (int)getDistance(myPosition,ingenieria);
         switch (closePoint.name()){
            case "porteria":
                distance = (int) getDistance(start, closePoint.coor());
+               Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,porteria,medicina,biblioteca,escaleras,ingenieria));
                Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
                stations = 0;
                break;
            case "porteria exacto":
                distance = (int) getDistance(myPosition, biblioteca);
+               Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,medicina,biblioteca,escaleras,ingenieria));
                Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
                    stations = 1;
                break;
            case "cajero":
                distance = (int) getDistance(myPosition, cajero);
+               Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,medicina,biblioteca,escaleras,ingenieria));
                Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
                stations = 1;
                break;
            case "cajero exacto":
                distance = (int) getDistance(myPosition, biblioteca);
-               Polyline Ruta1;
+
                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,medicina,biblioteca,escaleras,ingenieria));
                Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                stations = 2;
@@ -230,35 +234,42 @@ public class RoutesFragment extends Fragment implements LocationListener, Adapte
                 Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                 distance=(int) getDistance(myPosition, biblioteca);
                 stations=2;
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,biblioteca,escaleras,ingenieria));
                 break;
             case "medicina exacto":
                 Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                 Toast.makeText(requireContext(),"continua caminando para llegar a la biblioteca",Toast.LENGTH_LONG).show();
                 distance=(int) getDistance(myPosition, biblioteca);
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,biblioteca,escaleras,ingenieria));
                 stations =3;
                 break;
             case "biblioteca":
                 distance=(int)getDistance(myPosition,biblioteca);
                 Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,biblioteca,escaleras,ingenieria));
                 stations=3;
                 break;
             case "biblioteca exacto":
                 distance=(int)getDistance(myPosition,escaleras);
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,escaleras,ingenieria));
                 Toast.makeText(requireContext(), "Haz llegado a la biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 stations=4;
                 break;
             case "escaleras":
                 distance=(int)getDistance(myPosition,escaleras);
                 Toast.makeText(requireContext(), "Estas llegando a las escaleras cercanas a al bloque de ingenieria", Toast.LENGTH_SHORT).show();
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,escaleras,ingenieria));
                 stations=4;
                 break;
             case "escaleras exacto":
                 distance=(int)getDistance(myPosition,ingenieria);
                 Toast.makeText(requireContext(), "Haz llegado a las escaleras de ingenieria", Toast.LENGTH_SHORT).show();
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,ingenieria));
                 stations=5;
                 break;
             case "ingenieria":
                 distance=(int)getDistance(myPosition,ingenieria);
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,ingenieria));
                 stations=5;
                 break;
             case "ingenieria exacto":
