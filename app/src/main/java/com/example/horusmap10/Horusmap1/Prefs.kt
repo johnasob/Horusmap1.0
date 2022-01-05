@@ -9,12 +9,19 @@ class Prefs(val context: Context) {
         state.edit().putString("apikey",apikey).apply()
     }
     fun getIp():String{
-        return state.getString("ip","192.168.1.8:8080")!!
+        return state.getString("ip","192.168.43.3:8080")!!
     }
     fun getApikey():String{
         return state.getString("apikey","")!!
     }
     fun clearAll(){
         state.edit().clear().apply()
+    }
+
+    fun saveMostrador(mostrador: String){
+        state.edit().putString("mostrador",mostrador).apply()
+    }
+    fun getMostrador():String{
+        return state.getString("mostrador","")!!
     }
 }

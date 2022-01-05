@@ -22,14 +22,21 @@ public class line {
     public Polyline Ruta1;
     private static final int COLOR_BLACK_ARGB = 0xFD0000;
     private static final int PRIORITY_HIGH_ACCURACY = 100;
-    public final LatLng ingenieria = new LatLng(4.5560932, -75.6601713);
-    public final LatLng porteria = new LatLng(4.556286, -75.658436);
-    public final LatLng biblioteca = new LatLng(4.5565694, -75.6596335);
-    public final LatLng medicina = new LatLng(4.55646, -75.65904);
-    public final LatLng cajero = new LatLng(4.55638, -75.65871);
-    public final LatLng capilla = new LatLng(4.55642, -75.65933);
-    public final LatLng escaleras = new LatLng(4.55630, -75.65995);
-    public final LatLng maria = new LatLng(4.5564872, -75.6593398);
+    public static final LatLng ingenieria = new LatLng(4.5560932, -75.6601713);
+    public static final LatLng porteria = new LatLng(4.556286, -75.658436);
+    public static final LatLng biblioteca = new LatLng(4.5565694, -75.6596335);
+    public static final LatLng medicina = new LatLng(4.55646, -75.65904);
+    public static final LatLng cajero = new LatLng(4.55638, -75.65871);
+    public static final LatLng capilla = new LatLng(4.55642, -75.65933);
+    public static final LatLng escaleras = new LatLng(4.55630, -75.65995);
+    public static final LatLng maria = new LatLng(4.5564872, -75.6593398);
+    public static final int PORTERIA = 0;
+    public static final int CAJERO = 1;
+    public static final int MEDICINA = 2;
+    public static final int CAPILLA = 3;
+    public static final int BIBLIOTECA = 4;
+    public static final int ESCALERAS = 5;
+    public static final int INGENIERIA = 6;
     public PolylineOptions lineRoute(LatLng myLocation, int stations){
         PolylineOptions Ruta1;
         switch (stations){

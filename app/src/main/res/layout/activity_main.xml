@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_horusicon_round" />
+            app:srcCompat="@drawable/ic_horus_eye_edit" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/user_login"
