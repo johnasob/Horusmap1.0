@@ -80,6 +80,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private fun replaceFragment(fragment: Fragment){
         if(fragment !=null){
             val transition = supportFragmentManager.beginTransaction()
+            transition.addToBackStack(null)
             transition.replace(R.id.fragmentContainerView, fragment)
             transition.commit()
 

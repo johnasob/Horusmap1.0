@@ -63,6 +63,19 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         public void onMapReady(@NonNull GoogleMap googleMap) {
 
             mMap = googleMap;
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -72,23 +85,10 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 @Override
                 public void onLocationChanged(Location location) {
                     mMap.clear();
-
-                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     myPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     // se accede a las opciones de ubicación
-                    mMap.getUiSettings().setZoomControlsEnabled(true);
-                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    mMap.setMyLocationEnabled(true);
+
+
                     mMap = marker.addMarkers(mMap);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
                     mMap.addMarker(new MarkerOptions().position(myPosition).title("mi posición"));
@@ -252,20 +252,16 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     private void choiseOption(LatLng myPosition){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-            if (prefs.getMostrador()!="vacio") {
-                Toast.makeText(requireContext(), "Has seleccionado la ruta: Porteria a Facultad de ingenieria", Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(), "Has seleccionado la ruta: Porteria a Facultad de ingenieria", Toast.LENGTH_LONG).show();
                 mostrador = "porteria";
                 prefs.saveMostrador(mostrador);
-            }
 
             creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
-            if(prefs.getMostrador()!="vacio") {
-                Toast.makeText(requireContext(), "Has seleccionado la ruta: Facultad de ingeniería a Porteria", Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(), "Has seleccionado la ruta: Facultad de ingeniería a Porteria", Toast.LENGTH_LONG).show();
                 mostrador = "ingenieria";
                 prefs.saveMostrador(mostrador);
-            }
             creatRouteIngenieria(myPosition);
         }
     }
@@ -280,62 +276,62 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case "porteria":
                 distance = (int) getDistance(start, closePoint.coor());
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
                 stations = 0;
                 break;
             case "porteria exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
                 stations = 1;
                 break;
             case "cajero":
                 distance = (int) getDistance(myPosition, line.cajero);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
                 stations = 1;
                 break;
             case "cajero exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
 
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                 stations = 2;
                 break;
             case "medicina":
-                Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
                 distance=(int) getDistance(myPosition, line.biblioteca);
                 stations=2;
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 break;
             case "medicina exacto":
-                Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
-                Toast.makeText(requireContext(),"continua caminando para llegar a la biblioteca",Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(),"continua caminando para llegar a la biblioteca",Toast.LENGTH_LONG).show();
                 distance=(int) getDistance(myPosition, line.biblioteca);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 stations =3;
                 break;
             case "biblioteca":
                 distance=(int)getDistance(myPosition,line.biblioteca);
-                Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 stations=3;
                 break;
             case "biblioteca exacto":
                 distance=(int)getDistance(myPosition,line.escaleras);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.ingenieria));
-                Toast.makeText(requireContext(), "Haz llegado a la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "Haz llegado a la biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 stations=4;
                 break;
             case "escaleras":
                 distance=(int)getDistance(myPosition,line.escaleras);
-                Toast.makeText(requireContext(), "Estas llegando a las escaleras cercanas a al bloque de ingenieria", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "Estas llegando a las escaleras cercanas a al bloque de ingenieria", Toast.LENGTH_SHORT).show();
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.ingenieria));
                 stations=4;
                 break;
             case "escaleras exacto":
                 distance=(int)getDistance(myPosition,line.ingenieria);
-                Toast.makeText(requireContext(), "Haz llegado a las escaleras de ingenieria", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "Haz llegado a las escaleras de ingenieria", Toast.LENGTH_SHORT).show();
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.ingenieria));
                 stations=5;
                 break;
@@ -345,7 +341,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 stations=5;
                 break;
             case "ingenieria exacto":
-                Toast.makeText(requireContext(), "Haz llegado a la facultad de ingenieria", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "Haz llegado a la facultad de ingenieria", Toast.LENGTH_SHORT).show();
                 stations=6;
                 break;
             default:
@@ -376,7 +372,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 break;
             case 4:
                 Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
-                        "del bloque de ingenieria", Toast.LENGTH_SHORT).show();
+                       "del bloque de ingenieria", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
                 Toast.makeText(requireContext(), "En :"+distance+" metros, estaras llegando a la entrada de la facultad de ingenieria", Toast.LENGTH_SHORT).show();
@@ -390,7 +386,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(requireContext(),"otra excepcion",Toast.LENGTH_LONG).show();
                 break;
         }
-        Toast.makeText(requireContext(), "Usted se encuentra a: "+distanceFinish+" metros del bloque de Ingeniería", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Usted se encuentra a: "+distanceFinish+" metros del bloque de Ingeniería", Toast.LENGTH_LONG).show();
 
 
     }
@@ -451,8 +447,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 Toast.makeText(requireContext(), "Te encuentras muy cerca de la facultad de salud", Toast.LENGTH_SHORT).show();
                 stations=4;
                 break;
-            case "cajero":
-                distance=(int)getDistance(myPosition,line.escaleras);
+            case "cajero": distance=(int)getDistance(myPosition,line.escaleras);
                 Toast.makeText(requireContext(), "Pronto llegaras al cajero contigua a la entrada principal de la facultad de salud", Toast.LENGTH_SHORT).show();
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria));
                 stations=4;
@@ -471,7 +466,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 break;
             case "porteria exacto":
                 Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad" +
-                        "del Quindío", Toast.LENGTH_SHORT).show();
+                       "del Quindío", Toast.LENGTH_SHORT).show();
                 stations=6;
                 break;
             default:
@@ -484,7 +479,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case 0:
                 if (distance >= 30) {
                     Toast.makeText(requireContext(), "Debes acercarte más a la entrada principal de la facultad de ingeniería" +
-                            "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
+                           "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
                 } else {
                     sayRoute(distance, closePoint);
                     Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es un camino peatonal y vehicular", Toast.LENGTH_LONG).show();
@@ -493,14 +488,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case 1:
                 //mMap.clear();
                 Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con las escaleras cercanas al la" +
-                        "biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                       "biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegaras a la facultad de ciencias de la " +
-                        "salud", Toast.LENGTH_SHORT).show();
+                       "salud", Toast.LENGTH_SHORT).show();
                 break;
             case 4:
                 Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a la entrada " +
