@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
+import com.example.horusmap10.SettingsFragment.ComunicadorFragments3
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_start_route.*
@@ -18,7 +19,8 @@ import java.util.*
 import android.widget.Toast.makeText as makeText1
 
 
-class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2{
+class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,
+    ComunicadorFragments3{
     private val  RQ_SPEECH_REC = 102
     private lateinit var restClient: RESTClient
     private lateinit var thisActivity: StartRouteActivity
@@ -29,6 +31,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private val settingsFragment = SettingsFragment()
     private val profileFragment = ProfileFragment()
     private val editProfileFragment = EditProfileFragment()
+    private val contrastFragment = ContrastFragment()
     private var navegation: BottomNavigationView? = null
     private var microfono: FloatingActionButton? = null
     //lateinit var back: Button
@@ -184,6 +187,12 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     override fun devolverDato2(dato: Boolean) {
         if(dato==true){
             replaceFragment(profileFragment)
+        }
+    }
+
+    override fun devolverDato3(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(contrastFragment)
         }
     }
 

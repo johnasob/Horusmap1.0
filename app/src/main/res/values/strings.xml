@@ -14,20 +14,16 @@
     <string name="valid_password"><u>Las contraseñas coinciden</u></string>
     <string name="invalid_password"><u>Las contraseñas no coinciden</u></string>
     <string name="terms_validate">Debes aceptar términos y condiciones</string>
-    <string name="lorem_text">El Lorem Ipsum fue concebido como un texto de relleno, formateado de una
-        cierta manera para permitir la presentación de elementos gráficos en documentos, sin necesidad
-        de una copia formal. El uso de Lorem Ipsum permite a los diseñadores reunir los diseños y la
-        forma del contenido antes de que el contenido se haya creado, dando al diseño y al proceso de
-        producción más libertad.
-        Se cree ampliamente que la historia de Lorem Ipsum se origina con Cicerón en el siglo I aC y su
-        texto De Finibus bonorum et malorum. Esta obra filosófica, también conocida como En los extremos
-        del bien y del mal, se dividió en cinco libros. El Lorem Ipsum que conocemos hoy se deriva de
-        partes del primer libro Liber Primus y su discusión sobre el hedonismo, cuyas palabras habían
-        sido alteradas, añadidas y eliminadas para convertirlas en un latín sin sentido e impropio. No
-        se sabe exactamente cuándo el texto recibió su forma tradicional actual. Sin embargo, las referencias
-        a la frase "Lorem Ipsum" se pueden encontrar en la Edición de la Biblioteca Clásica Loeb de 1914
-        del De Finibus en las secciones 32 y 33. Fue en esta edición del De Finibus en la que H. Rackman
-        tradujo el texto. El siguiente fragmento se selecciona de la sección 32</string>
+    <string name="lorem_text">La aplicación HorusMap es propiedad de Germán Osorio y John Anderson Solano. En esta página se establecen los términos
+        y condiciones bajo los cuales puedes usar nuestra aplicación y susservicios. Esta aplicación ofrece a los usuarios un servicio de orientación
+        dentro del campus de la Universidad del Quindío en unas rutas específicas.
+        El servicio, los diseños, el software, imagenes y texto son de libre utilización ya que creemos en el software libre.
+Nos reservamos el derecho de modificar estos términos de vez en cuando a nuestra entera discreción, si no estás de acuerdo con alguno de los términos y
+        condiciones no aceptes, no uses o accedas al contenido de la aplicación.
+La información recopilada (nombre de usuario, contraseña, correo electrónico y nivel de discapacidad visual) será usada unicamente para cuestiones de
+        seguridad de ingreso a la aplicación, de registro de los usuarios y no será difundida, ni vendida por ningún medio o ninguna razón.
+En caso de tener alguna duda con respecto a la utilización de la aplicación por favor contactarse al siguiente correo electrónico:
+SoporteHorusMap@gmail.com.</string>
     <string name="Logo_horus">TODO</string>
     <string name="finish_edit">Edición finalizada con exito</string>
     <string name="name"><u>Nombre de usuario</u></string>
@@ -123,6 +119,7 @@
     <string name="map">Navegación</string>
     <string name="navegation_out">Navegación Exterior</string>
     <string name="choice_route">Escoje una ruta</string>
+    <string name="title_terms">Terminos y condiciones</string>
     <string-array name="routes">
         <item>Porteria a Facultad de ingenieria</item>
         <item>Facultad de ingenieria a porteria</item>

@@ -47,7 +47,6 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     String mostrador = "vacio";
     private FragmentRoutesBinding _binding;
     private Point closePoint;
-    private String ruta_selected;
     private AutoCompleteTextView spinner;
     public LatLng myPosition = new LatLng(4.556286, -75.658436);
     public int stations = 0;
