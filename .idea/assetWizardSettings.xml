@@ -104,8 +104,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\ciego.png" />
-                                                <entry key="scalingPercent" value="53" />
+                                                <entry key="imagePath" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\horus-default.png" />
+                                                <entry key="scalingPercent" value="71" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -141,7 +141,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="outputName" value="ic_ciego" />
+                                      <entry key="outputName" value="ic_horus_default" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -354,7 +354,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/bookmark/baseline_bookmark_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/call/baseline_call_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -364,8 +364,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_marker_route" />
-                            <entry key="sourceFile" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\ic_artes.svg" />
+                            <entry key="outputName" value="ic_call" />
+                            <entry key="sourceFile" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\horus-grises.svg" />
                           </map>
                         </option>
                       </PersistentState>

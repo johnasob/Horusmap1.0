@@ -21,7 +21,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
     <application
         android:name=".Horusmap1.Horusmap"
         android:usesCleartextTraffic="true"

@@ -64,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_perfil" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_alert"
             android:layout_width="0dp"
             android:layout_height="90dp"
             android:layout_marginStart="18dp"
@@ -101,10 +101,10 @@
             app:iconTint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintTop_toBottomOf="@+id/button_alert" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button_sos"
             android:layout_width="0dp"
             android:layout_height="90dp"
             android:layout_marginStart="18dp"

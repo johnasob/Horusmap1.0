@@ -34,8 +34,15 @@ class SettingsFragment : Fragment() {
 
         val contrast: Button = requireView().findViewById(R.id.button_contrast)
         contrast.setOnClickListener {
-
             actividadContenedora!!.devolverDato3(true)
+        }
+        val alert: Button = requireView().findViewById(R.id.button_alert)
+        alert.setOnClickListener {
+            actividadContenedora!!.devolverDato5(true)
+        }
+        val sos: Button = requireView().findViewById(R.id.button_sos)
+        sos.setOnClickListener {
+            actividadContenedora!!.devolverDato9(true)
         }
 
     }
@@ -43,6 +50,9 @@ class SettingsFragment : Fragment() {
 
     interface ComunicadorFragments3 {
         fun devolverDato3(dato: Boolean)
+        fun devolverDato5(dato: Boolean)
+        fun devolverDato7(dato: Boolean)
+        fun devolverDato9(dato: Boolean)
     }
     private var actividadContenedora : ComunicadorFragments3? = null
 

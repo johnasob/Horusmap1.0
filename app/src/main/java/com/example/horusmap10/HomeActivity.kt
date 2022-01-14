@@ -2,11 +2,18 @@ package com.example.horusmap10
 
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.databinding.ActivityHomeBinding
 import java.util.*
@@ -48,8 +55,7 @@ class HomeActivity : AppCompatActivity() {
         }
         /**EMERGENCIA*/
         binding.emergencyButton.setOnClickListener {
-            val sos = Intent(this, SosActivity::class.java)
-            startActivity(sos)
+            requestPermission()
         }
         /**Reconocimiento de voz*/
         binding.micButton.setOnClickListener {
@@ -135,6 +141,35 @@ class HomeActivity : AppCompatActivity() {
             if (input == list6[i]) {
                 onDestroy()
             }
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    private fun requestPermission(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.CALL_PHONE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    call()
+                }
+                else -> requestPermissionLaucher.launch(android.Manifest.permission.CALL_PHONE)
+            }
+        }else{
+            call()
+        }
+    }
+    private fun call() {
+        startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:${getString(R.string.sos_number)}")))
+    }
+    private val requestPermissionLaucher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){ isGranted->
+        if(isGranted){
+            call()
+        }else{
+            Toast.makeText(this,"Necesitas conceder los permisos primero", Toast.LENGTH_SHORT).show()
         }
     }
 

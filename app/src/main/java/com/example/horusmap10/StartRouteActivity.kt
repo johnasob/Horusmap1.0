@@ -2,13 +2,19 @@ package com.example.horusmap10
 
 
 import RESTClient
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.SettingsFragment.ComunicadorFragments3
@@ -20,7 +26,7 @@ import android.widget.Toast.makeText as makeText1
 
 
 class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,
-    ComunicadorFragments3{
+    ComunicadorFragments3,ContrastFragment.ComunicadorFragments4,AlertFragment.ComunicadorFragments6{
     private val  RQ_SPEECH_REC = 102
     private lateinit var restClient: RESTClient
     private lateinit var thisActivity: StartRouteActivity
@@ -32,6 +38,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private val profileFragment = ProfileFragment()
     private val editProfileFragment = EditProfileFragment()
     private val contrastFragment = ContrastFragment()
+    private val alertFragment = AlertFragment()
     private var navegation: BottomNavigationView? = null
     private var microfono: FloatingActionButton? = null
     //lateinit var back: Button
@@ -193,6 +200,62 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     override fun devolverDato3(dato: Boolean) {
         if(dato==true){
             replaceFragment(contrastFragment)
+        }
+    }
+
+    override fun devolverDato4(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(settingsFragment)
+        }
+    }
+    override fun devolverDato5(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(alertFragment)
+        }
+    }
+    override fun devolverDato6(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(settingsFragment)
+        }
+    }
+    override fun devolverDato7(dato: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+
+    override fun devolverDato9(dato: Boolean) {
+        if(dato==true){
+
+            requestPermission()
+
+        }
+    }
+    @SuppressLint("ObsoleteSdkInt")
+    private fun requestPermission(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.CALL_PHONE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    call()
+                }
+                else -> requestPermissionLaucher.launch(android.Manifest.permission.CALL_PHONE)
+            }
+        }else{
+            call()
+        }
+    }
+    private fun call() {
+        startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:${getString(R.string.sos_number)}")))
+    }
+    private val requestPermissionLaucher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){ isGranted->
+        if(isGranted){
+            call()
+        }else{
+            Toast.makeText(this,"Necesitas conceder los permisos primero",Toast.LENGTH_SHORT).show()
         }
     }
 

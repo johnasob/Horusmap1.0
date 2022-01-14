@@ -1,14 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/greenhorus"
     tools:context=".ContrastFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="48dp"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="@font/quicksand_light"
+        android:text="GUARDAR"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:cornerRadius="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_gray" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/quicksand_light"
+        android:text="Preferencias de color"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_default"
+        android:layout_width="wrap_content"
+        android:layout_height="64sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/gray2"
+        android:text="PREDETERMINADO"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:cornerRadius="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <Button
+        android:id="@+id/button_contraste"
+        android:layout_width="0dp"
+        android:layout_height="64sp"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="@color/gray2"
+        android:text="ALTO CONTRASTE"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:cornerRadius="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_default"
+        app:layout_constraintStart_toStartOf="@+id/button_default"
+        app:layout_constraintTop_toBottomOf="@+id/button_default" />
+
+    <Button
+        android:id="@+id/button_gray"
+        android:layout_width="0dp"
+        android:layout_height="64sp"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="@color/gray2"
+        android:text="ESCALA DE GRISES"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:cornerRadius="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_contraste"
+        app:layout_constraintStart_toStartOf="@+id/button_contraste"
+        app:layout_constraintTop_toBottomOf="@+id/button_contraste" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_default"
+        app:layout_constraintTop_toTopOf="@+id/button_default"
+        app:srcCompat="@drawable/ic_horus_default"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/button_contraste"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/button_contraste"
+        app:srcCompat="@drawable/ic_horus_contraste"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_horus_grises"
+        app:layout_constraintBottom_toBottomOf="@+id/button_gray"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/button_gray" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
