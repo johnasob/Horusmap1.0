@@ -126,4 +126,7 @@ SoporteHorusMap@gmail.com.</string>
         <item>Porteria a Facultad de ingenieria</item>
         <item>Facultad de ingenieria a porteria</item>
     </string-array>
+    <string name="Alertas">Las alertas son mensajes que se mostrarán en la parte inferior de la
+        pantalla a medida que usted se desplace por la ruta seleccionada. Por defecto las alertas
+    ya se encuentran activadas</string>
 </resources>

@@ -32,7 +32,7 @@ class SettingsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
 
-        val contrast: Button = requireView().findViewById(R.id.button_contrast)
+        val contrast: Button = requireView().findViewById(R.id.button_profile)
         contrast.setOnClickListener {
             actividadContenedora!!.devolverDato3(true)
         }

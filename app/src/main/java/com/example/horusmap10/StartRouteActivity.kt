@@ -26,7 +26,7 @@ import android.widget.Toast.makeText as makeText1
 
 
 class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,
-    ComunicadorFragments3,ContrastFragment.ComunicadorFragments4,AlertFragment.ComunicadorFragments6{
+    ComunicadorFragments3,AlertFragment.ComunicadorFragments6{
     private val  RQ_SPEECH_REC = 102
     private lateinit var restClient: RESTClient
     private lateinit var thisActivity: StartRouteActivity
@@ -199,15 +199,10 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
     override fun devolverDato3(dato: Boolean) {
         if(dato==true){
-            replaceFragment(contrastFragment)
+            replaceFragment(profileFragment)
         }
     }
 
-    override fun devolverDato4(dato: Boolean) {
-        if(dato==true){
-            replaceFragment(settingsFragment)
-        }
-    }
     override fun devolverDato5(dato: Boolean) {
         if(dato==true){
             replaceFragment(alertFragment)
