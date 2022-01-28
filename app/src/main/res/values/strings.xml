@@ -129,4 +129,7 @@ SoporteHorusMap@gmail.com.</string>
     <string name="Alertas">Las alertas son mensajes que se mostrarán en la parte inferior de la
         pantalla a medida que usted se desplace por la ruta seleccionada. Por defecto las alertas
     ya se encuentran activadas</string>
+    <string name="Sonidos">Las alertas sonoras son tonos cortos que notificarán alguna novedad
+    en su ruta seleccionada. Por defecto las alertas sonoras ya se encuentran desactivadas, pero puede
+    desactivarlas cuando lo desee en el siguiente selector.</string>
 </resources>

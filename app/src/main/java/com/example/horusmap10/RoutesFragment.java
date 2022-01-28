@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     Activity actividad;
     Context context;
     String mostrador = "vacio";
+    MediaPlayer mediaPlayer;
     private FragmentRoutesBinding _binding;
     private Point closePoint;
     private AutoCompleteTextView spinner;
@@ -119,13 +121,13 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         getLocationPermision();
         _binding =FragmentRoutesBinding.inflate(getLayoutInflater());
         vista =  _binding.getRoot();
+        prefs.saveMostrador("inicio");
         spinner = _binding.options;
         spinner.setOnItemSelectedListener(this);
         String[] route = vista.getResources().getStringArray(R.array.routes);
         ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,route);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
         this.mMap = mMap;
         this.context =  context;
         return vista;
@@ -139,6 +141,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+
     }
 
     @Override
@@ -249,10 +252,15 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     private void choiseOption(LatLng myPosition){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-            //Toast.makeText(requireContext(), "Has seleccionado la ruta: Porteria a Facultad de ingenieria", Toast.LENGTH_LONG).show();
-            mostrador = "porteria";
-            prefs.saveMostrador(mostrador);
-
+            /*if(prefs.getMostrador() == "inicio") {
+                if(prefs.getAlert() == "Activado") {
+                    Toast.makeText(requireContext(), "Has seleccionado la ruta: Porteria a Facultad de ingenieria", Toast.LENGTH_LONG).show();
+                }
+                if(prefs.getSounds() == "Activado"){
+                    playsound("start");
+                }
+                prefs.saveMostrador("iniciado");
+            }*/
             creatRoutePorteria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
@@ -262,7 +270,27 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             creatRouteIngenieria(myPosition);
         }
     }
+    private void playsound(String archivo) {
 
+        switch (archivo) {
+            case "start":
+                mediaPlayer = MediaPlayer.create(requireContext(), R.raw.starttono);
+                break;
+            case "error":
+                mediaPlayer = MediaPlayer.create(requireContext(), R.raw.errortono);
+                break;
+            case "sound":
+                mediaPlayer =MediaPlayer.create(requireContext(), R.raw.dostonos);
+                break;
+            case "llegada":
+                mediaPlayer =MediaPlayer.create(requireContext(), R.raw.tonosllegada);
+                break;
+            default:
+                mediaPlayer =MediaPlayer.create(requireContext(), R.raw.dostonos);
+                break;
+        }
+        mediaPlayer.start(); // no need to call prepare(); create() does that for you
+    }
     private void creatRoutePorteria(LatLng start){
 
         closerPoint(myPosition);
@@ -349,6 +377,9 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
 
         switch (stations){
             case 0:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if (distance >= 30) {
                     if(prefs.getAlert() =="Activado"){
                     Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
@@ -361,37 +392,61 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 }
                 break;
             case 1:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada al bloque de salud", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 2:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca, pasando el bloque de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 3:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "Sigue caminando: " + distance + " metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 4:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if(prefs.getAlert() =="Activado"){
                 Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
                         "del bloque de ingenieria", Toast.LENGTH_SHORT).show();}
                 break;
             case 5:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "En :" + distance + " metros, estaras llegando a la entrada de la facultad de ingenieria", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 6:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("sound");
+                }
                 if(prefs.getAlert() =="Activado"){
                 Toast.makeText(requireContext()," Tu recorrido a terminado",Toast.LENGTH_LONG).show();}
                 mostrador = "terminado";
                 prefs.saveMostrador(mostrador);
+                if(prefs.getSounds() == "Activado"){
+                    playsound("llegada");
+                }
                 break;
             default:
+                if(prefs.getSounds() == "Activado") {
+                    playsound("error");
+                }
                 if(prefs.getAlert() =="Activado"){
                 Toast.makeText(requireContext(),"otra excepcion",Toast.LENGTH_LONG).show();}
                 break;

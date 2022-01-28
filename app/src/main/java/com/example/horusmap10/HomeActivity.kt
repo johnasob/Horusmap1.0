@@ -21,7 +21,7 @@ import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import java.util.*
 
 class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,SettingsFragment.ComunicadorFragments3
-,AlertFragment.ComunicadorFragments6,ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2{
+,AlertFragment.ComunicadorFragments6,ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,SoundFragment.ComunicadorFragmentsSounds{
 
     private val  RQ_SPEECH_REC = 102
     private var apikey: String? = null
@@ -29,8 +29,8 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
     private val settingsFragment = SettingsFragment()
     private val profileFragment = ProfileFragment()
     private val editProfileFragment = EditProfileFragment()
-    private val contrastFragment = ContrastFragment()
     private val alertFragment = AlertFragment()
+    private val soundFragment = SoundFragment()
     private lateinit var thisActivity: HomeActivity
     private lateinit var back:Button
 
@@ -249,6 +249,18 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
     override fun devolverDato2(dato: Boolean) {
         if(dato==true){
             replaceFragment(profileFragment)
+        }
+    }
+
+    override fun sounds(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(settingsFragment)
+        }
+    }
+
+    override fun devolversounds(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(soundFragment)
         }
     }
 

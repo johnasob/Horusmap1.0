@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/button_profile" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_sounds"
             android:layout_width="0dp"
             android:layout_height="90dp"
             android:layout_marginStart="18dp"
@@ -124,7 +124,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintTop_toBottomOf="@+id/button_sounds" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@ import android.widget.Toast.makeText as makeText1
 
 
 class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,
-    ComunicadorFragments3,AlertFragment.ComunicadorFragments6{
+    ComunicadorFragments3,AlertFragment.ComunicadorFragments6,SoundFragment.ComunicadorFragmentsSounds{
     private val  RQ_SPEECH_REC = 102
     private lateinit var restClient: RESTClient
     private lateinit var thisActivity: StartRouteActivity
@@ -37,8 +37,8 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private val settingsFragment = SettingsFragment()
     private val profileFragment = ProfileFragment()
     private val editProfileFragment = EditProfileFragment()
-    private val contrastFragment = ContrastFragment()
     private val alertFragment = AlertFragment()
+    private val soundFragment = SoundFragment()
     private var navegation: BottomNavigationView? = null
     private var microfono: FloatingActionButton? = null
     //lateinit var back: Button
@@ -225,6 +225,19 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
         }
     }
+
+    override fun sounds(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(settingsFragment)
+        }
+    }
+
+    override fun devolversounds(dato: Boolean) {
+        if(dato==true){
+            replaceFragment(soundFragment)
+        }
+    }
+
     @SuppressLint("ObsoleteSdkInt")
     private fun requestPermission(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){

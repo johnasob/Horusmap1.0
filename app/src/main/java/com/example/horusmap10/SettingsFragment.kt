@@ -44,6 +44,10 @@ class SettingsFragment : Fragment() {
         sos.setOnClickListener {
             actividadContenedora!!.devolverDato9(true)
         }
+        val sound: Button = requireView().findViewById(R.id.button_sounds)
+        sound.setOnClickListener {
+            actividadContenedora!!.devolversounds(true)
+        }
 
     }
 
@@ -53,6 +57,7 @@ class SettingsFragment : Fragment() {
         fun devolverDato5(dato: Boolean)
         fun devolverDato7(dato: Boolean)
         fun devolverDato9(dato: Boolean)
+        fun devolversounds(dato: Boolean)
     }
     private var actividadContenedora : ComunicadorFragments3? = null
 

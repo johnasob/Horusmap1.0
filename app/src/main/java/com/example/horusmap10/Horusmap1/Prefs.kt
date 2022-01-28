@@ -5,6 +5,7 @@ import android.content.Context
 class Prefs(val context: Context) {
     val state= context.getSharedPreferences("MisDatos",0)
 
+
     fun saveApikey(apikey: String){
         state.edit().putString("apikey",apikey).apply()
     }
@@ -28,6 +29,12 @@ class Prefs(val context: Context) {
         state.edit().putString("alert",alert).apply()
     }
     fun getAlert():String{
+        return state.getString("alert","")!!
+    }
+    fun saveSounds(alert: String){
+        state.edit().putString("alert",alert).apply()
+    }
+    fun getSounds():String{
         return state.getString("alert","")!!
     }
 }
