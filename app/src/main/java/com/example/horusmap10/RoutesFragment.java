@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.horusmap10.Rutas.Alerts;
 import com.example.horusmap10.Rutas.Point;
 import com.example.horusmap10.Rutas.line;
 import com.example.horusmap10.databinding.FragmentRoutesBinding;
@@ -53,6 +54,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     private GoogleMap mMap;
     private final line marker = new line(mMap);
     private LocationManager location;
+    private Alerts alertas;
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         public void onLocationChanged(Location location) {
@@ -61,44 +63,45 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
 
-            mMap = googleMap;
-            mMap.getUiSettings().setZoomControlsEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
-            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
+                    mMap = googleMap;
+                    mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    mMap.setMyLocationEnabled(true);
+                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
 
-            LocationManager locationManager = (LocationManager) requireContext().getSystemService(LOCATION_SERVICE);
-            LocationListener locationListener = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    mMap.clear();
-                    myPosition = new LatLng(location.getLatitude(), location.getLongitude());
-                    // se accede a las opciones de ubicación
+                    LocationManager locationManager = (LocationManager) requireContext().getSystemService(LOCATION_SERVICE);
+                    LocationListener locationListener = new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            mMap.clear();
+                            myPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                            // se accede a las opciones de ubicación
 
+                            mMap = marker.addMarkers(mMap);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
+                            mMap.addMarker(new MarkerOptions().position(myPosition).title("mi posición"));
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1500, null);
 
-                    mMap = marker.addMarkers(mMap);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
-                    mMap.addMarker(new MarkerOptions().position(myPosition).title("mi posición"));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1500, null);
-                    choiseOption(myPosition);
+                            choiseOption(myPosition);
 
-
+                        }
+                    };
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
                 }
-            };
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        }
+
+
     };
     private void getLocationPermision() {
         int permiso = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -141,6 +144,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+
 
     }
 
@@ -457,7 +461,8 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
 
     }
     private void creatRouteIngenieria(LatLng start){
-
+        /**alertas = new Alerts();
+        alertas.RunThread("COMPROBADO",requireContext(),requireActivity(),myPosition,mMap,start);*/
         closerPoint(myPosition);
         Polyline Ruta2;
         int distance=0;
@@ -618,4 +623,5 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         }
 
     }
+
 }

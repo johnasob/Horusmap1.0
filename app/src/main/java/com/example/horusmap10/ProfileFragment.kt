@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
+
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -49,17 +50,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val myUserInfo = restClient.wait()
             val list = JSONObject(myUserInfo)
 
-            val name: String = list.getString("Name: ")
+            val name: String = list.getString("Name")
+
             val name_t: TextView = requireView().findViewById(R.id.name_profile1)
             name_t.text = name
 
-            val password = list.getString("Password: ")
+            val password = list.getString("Password")
 
-            val email: String = list.getString("Email: ")
+            val email: String = list.getString("Email")
             val email_t: TextView = requireView().findViewById(R.id.email_profile1)
             email_t.text = email
 
-            val vision: String = list.getString("Vision: ")
+            val vision: String = list.getString("Vision")
             val vision_t: TextView = requireView().findViewById(R.id.vision_profile1)
             vision_t.text = vision
         }

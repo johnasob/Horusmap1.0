@@ -131,10 +131,10 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             val myUserInfo = restClient.wait()
 
             val list = JSONObject(myUserInfo)
-            name = list.getString("Name: ")
-            password = list.getString("Password: ")
-            email = list.getString("Email: ")
-            vision = list.getString("Vision: ")
+            name = list.getString("Name")
+            password = list.getString("Password")
+            email = list.getString("Email")
+            vision = list.getString("Vision")
         }
     }
     interface ComunicadorFragments2 {

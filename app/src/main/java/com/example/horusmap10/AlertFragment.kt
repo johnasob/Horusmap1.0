@@ -32,6 +32,7 @@ class AlertFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         state = prefs.getAlert()
         Toast.makeText(requireContext(),"EL estado actual de las alertas es:  "+prefs.getAlert(),Toast.LENGTH_SHORT).show()
+
         val save2: Button = requireView().findViewById(R.id.button_save2)
         save2.setOnClickListener {
             prefs.saveAlert(state)

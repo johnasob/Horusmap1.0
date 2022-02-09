@@ -11,6 +11,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private val soundFragment = SoundFragment()
     private var navegation: BottomNavigationView? = null
     private var microfono: FloatingActionButton? = null
+    private var beacon: Button? = null
     //lateinit var back: Button
 
 
@@ -53,22 +56,28 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         ip = prefs.getIp()
         apikey = prefs.getApikey()
         restClient = RESTClient("http://$ip/")
-
+        beacon = findViewById(R.id.beacon_button)
         replaceFragment(routesFragment)
+        findViewById<Button>(R.id.beacon_button).visibility = View.VISIBLE
         navegation = findViewById(R.id.bottomNavigationView)
         navegation!!.setBackgroundColor(Color.TRANSPARENT)
         navegation?.setOnItemSelectedListener {
 
             when(it.itemId){
-                R.id.routes_fragment -> replaceFragment(routesFragment)
-                R.id.questions_fragment -> replaceFragment(questionsFragment)
-                R.id.settings_fragment -> replaceFragment(settingsFragment)
+                R.id.routes_fragment -> {replaceFragment(routesFragment)
+                findViewById<Button>(R.id.beacon_button).visibility = View.VISIBLE
+                }
+                R.id.questions_fragment -> {replaceFragment(questionsFragment)
+                    findViewById<Button>(R.id.beacon_button).visibility = View.INVISIBLE}
+                R.id.settings_fragment -> {replaceFragment(settingsFragment)
+                    findViewById<Button>(R.id.beacon_button).visibility = View.INVISIBLE}
                 R.id.profile_fragment -> {
                     val bundle=  Bundle()
                     bundle.putString("ip",ip)
                     bundle.putString("apikey",apikey)
                     profileFragment.arguments = bundle
                     replaceFragment(profileFragment)
+                    findViewById<Button>(R.id.beacon_button).visibility = View.INVISIBLE
                 }
             }
             true
@@ -82,6 +91,11 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         back_home_button.setOnClickListener {
             val home = Intent(this, HomeActivity::class.java)
             startActivity(home)
+            finish()
+        }
+        beacon?.setOnClickListener {
+            val InDoor = Intent(this, InDoor::class.java)
+            startActivity(InDoor)
             finish()
         }
 

@@ -364,8 +364,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_persona" />
-                            <entry key="sourceFile" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\horus-grises.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_beacon" />
+                            <entry key="sourceFile" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\beacon.svg" />
                           </map>
                         </option>
                       </PersistentState>

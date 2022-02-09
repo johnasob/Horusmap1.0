@@ -42,6 +42,7 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         val ip = prefs.getIp()
         /*Se recibe el apykey del usuario*/
         apikey = prefs.getApikey()
+        Toast.makeText(this,apikey,Toast.LENGTH_SHORT).show()
         back= findViewById(R.id.back_home_button)
         back.visibility = View.INVISIBLE
         replaceFragment(homeFragment)
