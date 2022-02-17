@@ -118,13 +118,14 @@ SoporteHorusMap@gmail.com.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="map">Navegación</string>
-    <string name="navegation_out">Navegación Exterior</string>
+    <string name="navegation_out">Navegación Interior</string>
     <string name="choice_route">Escoje una ruta</string>
     <string name="title_terms">Terminos y condiciones</string>
     <string name="sos_number">123</string>
     <string-array name="routes">
         <item>Porteria a Facultad de ingenieria</item>
         <item>Facultad de ingenieria a porteria</item>
+        <item>Navegación Interna</item>
     </string-array>
     <string name="Alertas">Las alertas son mensajes que se mostrarán en la parte inferior de la
         pantalla a medida que usted se desplace por la ruta seleccionada. Por defecto las alertas
@@ -132,4 +133,17 @@ SoporteHorusMap@gmail.com.</string>
     <string name="Sonidos">Las alertas sonoras son tonos cortos que notificarán alguna novedad
     en su ruta seleccionada. Por defecto las alertas sonoras ya se encuentran desactivadas, pero puede
     desactivarlas cuando lo desee en el siguiente selector.</string>
+    <string name="actual_level"><u>Nivel actual</u></string>
+    <string name="level1">Primer Nivel</string>
+    <string name="level2">Segundo Nivel</string>
+    <string name="level3">Tercer Nivel</string>
+    <string name="level4">Cuarto Nivel</string>
+    <string name="facult">Facultad de Ingeniería</string>
+    <string name="close_places"><u>Lugares cercanos</u></string>
+    <string name="inge1">* Oficina IEEE\n* Escaleras aulas 101 a la 103\n* Escaleras al nivel dos \n</string>
+    <string name="inge2">* Decanatura de ingeniería\n* Oficina de ingeniería Civil\n* Aulas de diseño\n</string>
+    <string name="inge3">* Oficina de Ing. Electrónica\n* Laboratorio de telemática\n* Oficina de Ing. sistemas\n</string>
+    <string name="inge4">* Aulas cuarto piso\n* Lab. de Electrónica\n* Unidad de Extension\n</string>
+    <string name="end_route">Terminar Ruta</string>
+
 </resources>

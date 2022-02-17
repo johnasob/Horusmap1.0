@@ -4,6 +4,10 @@ package com.example.horusmap10
 import RESTClient
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -13,9 +17,12 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.Button
+import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
@@ -44,6 +51,10 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private var navegation: BottomNavigationView? = null
     private var microfono: FloatingActionButton? = null
     private var beacon: Button? = null
+    private val channelName = "channelName"
+    private val channelId = "channelId"
+    private lateinit var notificationCustomStyle: Notification
+    private val notificationCustomStyleID = 5
     //lateinit var back: Button
 
 
@@ -61,6 +72,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         findViewById<Button>(R.id.beacon_button).visibility = View.VISIBLE
         navegation = findViewById(R.id.bottomNavigationView)
         navegation!!.setBackgroundColor(Color.TRANSPARENT)
+        createNotificationChannel()
         navegation?.setOnItemSelectedListener {
 
             when(it.itemId){
@@ -91,14 +103,20 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         back_home_button.setOnClickListener {
             val home = Intent(this, HomeActivity::class.java)
             startActivity(home)
-            finish()
         }
         beacon?.setOnClickListener {
             val InDoor = Intent(this, InDoor::class.java)
             startActivity(InDoor)
-            finish()
+            onPause()
         }
 
+    }
+
+    public fun shownotify(cadena:String) {
+
+        buildNotificationCustomStyle(cadena)
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(notificationCustomStyleID, notificationCustomStyle)
     }
 
     private fun replaceFragment(fragment: Fragment){
@@ -279,6 +297,35 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         }else{
             Toast.makeText(this,"Necesitas conceder los permisos primero",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    /** notificaciones */
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channelImportance = NotificationManager.IMPORTANCE_HIGH
+
+            val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
+                lightColor = Color.RED
+                enableLights(true)
+            }
+
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun buildNotificationCustomStyle(cadena:String) {
+        val notificationLayout = RemoteViews(packageName, R.layout.notification_small)
+        val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_expanded)
+        notificationLayout.setTextViewText(R.id.textViewTitle,"HORUSMAP")
+        notificationLayout.setTextViewText(R.id.textViewText,cadena)
+
+        notificationCustomStyle = NotificationCompat.Builder(this, channelId).also {
+            it.setSmallIcon(R.drawable.ic_horus_eye_edit)
+            //it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            it.setCustomContentView(notificationLayout)
+            it.setCustomBigContentView(notificationLayoutExpanded)
+        }.build()
     }
 
 }

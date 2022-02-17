@@ -13,6 +13,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -20,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.example.horusmap10.R.*
 import kotlinx.android.synthetic.main.activity_in_door.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
@@ -47,11 +50,11 @@ class InDoor : AppCompatActivity() {
         .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
         .build()
 
-    private var isScanning = false
+    /*private var isScanning = false
         set(value) {
             field = value
-            runOnUiThread { scan_button.text = if (value) "Stop Scan" else "Start Scan" }
-        }
+            runOnUiThread { logout_button2.text = if (value) "Stop Scan" else "Start Scan" }
+        }*/
 
     private val isLocationPermissionGranted
         get() = hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -68,14 +71,23 @@ class InDoor : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_in_door)
+        setContentView(layout.activity_in_door)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        scan_button.setOnClickListener { if (isScanning) stopBleScan() else startBleScan() }
-        imageButton_back.setOnClickListener { val Routes = Intent(this, StartRouteActivity::class.java)
+        //scan_button.setOnClickListener { if (isScanning) stopBleScan() else startBleScan() }
+        logout_button2.setOnClickListener {
+            val HOME = Intent(this, HomeActivity::class.java)
+            startActivity(HOME)
+            finish()
+            stopBleScan()  }
+        startBleScan()
+        imageButton_back.setOnClickListener {
+            val Routes = Intent(this, StartRouteActivity::class.java)
             startActivity(Routes)
-            finish() }
+            stopBleScan()
+            finish()
+        }
         setupRecyclerView()
     }
 
@@ -130,13 +142,12 @@ class InDoor : AppCompatActivity() {
             scanResults.clear()
             scanResultAdapter.notifyDataSetChanged()
             bleScanner.startScan(null, scanSettings, scanCallback)
-            isScanning = true
         }
     }
 
     private fun stopBleScan() {
         bleScanner.stopScan(scanCallback)
-        isScanning = false
+        //isScanning = false
     }
 
     private fun requestLocationPermission() {
@@ -196,6 +207,30 @@ class InDoor : AppCompatActivity() {
                     if((address =="DC:0D:30:00:18:F2")||(address =="DC:0D:2F:AE:79:D5")){
                         scanResults.add(result)
                         scanResultAdapter.notifyItemInserted(scanResults.size - 1)
+                        /*** MODIFICACIÓN*/
+                        if(address =="DC:0D:30:00:18:F2"){
+                            level_actual.text = getString(string.level3)
+                            multi2.text = getString(string.inge3)
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                {
+
+                                    startBleScan()
+                                },
+                                1000 // value in milliseconds
+                            )
+
+                        }else{
+                            level_actual.text = getString(string.level4)
+                            multi2.text = getString(string.inge4)
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                {
+
+                                    startBleScan()
+                                },
+                                1000 // value in milliseconds
+                            )
+
+                        }
                     }
                 }
 

@@ -1,16 +1,25 @@
 package com.example.horusmap10;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.example.horusmap10.Horusmap1.Horusmap.prefs;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +27,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.horusmap10.Rutas.Alerts;
 import com.example.horusmap10.Rutas.Point;
 import com.example.horusmap10.Rutas.line;
+
 import com.example.horusmap10.databinding.FragmentRoutesBinding;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,12 +56,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.Objects;
+
+
 public class RoutesFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     View vista;
     Activity actividad;
     Context context;
-    String mostrador = "vacio";
+    String mostrador;
     MediaPlayer mediaPlayer;
+    String sounds;
+    String notificacion;
     private FragmentRoutesBinding _binding;
     private Point closePoint;
     private AutoCompleteTextView spinner;
@@ -63,76 +84,79 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
 
-                    mMap = googleMap;
-                    mMap.getUiSettings().setZoomControlsEnabled(true);
-                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    mMap.setMyLocationEnabled(true);
-                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
+            mMap = googleMap;
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
 
-                    LocationManager locationManager = (LocationManager) requireContext().getSystemService(LOCATION_SERVICE);
-                    LocationListener locationListener = new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            mMap.clear();
-                            myPosition = new LatLng(location.getLatitude(), location.getLongitude());
-                            // se accede a las opciones de ubicación
+            LocationManager locationManager = (LocationManager) requireContext().getSystemService(LOCATION_SERVICE);
+            LocationListener locationListener = new LocationListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onLocationChanged(Location location) {
+                    mMap.clear();
+                    myPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                    // se accede a las opciones de ubicación
 
-                            mMap = marker.addMarkers(mMap);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
-                            mMap.addMarker(new MarkerOptions().position(myPosition).title("mi posición"));
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1500, null);
+                    mMap = marker.addMarkers(mMap);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1500, null);
 
-                            choiseOption(myPosition);
+                    choiseOption(myPosition);
 
-                        }
-                    };
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
                 }
+            };
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
 
 
     };
+
     private void getLocationPermision() {
         int permiso = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        if(permiso == PackageManager.PERMISSION_DENIED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
-            }else{
-                ActivityCompat.requestPermissions((Activity) requireContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        if (permiso == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions((Activity) requireContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
     }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         getLocationPermision();
-        _binding =FragmentRoutesBinding.inflate(getLayoutInflater());
-        vista =  _binding.getRoot();
+        _binding = FragmentRoutesBinding.inflate(getLayoutInflater());
+        vista = _binding.getRoot();
         prefs.saveMostrador("inicio");
         spinner = _binding.options;
         spinner.setOnItemSelectedListener(this);
         String[] route = vista.getResources().getStringArray(R.array.routes);
-        ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,route);
+        ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, route);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         this.mMap = mMap;
-        this.context =  context;
+        this.context = context;
         return vista;
     }
 
@@ -157,11 +181,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    private void sayRoute(int distance, Point closePoint){
-        Toast.makeText(requireContext(), "Camina  "+distance+" metros y te encontraras con "+closePoint.name(), Toast.LENGTH_SHORT).show();
+    private void sayRoute(int distance, Point closePoint) {
+        Toast.makeText(requireContext(), "Camina  " + distance + " metros y te encontraras con " + closePoint.name(), Toast.LENGTH_SHORT).show();
     }
-    /**Metodo que encuentra la distancia entre dos coordenadas*/
-    private double getDistance(LatLng start, LatLng finish){
+
+    /**
+     * Metodo que encuentra la distancia entre dos coordenadas
+     */
+    private double getDistance(LatLng start, LatLng finish) {
         //Inicializa el locationrequest que se usa para encontrar la distancia
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(10000);
@@ -170,12 +197,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
 
         float[] distances = new float[1];
         //Calcula la distancia
-        Location.distanceBetween(start.latitude,start.longitude,finish.latitude,finish.longitude,distances);
+        Location.distanceBetween(start.latitude, start.longitude, finish.latitude, finish.longitude, distances);
         return distances[0];
     }
 
 
-    /**Calculo de el punto más cercano al punto dado*/
+    /**
+     * Calculo de el punto más cercano al punto dado
+     */
     private void closerPoint(LatLng start) {
         double[] distance = new double[7];
         distance[0] = getDistance(start, line.porteria);
@@ -194,84 +223,100 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 pos = i;
             }
         }
-        if(distance[pos] >= 80){
+        if (distance[pos] >= 80) {
             pos = 7;
         }
-        switch (pos){
+        switch (pos) {
             case line.PORTERIA:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.porteria, "porteria exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.porteria, "porteria");
                 }
                 break;
             case line.CAJERO:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.cajero, "cajero exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.cajero, "cajero");
                 }
                 break;
             case line.MEDICINA:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.medicina, "medicina exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.medicina, "medicina");
                 }
                 break;
             case line.CAPILLA:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.capilla, "capilla exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.capilla, "capilla");
                 }
                 break;
             case line.BIBLIOTECA:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.biblioteca, "biblioteca exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.biblioteca, "biblioteca");
                 }
                 break;
             case line.ESCALERAS:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.escaleras, "escaleras exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.escaleras, "escaleras");
                 }
                 break;
             case line.INGENIERIA:
-                if(distance[pos] <=3){
+                if (distance[pos] <= 10) {
                     closePoint = new Point(line.ingenieria, "ingenieria exacto");
-                }else {
+                } else {
                     closePoint = new Point(line.ingenieria, "ingenieria");
                 }
                 break;
             default:
-                LatLng nulo = new LatLng(0,0);
-                closePoint= new Point(nulo,"estas demasiado lejos");
+                LatLng nulo = new LatLng(0, 0);
+                closePoint = new Point(nulo, "estas demasiado lejos");
                 break;
         }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void choiseOption(LatLng myPosition){
 
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
-            /*if(prefs.getMostrador() == "inicio") {
-                if(prefs.getAlert() == "Activado") {
-                    Toast.makeText(requireContext(), "Has seleccionado la ruta: Porteria a Facultad de ingenieria", Toast.LENGTH_LONG).show();
-                }
-                if(prefs.getSounds() == "Activado"){
-                    playsound("start");
-                }
-                prefs.saveMostrador("iniciado");
-            }*/
-            creatRoutePorteria(myPosition);
+
+                    mostrador = prefs.getMostrador();
+                    notificacion = prefs.getAlert();
+                    sounds  = prefs.getSounds();
+
+            if(mostrador != "porteria") {
+
+                        prefs.saveMostrador("porteria");
+
+                        if(notificacion == "Activado") {
+                            notification("Usted ha seleccionado la ruta porteria a Facultad de ingeniería");
+                        }
+                        if(sounds == "Activado"){
+                            playsound("start");
+                        }
+                    }
+
+                    creatRoutePorteria(myPosition);
+
         }
         if (_binding.options.getText().toString().equals("Facultad de ingenieria a porteria")){
-            //Toast.makeText(requireContext(), "Has seleccionado la ruta: Facultad de ingeniería a Porteria", Toast.LENGTH_LONG).show();
+            notification("Has seleccionado la ruta: Facultad de ingeniería a Porteria");
             mostrador = "ingenieria";
             prefs.saveMostrador(mostrador);
             creatRouteIngenieria(myPosition);
+        }
+        if (_binding.options.getText().toString().equals("Navegación Interior")){
+            notification("entro");
+           // Intent intent = new Intent(getActivity(),InDoor.class);
+            //startActivity(intent);
         }
     }
     private void playsound(String archivo) {
@@ -296,7 +341,8 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
     }
     private void creatRoutePorteria(LatLng start){
-
+        notificacion = prefs.getAlert();
+        sounds  = prefs.getSounds();
         closerPoint(myPosition);
         Polyline Ruta1;
         int distance=0;
@@ -305,68 +351,69 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case "porteria":
                 distance = (int) getDistance(start, closePoint.coor());
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                //Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
+                notification("Estas cerca de " );
                 stations = 0;
                 break;
             case "porteria exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                //Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_LONG).show();
+                notification("Haz llegado a la porteria 2 de la Universidad del Quindío");
                 stations = 1;
                 break;
             case "cajero":
                 distance = (int) getDistance(myPosition, line.cajero);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                //Toast.makeText(requireContext(), "Estas cerca de la facultad de ciencias de la salud", Toast.LENGTH_LONG).show();
+                notification("Estas cerca de la facultad de ciencias de la salud");
                 stations = 1;
                 break;
             case "cajero exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
 
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                //Toast.makeText(requireContext(),"Estas muy cerca de la entrada de la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                notification("Estas muy cerca de la entrada de la facultad de ciencias de la salud");
                 stations = 2;
                 break;
             case "medicina":
-                //Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
+                notification("Te estas moviendo cerca a la facultad de ciencias de la salud");
                 distance=(int) getDistance(myPosition, line.biblioteca);
                 stations=2;
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 break;
             case "medicina exacto":
-                //Toast.makeText(requireContext(),"Estas muy cerca de  la facultad de ciencias de la salud",Toast.LENGTH_LONG).show();
-                //Toast.makeText(requireContext(),"continua caminando para llegar a la biblioteca",Toast.LENGTH_LONG).show();
+                notification("Vas caminando de la facultad de medicina a la biblioteca");
+                notification("continua caminando para llegar a la biblioteca");
                 distance=(int) getDistance(myPosition, line.biblioteca);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 stations =3;
                 break;
             case "biblioteca":
                 distance=(int)getDistance(myPosition,line.biblioteca);
-                //Toast.makeText(requireContext(), "Estas llegando a la entrada de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                notification("Estas llegando a la entrada de la biblioteca CRAI");
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 stations=3;
                 break;
             case "biblioteca exacto":
                 distance=(int)getDistance(myPosition,line.escaleras);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.ingenieria));
-                //Toast.makeText(requireContext(), "Haz llegado a la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                notification("Haz llegado a la biblioteca CRAI");
                 stations=4;
                 break;
             case "escaleras":
                 distance=(int)getDistance(myPosition,line.escaleras);
-                //Toast.makeText(requireContext(), "Estas llegando a las escaleras cercanas a al bloque de ingenieria", Toast.LENGTH_SHORT).show();
+                notification("Estas llegando a las escaleras cercanas a al bloque de ingenieria");
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.ingenieria));
                 stations=4;
                 break;
             case "escaleras exacto":
                 distance=(int)getDistance(myPosition,line.ingenieria);
-                //Toast.makeText(requireContext(), "Haz llegado a las escaleras de ingenieria", Toast.LENGTH_SHORT).show();
+                notification("Haz llegado a las escaleras de ingenieria");
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.ingenieria));
                 stations=5;
                 break;
             case "ingenieria":
                 distance=(int)getDistance(myPosition,line.ingenieria);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.ingenieria));
+                notification("Estas cerca de la facultad de ingenieria");
                 stations=5;
                 break;
             case "ingenieria exacto":
@@ -381,92 +428,58 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
 
         switch (stations){
             case 0:
-                if(prefs.getSounds() == "Activado") {
+                /*if(prefs.getSounds() == "Activado") {
                     playsound("sound");
-                }
+                }*/
                 if (distance >= 30) {
-                    if(prefs.getAlert() =="Activado"){
                     Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
-                            "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();}
+                            "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(prefs.getAlert() =="Activado") {
                         sayRoute(distance, closePoint);
                         Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
-                    }
                 }
                 break;
             case 1:
                 if(prefs.getSounds() == "Activado") {
                     playsound("sound");
                 }
-                if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada al bloque de salud", Toast.LENGTH_SHORT).show();
-                }
+
                 break;
             case 2:
-                if(prefs.getSounds() == "Activado") {
-                    playsound("sound");
-                }
-                if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca, pasando el bloque de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case 3:
-                if(prefs.getSounds() == "Activado") {
-                    playsound("sound");
-                }
-                if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "Sigue caminando: " + distance + " metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case 4:
-                if(prefs.getSounds() == "Activado") {
-                    playsound("sound");
-                }
-                if(prefs.getAlert() =="Activado"){
                 Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
-                        "del bloque de ingenieria", Toast.LENGTH_SHORT).show();}
+                        "del bloque de ingenieria", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
-                if(prefs.getSounds() == "Activado") {
-                    playsound("sound");
-                }
-                if(prefs.getAlert() =="Activado") {
                     Toast.makeText(requireContext(), "En :" + distance + " metros, estaras llegando a la entrada de la facultad de ingenieria", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case 6:
-                if(prefs.getSounds() == "Activado") {
-                    playsound("sound");
-                }
-                if(prefs.getAlert() =="Activado"){
-                Toast.makeText(requireContext()," Tu recorrido a terminado",Toast.LENGTH_LONG).show();}
+                Toast.makeText(requireContext()," Tu recorrido a terminado",Toast.LENGTH_LONG).show();
                 mostrador = "terminado";
                 prefs.saveMostrador(mostrador);
-                if(prefs.getSounds() == "Activado"){
-                    playsound("llegada");
-                }
                 break;
             default:
-                if(prefs.getSounds() == "Activado") {
-                    playsound("error");
-                }
-                if(prefs.getAlert() =="Activado"){
-                Toast.makeText(requireContext(),"otra excepcion",Toast.LENGTH_LONG).show();}
+                notification(  "otra excepcion");
                 break;
         }
-        if(prefs.getAlert() =="Activado") {
-            Toast.makeText(getActivity(), "Usted se encuentra a: " + distanceFinish + " metros del bloque de Ingeniería", Toast.LENGTH_LONG).show();
-        }
-
+        notification(   "Usted se encuentra a: " + distanceFinish + " metros del bloque de Ingeniería");
     }
     private void creatRouteIngenieria(LatLng start){
-        /**alertas = new Alerts();
-        alertas.RunThread("COMPROBADO",requireContext(),requireActivity(),myPosition,mMap,start);*/
+        /*alertas = new Alerts();
+        alertas.RunThread("COMPROBADO",requireContext(),requireActivity(),myPosition,mMap,start);
+        */
         closerPoint(myPosition);
         Polyline Ruta2;
         int distance=0;
         int distanceFinish = (int)getDistance(myPosition,line.ingenieria);
+
+        // switch close point
         switch (closePoint.name()){
             case "ingenieria":
                 distance = (int) getDistance(start, closePoint.coor());
@@ -576,52 +589,50 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                             "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();}
                 } else {
                     sayRoute(distance, closePoint);
-                    if(prefs.getAlert() =="Activado") {
                         Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es un camino peatonal y vehicular", Toast.LENGTH_LONG).show();
-                    }
                 }
                 break;
             case 1:
-                if(prefs.getAlert() =="Activado"){
                 Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con las escaleras cercanas al la" +
-                        "biblioteca CRAI", Toast.LENGTH_SHORT).show();}
+                        "biblioteca CRAI", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                if(prefs.getAlert() =="Activado") {
+
                     Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
-                }
+
                 break;
             case 3:
-                if(prefs.getAlert() =="Activado"){
+
                 Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegaras a la facultad de ciencias de la " +
-                        "salud", Toast.LENGTH_SHORT).show();}
+                        "salud", Toast.LENGTH_SHORT).show();
                 break;
             case 4:
-                if(prefs.getAlert() =="Activado"){
+
                 Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a la entrada " +
-                        "principal de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();}
+                        "principal de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
-                if(prefs.getAlert() =="Activado") {
+
                     Toast.makeText(requireContext(), "En :" + distance + " metros, estaras llegando a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_SHORT).show();
-                }
+
                 break;
             case 6:
-                if(prefs.getAlert() =="Activado") {
+
                     Toast.makeText(requireContext(), " Tu recorrido a terminado", Toast.LENGTH_LONG).show();
-                }
+
                 mostrador = "terminado";
                 prefs.saveMostrador(mostrador);
                 break;
             default:
-                if(prefs.getAlert() =="Activado"){
-                Toast.makeText(requireContext(),"otra excepcion",Toast.LENGTH_LONG).show();}
+
+                Toast.makeText(requireContext(),"otra excepcion",Toast.LENGTH_LONG).show();
                 break;
         }
-        if(prefs.getAlert() =="Activado") {
             Toast.makeText(requireContext(), "Usted se encuentra a: " + distanceFinish + " metros de la porteria 2 de la Universidad del Quindío", Toast.LENGTH_SHORT).show();
-        }
 
+    }
+    void notification(String cadena){
+        ((StartRouteActivity) Objects.requireNonNull(getActivity())).shownotify(cadena);
     }
 
 }
