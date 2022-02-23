@@ -21,6 +21,7 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.INotificationSideChannel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,7 +183,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void sayRoute(int distance, Point closePoint) {
-        Toast.makeText(requireContext(), "Camina  " + distance + " metros y te encontraras con " + closePoint.name(), Toast.LENGTH_SHORT).show();
+        notification("Camina  " + distance + " metros y te encontraras con " + closePoint.name());
     }
 
     /**
@@ -313,10 +314,9 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             prefs.saveMostrador(mostrador);
             creatRouteIngenieria(myPosition);
         }
-        if (_binding.options.getText().toString().equals("Navegación Interior")){
-            notification("entro");
-           // Intent intent = new Intent(getActivity(),InDoor.class);
-            //startActivity(intent);
+        if (_binding.options.getText().toString().equals("Navegación Interna")){
+            notification("Iniciando navegación interna");
+            ((StartRouteActivity) Objects.requireNonNull(getActivity())).InDoorNotification();
         }
     }
     private void playsound(String archivo) {
@@ -342,82 +342,107 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     }
     private void creatRoutePorteria(LatLng start){
         notificacion = prefs.getAlert();
+        Toast.makeText(requireContext(), notificacion, Toast.LENGTH_SHORT).show();
         sounds  = prefs.getSounds();
         closerPoint(myPosition);
         Polyline Ruta1;
         int distance=0;
         int distanceFinish = (int)getDistance(myPosition,line.ingenieria);
-        switch (closePoint.name()){
+        switch (closePoint.name()) {
             case "porteria":
                 distance = (int) getDistance(start, closePoint.coor());
-                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                notification("Estas cerca de " );
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition, line.porteria, line.medicina, line.biblioteca, line.escaleras, line.ingenieria));
+                if(notificacion == "Activado") {
+                    notification("Estas cerca de ");
+                }
                 stations = 0;
                 break;
             case "porteria exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
-                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                notification("Haz llegado a la porteria 2 de la Universidad del Quindío");
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition, line.medicina, line.biblioteca, line.escaleras, line.ingenieria));
+                if(notificacion == "Activado") {
+                    notification("Haz llegado a la porteria 2 de la Universidad del Quindío");
+                }
                 stations = 1;
                 break;
             case "cajero":
                 distance = (int) getDistance(myPosition, line.cajero);
-                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                notification("Estas cerca de la facultad de ciencias de la salud");
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition, line.medicina, line.biblioteca, line.escaleras, line.ingenieria));
+                if(notificacion == "Activado") {
+                    notification("Estas cerca de la facultad de ciencias de la salud");
+                }
                 stations = 1;
                 break;
             case "cajero exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
 
-                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.biblioteca,line.escaleras,line.ingenieria));
-                notification("Estas muy cerca de la entrada de la facultad de ciencias de la salud");
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition, line.medicina, line.biblioteca, line.escaleras, line.ingenieria));
+                if(notificacion == "Activado") {
+                    notification("Estas muy cerca de la entrada de la facultad de ciencias de la salud");
+                }
                 stations = 2;
                 break;
             case "medicina":
-                notification("Te estas moviendo cerca a la facultad de ciencias de la salud");
-                distance=(int) getDistance(myPosition, line.biblioteca);
-                stations=2;
-                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
+                if(notificacion == "Activado") {
+                    notification("Te estas moviendo cerca a la facultad de ciencias de la salud");
+                }
+                distance = (int) getDistance(myPosition, line.biblioteca);
+                stations = 2;
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition, line.biblioteca, line.escaleras, line.ingenieria));
                 break;
             case "medicina exacto":
-                notification("Vas caminando de la facultad de medicina a la biblioteca");
-                notification("continua caminando para llegar a la biblioteca");
-                distance=(int) getDistance(myPosition, line.biblioteca);
-                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
-                stations =3;
+                if(notificacion == "Activado") {
+                    notification("Vas caminando de la facultad de medicina a la biblioteca");
+                    notification("continua caminando para llegar a la biblioteca");
+                }
+                distance = (int) getDistance(myPosition, line.biblioteca);
+                Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition, line.biblioteca, line.escaleras, line.ingenieria));
+                stations = 3;
                 break;
             case "biblioteca":
-                distance=(int)getDistance(myPosition,line.biblioteca);
-                notification("Estas llegando a la entrada de la biblioteca CRAI");
+                distance = (int) getDistance(myPosition, line.biblioteca);
+                if(notificacion == "Activado") {
+                    notification("Estas llegando a la entrada de la biblioteca CRAI");
+                }
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.escaleras,line.ingenieria));
                 stations=3;
                 break;
             case "biblioteca exacto":
                 distance=(int)getDistance(myPosition,line.escaleras);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.ingenieria));
-                notification("Haz llegado a la biblioteca CRAI");
+                if(notificacion == "Activado") {
+                    notification("Haz llegado a la biblioteca CRAI");
+                }
                 stations=4;
                 break;
             case "escaleras":
                 distance=(int)getDistance(myPosition,line.escaleras);
-                notification("Estas llegando a las escaleras cercanas a al bloque de ingenieria");
+                if(notificacion == "Activado") {
+                    notification("Estas llegando a las escaleras cercanas a al bloque de ingenieria");
+                }
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.ingenieria));
                 stations=4;
                 break;
             case "escaleras exacto":
                 distance=(int)getDistance(myPosition,line.ingenieria);
-                notification("Haz llegado a las escaleras de ingenieria");
+                if(notificacion == "Activado") {
+                    notification("Haz llegado a las escaleras de ingenieria");
+                }
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.ingenieria));
                 stations=5;
                 break;
             case "ingenieria":
                 distance=(int)getDistance(myPosition,line.ingenieria);
                 Ruta1 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.ingenieria));
-                notification("Estas cerca de la facultad de ingenieria");
+                if(notificacion == "Activado") {
+                    notification("Estas cerca de la facultad de ingenieria");
+                }
                 stations=5;
                 break;
             case "ingenieria exacto":
-                //Toast.makeText(requireContext(), "Haz llegado a la facultad de ingenieria", Toast.LENGTH_SHORT).show();
+                if(notificacion == "Activado") {
+                    notification("Haz llegado a la facultad de ingenieria");
+                }
                 stations=6;
                 break;
             default:
@@ -431,44 +456,65 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 /*if(prefs.getSounds() == "Activado") {
                     playsound("sound");
                 }*/
-                if (distance >= 30) {
-                    Toast.makeText(requireContext(), "Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
-                            "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();
+                if (distance >= 80) {
+                    if(notificacion == "Activado") {
+                        notification("Debes acercarte más a la porteria 2 de la Universidad del Quindío" +
+                                "para iniciar tu recorrido");
+                    }
                 } else {
                         sayRoute(distance, closePoint);
-                        Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es una entrada vehicular y peatonal", Toast.LENGTH_LONG).show();
+                    if(notificacion == "Activado") {
+                        notification("Recuerda tener cuidado ya que es una entrada vehicular y peatonal");
+                    }
                 }
                 break;
             case 1:
                 if(prefs.getSounds() == "Activado") {
                     playsound("sound");
                 }
-                    Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada al bloque de salud", Toast.LENGTH_SHORT).show();
-
+                if(notificacion == "Activado") {
+                    notification("Camina " + distance + " metros por la acera podotactil y te encontraras con la entrada al bloque de salud");
+                }
                 break;
             case 2:
-                    Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca, pasando el bloque de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
+                if(notificacion == "Activado") {
+                    notification("Estas a: " + distance + " metros  de la biblioteca, pasando el bloque de la facultad de ciencias de la salud");
+                }
                 break;
             case 3:
-                    Toast.makeText(requireContext(), "Sigue caminando: " + distance + " metros por la acera podotactil y llegara a la biblioteca", Toast.LENGTH_SHORT).show();
+                if(notificacion == "Activado") {
+                    notification("Sigue caminando: " + distance + " metros por la acera podotactil y llegara a la biblioteca");
+                }
                 break;
             case 4:
-                Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
-                        "del bloque de ingenieria", Toast.LENGTH_SHORT).show();
+                if(notificacion == "Activado") {
+                    notification("Continua caminando: " + distance + " metros por la acera podotactil y llegaras a las escaleras contiguas a la entrada" +
+                            "del bloque de ingenieria");
+                }
                 break;
             case 5:
-                    Toast.makeText(requireContext(), "En :" + distance + " metros, estaras llegando a la entrada de la facultad de ingenieria", Toast.LENGTH_SHORT).show();
+                if(notificacion == "Activado") {
+                    notification("En :" + distance + " metros, estaras llegando a la entrada de la facultad de ingenieria");
+                }
                 break;
             case 6:
-                Toast.makeText(requireContext()," Tu recorrido a terminado",Toast.LENGTH_LONG).show();
+                if(notificacion == "Activado") {
+                    notification(" Tu recorrido a terminado");
+                }
                 mostrador = "terminado";
                 prefs.saveMostrador(mostrador);
+                notification("Iniciando navegación interna");
+                ((StartRouteActivity) Objects.requireNonNull(getActivity())).InDoorNotification();
                 break;
             default:
-                notification(  "otra excepcion");
+                if(notificacion == "Activado") {
+                    notification("otra excepcion");
+                }
                 break;
         }
-        notification(   "Usted se encuentra a: " + distanceFinish + " metros del bloque de Ingeniería");
+        if(notificacion == "Activado") {
+            notification2("Usted se encuentra a: " + distanceFinish + " metros del bloque de Ingeniería");
+        }
     }
     private void creatRouteIngenieria(LatLng start){
         /*alertas = new Alerts();
@@ -485,14 +531,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 distance = (int) getDistance(start, closePoint.coor());
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.ingenieria,line.escaleras,line.biblioteca,line.medicina,line.porteria));
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Estas cerca de " + closePoint.name(), Toast.LENGTH_LONG).show();
+                    notification("Estas cerca de la puerta de la facultad de ingeniería");
                 }stations = 0;
                 break;
             case "ingenieria exacto":
                 distance = (int) getDistance(myPosition, line.biblioteca);
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.biblioteca,line.medicina,line.porteria));
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Haz llegado a la entrada del bloque de ingenieria", Toast.LENGTH_LONG).show();
+                    notification("Haz llegado a la entrada del bloque de ingenieria");
                 }
                 stations = 1;
                 break;
@@ -500,7 +546,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 distance = (int) getDistance(myPosition, line.cajero);
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.escaleras,line.biblioteca,line.medicina,line.porteria));
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Estas cerca de las escaleras cercanas a la biblioteca CRAI", Toast.LENGTH_LONG).show();
+                    notification("Estas cerca de las escaleras cercanas a la biblioteca CRAI");
                 }
                 stations = 1;
                 break;
@@ -509,22 +555,22 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
 
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.medicina,line.porteria));
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Haz llegado a las escaleras cercanas a la biblioteca CRAI", Toast.LENGTH_LONG).show();
+                    notification("Haz llegado a las escaleras cercanas a la biblioteca CRAI");
                 }
                 stations = 2;
                 break;
 
             case "biblioteca":
                 if(prefs.getAlert() =="Activado"){
-                Toast.makeText(requireContext(),"Esta cerca de la biblioteca",Toast.LENGTH_LONG).show();}
+                notification("Esta cerca de la biblioteca");}
                 distance=(int) getDistance(myPosition, line.biblioteca);
                 stations=2;
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.biblioteca,line.medicina,line.porteria));
                 break;
             case "biblioteca exacto":
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Estas muy cerca de la biblioteca", Toast.LENGTH_LONG).show();
-                    Toast.makeText(requireContext(), "continua caminando por la acera podotactil para llegar a la facultad de medicina", Toast.LENGTH_LONG).show();
+                    notification("Estas muy cerca de la biblioteca");
+                    notification("continua caminando por la acera podotactil para llegar a la facultad de medicina");
                 }
                 distance=(int) getDistance(myPosition, line.biblioteca);
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.porteria));
@@ -533,7 +579,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case "medicina":
                 distance=(int)getDistance(myPosition,line.biblioteca);
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Te estas acercando a la facultad de medicina", Toast.LENGTH_SHORT).show();
+                    notification("Te estas acercando a la facultad de medicina");
                 }
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.medicina,line.porteria));
                 stations=3;
@@ -542,13 +588,13 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 distance=(int)getDistance(myPosition,line.escaleras);
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria));
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Te encuentras muy cerca de la facultad de salud", Toast.LENGTH_SHORT).show();
+                    notification("Te encuentras muy cerca de la facultad de salud");
                 }
                 stations=4;
                 break;
             case "cajero": distance=(int)getDistance(myPosition,line.escaleras);
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Pronto llegaras al cajero contigua a la entrada principal de la facultad de salud", Toast.LENGTH_SHORT).show();
+                    notification("Pronto llegaras al cajero contigua a la entrada principal de la facultad de salud");
                 }
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria));
                 stations=4;
@@ -556,7 +602,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case "cajero exacto":
                 distance=(int)getDistance(myPosition,line.ingenieria);
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Estas muy cerca a la entrada de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
+                    notification("Estas muy cerca a la entrada de la facultad de ciencias de la salud");
                 }
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria));
                 stations=5;
@@ -564,15 +610,15 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case "porteria":
                 distance=(int)getDistance(myPosition,line.ingenieria);
                 if(prefs.getAlert() =="Activado") {
-                    Toast.makeText(requireContext(), "Estas llegando a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_SHORT).show();
+                    notification("Estas llegando a la porteria 2 de la Universidad del Quindío");
                 }
                 Ruta2 = mMap.addPolyline(new PolylineOptions().add(myPosition,line.porteria));
                 stations=5;
                 break;
             case "porteria exacto":
                 if(prefs.getAlert() =="Activado"){
-                Toast.makeText(requireContext(), "Haz llegado a la porteria 2 de la Universidad" +
-                        "del Quindío", Toast.LENGTH_SHORT).show();}
+                notification("Haz llegado a la porteria 2 de la Universidad" +
+                        "del Quindío");}
                 stations=6;
                 break;
             default:
@@ -585,54 +631,53 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case 0:
                 if (distance >= 30) {
                     if(prefs.getAlert() =="Activado"){
-                    Toast.makeText(requireContext(), "Debes acercarte más a la entrada principal de la facultad de ingeniería" +
-                            "para iniciar tu recorrido", Toast.LENGTH_SHORT).show();}
+                    notification("Debes acercarte más a la entrada principal de la facultad de ingeniería" +
+                            "para iniciar tu recorrido");}
                 } else {
                     sayRoute(distance, closePoint);
-                        Toast.makeText(requireContext(), "Recuerda tener cuidado ya que es un camino peatonal y vehicular", Toast.LENGTH_LONG).show();
+                        notification("Recuerda tener cuidado ya que es un camino peatonal y vehicular");
                 }
                 break;
             case 1:
-                Toast.makeText(requireContext(), "Camina " + distance + " metros por la acera podotactil y te encontraras con las escaleras cercanas al la" +
-                        "biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                notification("Camina " + distance + " metros por la acera podotactil y te encontraras con las escaleras cercanas al la" +
+                        "biblioteca CRAI");
                 break;
             case 2:
-
-                    Toast.makeText(requireContext(), "Estas a: " + distance + " metros  de la biblioteca CRAI", Toast.LENGTH_SHORT).show();
+                notification("Estas a: " + distance + " metros  de la biblioteca CRAI");
 
                 break;
             case 3:
 
-                Toast.makeText(requireContext(), "Sigue caminando: "+distance+" metros por la acera podotactil y llegaras a la facultad de ciencias de la " +
-                        "salud", Toast.LENGTH_SHORT).show();
+                notification("Sigue caminando: "+distance+" metros por la acera podotactil y llegaras a la facultad de ciencias de la " +
+                        "salud");
                 break;
             case 4:
 
-                Toast.makeText(requireContext(), "Continua caminando: "+distance+" metros por la acera podotactil y llegaras a la entrada " +
-                        "principal de la facultad de ciencias de la salud", Toast.LENGTH_SHORT).show();
+                notification("Continua caminando: "+distance+" metros por la acera podotactil y llegaras a la entrada " +
+                        "principal de la facultad de ciencias de la salud");
                 break;
             case 5:
-
-                    Toast.makeText(requireContext(), "En :" + distance + " metros, estaras llegando a la porteria 2 de la Universidad del Quindío", Toast.LENGTH_SHORT).show();
-
+                notification("En :" + distance + " metros, estaras llegando a la porteria 2 de la Universidad del Quindío");
                 break;
             case 6:
-
-                    Toast.makeText(requireContext(), " Tu recorrido a terminado", Toast.LENGTH_LONG).show();
+                notification(" Tu recorrido a terminado");
 
                 mostrador = "terminado";
                 prefs.saveMostrador(mostrador);
                 break;
             default:
 
-                Toast.makeText(requireContext(),"otra excepcion",Toast.LENGTH_LONG).show();
+                notification("otra excepcion");
                 break;
         }
-            Toast.makeText(requireContext(), "Usted se encuentra a: " + distanceFinish + " metros de la porteria 2 de la Universidad del Quindío", Toast.LENGTH_SHORT).show();
+            notification2("Usted se encuentra a: " + distanceFinish + " metros de la porteria 2 de la Universidad del Quindío");
 
     }
     void notification(String cadena){
         ((StartRouteActivity) Objects.requireNonNull(getActivity())).shownotify(cadena);
+    }
+    void notification2(String cadena){
+        ((StartRouteActivity) Objects.requireNonNull(getActivity())).shownotify2(cadena);
     }
 
 }

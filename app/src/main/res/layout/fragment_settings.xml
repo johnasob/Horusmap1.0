@@ -36,7 +36,7 @@
             android:fontFamily="@font/quicksand_light"
             android:text="Configuración"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/horus_icon"
             app:layout_constraintEnd_toEndOf="parent"

@@ -209,16 +209,18 @@ android:background="@color/greenhorus">
         <Button
             android:id="@+id/edit_button"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="60dp"
             android:backgroundTint="@color/transparent"
             app:icon="@drawable/ic_edit"
             app:iconTint="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/horus_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

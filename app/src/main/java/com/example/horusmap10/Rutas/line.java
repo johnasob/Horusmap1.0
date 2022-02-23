@@ -22,7 +22,7 @@ public class line {
     public Polyline Ruta1;
     private static final int COLOR_BLACK_ARGB = 0xFD0000;
     private static final int PRIORITY_HIGH_ACCURACY = 100;
-    public static final LatLng ingenieria = new LatLng(4.5560932, -75.6601713);
+    public static final LatLng ingenieria = new LatLng(4.5559181642264654, -75.66006419127707);
     public static final LatLng porteria = new LatLng(4.556286, -75.658436);
     public static final LatLng biblioteca = new LatLng(4.5565694, -75.6596335);
     public static final LatLng medicina = new LatLng(4.55646, -75.65904);

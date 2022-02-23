@@ -66,6 +66,8 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/activity_termns.xml" value="0.2" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/blanck.xml" value="0.22" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/dropdown_menu.xml" value="0.21" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/elv_child.xml" value="0.15443840579710144" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/elv_group.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_alert.xml" value="0.25" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_blank.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_constrast2.xml" value="0.20199275362318841" />
@@ -75,7 +77,7 @@
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_home.xml" value="0.15" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_maps.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
-        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_questions.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_questions.xml" value="0.22" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_route.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_routes.xml" value="0.16397228637413394" />
         <entry key="..\:/Users/JOHN/AndroidStudioProjects/Horusmap10/app/src/main/res/layout/fragment_routes2.xml" value="0.20416666666666666" />

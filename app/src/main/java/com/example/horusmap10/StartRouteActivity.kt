@@ -15,7 +15,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.view.View
 import android.widget.Button
 import android.widget.RemoteViews
 import android.widget.Toast
@@ -53,8 +52,13 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private var beacon: Button? = null
     private val channelName = "channelName"
     private val channelId = "channelId"
+    private val channelName2 = "channelName2"
+    private val channelId2 = "channelId2"
     private lateinit var notificationCustomStyle: Notification
-    private val notificationCustomStyleID = 5
+    private var notificationCustomStyleID = 5
+    private var notificationCustomStyleID2 = 2
+
+
     //lateinit var back: Button
 
 
@@ -67,29 +71,27 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         ip = prefs.getIp()
         apikey = prefs.getApikey()
         restClient = RESTClient("http://$ip/")
-        beacon = findViewById(R.id.beacon_button)
         replaceFragment(routesFragment)
-        findViewById<Button>(R.id.beacon_button).visibility = View.VISIBLE
         navegation = findViewById(R.id.bottomNavigationView)
         navegation!!.setBackgroundColor(Color.TRANSPARENT)
         createNotificationChannel()
+        createNotificationChannel2()
         navegation?.setOnItemSelectedListener {
 
             when(it.itemId){
                 R.id.routes_fragment -> {replaceFragment(routesFragment)
-                findViewById<Button>(R.id.beacon_button).visibility = View.VISIBLE
                 }
                 R.id.questions_fragment -> {replaceFragment(questionsFragment)
-                    findViewById<Button>(R.id.beacon_button).visibility = View.INVISIBLE}
+                   }
                 R.id.settings_fragment -> {replaceFragment(settingsFragment)
-                    findViewById<Button>(R.id.beacon_button).visibility = View.INVISIBLE}
+                   }
                 R.id.profile_fragment -> {
                     val bundle=  Bundle()
                     bundle.putString("ip",ip)
                     bundle.putString("apikey",apikey)
                     profileFragment.arguments = bundle
                     replaceFragment(profileFragment)
-                    findViewById<Button>(R.id.beacon_button).visibility = View.INVISIBLE
+
                 }
             }
             true
@@ -112,11 +114,17 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
     }
 
-    public fun shownotify(cadena:String) {
+    public fun shownotify(cadena:String){
 
         buildNotificationCustomStyle(cadena)
         val notificationManager = NotificationManagerCompat.from(this)
         notificationManager.notify(notificationCustomStyleID, notificationCustomStyle)
+    }
+    public fun shownotify2(cadena:String){
+
+        buildNotificationCustomStyle(cadena)
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(notificationCustomStyleID2, notificationCustomStyle)
     }
 
     private fun replaceFragment(fragment: Fragment){
@@ -313,19 +321,54 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
             manager.createNotificationChannel(channel)
         }
     }
+    private fun createNotificationChannel2() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channelImportance = NotificationManager.IMPORTANCE_HIGH
+
+            val channel = NotificationChannel(channelId2, channelName2, channelImportance).apply {
+                lightColor = Color.RED
+                enableLights(true)
+            }
+
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
 
     private fun buildNotificationCustomStyle(cadena:String) {
         val notificationLayout = RemoteViews(packageName, R.layout.notification_small)
         val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_expanded)
         notificationLayout.setTextViewText(R.id.textViewTitle,"HORUSMAP")
         notificationLayout.setTextViewText(R.id.textViewText,cadena)
-
+        notificationLayoutExpanded .setTextViewText(R.id.textViewText,"HORUSMAP")
+        notificationLayoutExpanded .setTextViewText(R.id.textViewText,cadena)
         notificationCustomStyle = NotificationCompat.Builder(this, channelId).also {
             it.setSmallIcon(R.drawable.ic_horus_eye_edit)
             //it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
             it.setCustomContentView(notificationLayout)
             it.setCustomBigContentView(notificationLayoutExpanded)
         }.build()
+    }
+
+    private fun buildNotificationCustomStyle2(cadena:String) {
+        val notificationLayout = RemoteViews(packageName, R.layout.notification_small)
+        val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_expanded)
+        notificationLayout.setTextViewText(R.id.textViewTitle,"HORUSMAP")
+        notificationLayout.setTextViewText(R.id.textViewText,cadena)
+        notificationLayoutExpanded .setTextViewText(R.id.textViewText,"HORUSMAP")
+        notificationLayoutExpanded .setTextViewText(R.id.textViewText,cadena)
+        notificationCustomStyle = NotificationCompat.Builder(this, channelId2).also {
+            it.setSmallIcon(R.drawable.ic_horus_eye_edit)
+            //it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            it.setCustomContentView(notificationLayout)
+            it.setCustomBigContentView(notificationLayoutExpanded)
+        }.build()
+    }
+
+    fun InDoorNotification(){
+        val InDoor = Intent(this, InDoor::class.java)
+        startActivity(InDoor)
+        onPause()
     }
 
 }
