@@ -60,6 +60,9 @@ SoporteHorusMap@gmail.com.</string>
         <item>presiona iniciar ruta</item>
         <item>presione iniciar ruta</item>
         <item>ir a iniciar ruta</item>
+        <item>rutas</item>
+        <item>navegación exterior</item>
+        <item>ir a navegación exterior</item>
     </string-array>
     <string-array name="comand_logout">
         <item>cerrar sesión</item>
@@ -80,6 +83,10 @@ SoporteHorusMap@gmail.com.</string>
     </string-array>
     <string-array name="comand_back">
         <item>volver</item>
+        <item>Volver</item>
+        <item>vulve</item>
+        <item>Regresar</item>
+        <item>regresar</item>
         <item>presiona volver</item>
         <item>presione volver</item>
         <item>ir a pantalla anterior</item>
@@ -87,6 +94,7 @@ SoporteHorusMap@gmail.com.</string>
     <string-array name="comand_off">
         <item>off</item>
         <item>cerrar aplicación</item>
+        <item>Cerrar aplicación</item>
         <item>presiona cerrar aplicación</item>
         <item>presione cerrar aplicación</item>
         <item>cierra esta aplicación</item>
@@ -95,9 +103,14 @@ SoporteHorusMap@gmail.com.</string>
         <item>perfíl</item>
         <item>Perfíl</item>
         <item>ir a perfíl</item>
+        <item>ir a perfil</item>
+        <item>pantalla de perfil</item>
+        <item>presiona perfíl</item>
         <item>pantalla de perfíl</item>
         <item>presiona perfil</item>
         <item>opción perfíl</item>
+        <item>opción perfil</item>
+
     </string-array>
     <string-array name="comand_question">
         <item>Preguntas frecuentes</item>

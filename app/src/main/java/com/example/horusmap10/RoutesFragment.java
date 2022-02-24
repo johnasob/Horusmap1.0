@@ -77,6 +77,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     private final line marker = new line(mMap);
     private LocationManager location;
     private Alerts alertas;
+    private int station;
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         public void onLocationChanged(Location location) {
@@ -109,13 +110,11 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 @Override
                 public void onLocationChanged(Location location) {
                     mMap.clear();
-                    myPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     // se accede a las opciones de ubicación
-
+                    myPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap = marker.addMarkers(mMap);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1500, null);
-
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1000, null);
                     choiseOption(myPosition);
 
                 }
@@ -202,6 +201,15 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         return distances[0];
     }
 
+    private void getStation(LatLng myPosition){
+        double longitude = myPosition.longitude;
+        double latitude = myPosition.latitude;
+
+        // ESTACION PORTERIA
+        if((latitude>4.556050)&&(latitude<4.556571)&&(longitude>-75.658250)&&(longitude<-75.658840)){
+            station =0;
+        }
+    }
 
     /**
      * Calculo de el punto más cercano al punto dado
@@ -679,5 +687,6 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     void notification2(String cadena){
         ((StartRouteActivity) Objects.requireNonNull(getActivity())).shownotify2(cadena);
     }
+
 
 }

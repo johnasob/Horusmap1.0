@@ -30,7 +30,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_start_route.*
 import java.util.*
-import android.widget.Toast.makeText as makeText1
 
 
 class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,
@@ -98,9 +97,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         }
         microfono = findViewById<FloatingActionButton>(R.id.microfono)
 
-        microfono?.setOnClickListener {
-           askSpeechInput()
-        }
+        microfono?.setOnClickListener { runOnUiThread { askSpeechInput() } }
 
         back_home_button.setOnClickListener {
             val home = Intent(this, HomeActivity::class.java)
@@ -136,7 +133,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
         }
     }
-
+    // VERIFICACIÓN DE ENTRADA DE AUDIO
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RQ_SPEECH_REC && resultCode == Activity.RESULT_OK){
@@ -145,6 +142,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
             voice_option(input)
         }
     }
+    // LECTURA DE AUDIO
     private fun askSpeechInput() {
 
         val i = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -152,66 +150,71 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Dí algo")
         startActivityForResult(i,RQ_SPEECH_REC)
-
     }
 
-    private  fun  voice_option(imput: String) {
+    // RECONOCIMIENTO DE COMANDOS DE VOZ
+    private  fun  voice_option(input: String) {
 
         val list1 = resources.getStringArray(R.array.comand_route)
         val list2 = resources.getStringArray(R.array.comand_confi)
-        val list3 = resources.getStringArray(R.array.comand_profile)
+        val list3 = resources.getStringArray(R.array.comand_logout)
         val list4 = resources.getStringArray(R.array.comand_sos)
         val list5 = resources.getStringArray(R.array.comand_back)
         val list6 = resources.getStringArray(R.array.comand_off)
-        val list7 = resources.getStringArray(R.array.comand_question)
+        val profile = resources.getStringArray(R.array.comand_profile)
+        val preguntas = resources.getStringArray(R.array.comand_question)
 
-        navegation = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        makeText1(thisActivity, "input= "+imput+" list1= "+list2[1], Toast.LENGTH_SHORT).show()
-        //Iniciar ruta
+        //start routes
         for (i in list1.indices) {
-            if (imput == list1[i]) {
-                replaceFragment(profileFragment)
+            if (input == list1[i]) {
+                replaceFragment(routesFragment)
             }
         }
         //star settings
         for (i in list2.indices) {
-            if (imput == list2[i]) {
+            if (input == list2[i]) {
                 replaceFragment(settingsFragment)
             }
         }
         //start logout
         for (i in list3.indices) {
-            if (imput == list3[i]) {
-               // replaceFragment(profileFragment)
+            if (input == list3[i]) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("apikey", apikey)
+                startActivity(intent)
+                finish()
             }
         }
-        //SOS
+        //start sos
         for (i in list4.indices) {
-            if (imput == list4[i]) {
-                val intent = Intent(this, SosActivity::class.java)
-                intent.putExtra("apikey", apikey)
-                startActivity(intent)
+            if (input == list4[i]) {
+                requestPermission()
             }
         }
-        // VOLVER
+        /**VOLVER*/
         for (i in list5.indices) {
-            if (imput == list5[i]) {
+            if (input == list5[i]) {
                 val intent = Intent(this, HomeActivity::class.java)
-                intent.putExtra("apikey", apikey)
                 startActivity(intent)
                 finish()
             }
         }
-        //CERRAR APP
+        //cerrar aplicacion
         for (i in list6.indices) {
-            if (imput == list6[i]) {
-                finish()
+            if (input == list6[i]) {
+
             }
         }
-        //PREGUNTAS FRECUENTES
-        for (i in list7.indices) {
-            if (imput == list6[i]) {
-                //replaceFragment(questionsFragment)
+        //Perfil
+        for (i in profile.indices) {
+            if (input == profile[i]) {
+                replaceFragment(profileFragment)
+            }
+        }
+        //Preguntas  y respuestas
+        for (i in preguntas.indices) {
+            if (input == preguntas[i]) {
+                replaceFragment(questionsFragment)
             }
         }
     }
