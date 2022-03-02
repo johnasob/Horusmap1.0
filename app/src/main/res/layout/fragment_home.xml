@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray2"
     android:backgroundTint="@color/gray2"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,25 +17,23 @@
         <Button
             android:id="@+id/routes_button"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="12dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="12dp"
             android:backgroundTint="@color/greenhorus"
             android:drawableStart="@drawable/ic_routes"
             android:drawablePadding="12dp"
             android:fontFamily="@font/quicksand_light"
+            android:paddingStart="36sp"
             android:text="Iniciar Ruta"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="24dp"
             android:textStyle="bold"
             app:cornerRadius="16dp"
-            android:paddingStart="36sp"
             app:icon="@drawable/ic_routes"
             app:iconTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/settings_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -47,7 +45,7 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="160dp"
-            android:layout_marginBottom="600dp"
+            android:layout_marginBottom="630dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.415"
@@ -76,10 +74,10 @@
         <Button
             android:id="@+id/settings_button"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/quicksand_light"
+            android:paddingStart="36sp"
             android:text="Configuración"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -88,31 +86,28 @@
             app:cornerRadius="16dp"
             app:icon="@drawable/ic_settings"
             app:iconPadding="32sp"
-            android:paddingStart="36sp"
             app:iconTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/logout_button"
             app:layout_constraintEnd_toEndOf="@+id/routes_button"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/routes_button"
             app:layout_constraintTop_toBottomOf="@+id/routes_button" />
 
         <Button
             android:id="@+id/logout_button"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="12dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/quicksand_light"
+            android:paddingStart="36sp"
             android:text="Cerrar Sesión"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="24dp"
-            android:paddingStart="36sp"
             android:textStyle="bold"
             app:cornerRadius="16dp"
             app:icon="@drawable/ic_logout"
             app:iconPadding="18sp"
             app:iconTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/emergency_button"
             app:layout_constraintEnd_toEndOf="@+id/settings_button"
             app:layout_constraintStart_toStartOf="@+id/settings_button"
             app:layout_constraintTop_toBottomOf="@+id/settings_button" />
@@ -120,11 +115,11 @@
         <Button
             android:id="@+id/emergency_button"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="130dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#FF4949"
             android:fontFamily="@font/quicksand_light"
+            android:paddingStart="36sp"
             android:text="Emergencia"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -132,25 +127,12 @@
             android:textStyle="bold"
             app:cornerRadius="16dp"
             app:icon="@drawable/ic_sos"
-            android:paddingStart="36sp"
             app:iconTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/logout_button"
             app:layout_constraintStart_toStartOf="@+id/logout_button"
             app:layout_constraintTop_toBottomOf="@+id/logout_button" />
 
-        <ImageButton
-            android:id="@+id/mic_button"
-            style="@android:style/Widget.DeviceDefault.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emergency_button"
-            app:srcCompat="@drawable/ic_micro" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

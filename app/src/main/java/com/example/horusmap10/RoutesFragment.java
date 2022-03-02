@@ -115,7 +115,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                     mMap = marker.addMarkers(mMap);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18), 1000, null);
-                    choiseOption(myPosition);
+
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            choiseOption(myPosition);
+                        }
+                    });
 
                 }
             };
@@ -294,7 +301,6 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void choiseOption(LatLng myPosition){
-
         if (_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria")){
 
                     mostrador = prefs.getMostrador();
@@ -323,6 +329,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             creatRouteIngenieria(myPosition);
         }
         if (_binding.options.getText().toString().equals("Navegación Interna")){
+
             notification("Iniciando navegación interna");
             ((StartRouteActivity) Objects.requireNonNull(getActivity())).InDoorNotification();
         }
@@ -578,6 +585,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             case "biblioteca exacto":
                 if(prefs.getAlert() =="Activado") {
                     notification("Estas muy cerca de la biblioteca");
+
                     notification("continua caminando por la acera podotactil para llegar a la facultad de medicina");
                 }
                 distance=(int) getDistance(myPosition, line.biblioteca);

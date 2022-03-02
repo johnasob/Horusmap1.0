@@ -163,6 +163,10 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         val list6 = resources.getStringArray(R.array.comand_off)
         val profile = resources.getStringArray(R.array.comand_profile)
         val preguntas = resources.getStringArray(R.array.comand_question)
+        val edit = resources.getStringArray(R.array.comand_edit)
+        val interior = resources.getStringArray(R.array.comand_interior)
+        val terminar = resources.getStringArray(R.array.comand_finish)
+        val ruta1 = resources.getStringArray(R.array.comand_rute2)
 
         //start routes
         for (i in list1.indices) {
@@ -217,6 +221,33 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
                 replaceFragment(questionsFragment)
             }
         }
+
+        //Editar perfil
+        for (i in edit.indices) {
+            if (input == edit[i]) {
+                replaceFragment(editProfileFragment)
+            }
+        }
+
+        //Navegación inteior
+        for (i in interior.indices) {
+            if (input == interior[i]) {
+                InDoorNotification()
+            }
+        }
+        for (i in terminar.indices) {
+            if (input == terminar[i]) {
+                editProfileFragment.validation()
+                replaceFragment(profileFragment)
+            }
+        }
+        for (i in ruta1.indices) {
+            if (input == ruta1[i]) {
+
+            }
+        }
+        
+
     }
 
     override fun devolverDato(dato: Boolean) {

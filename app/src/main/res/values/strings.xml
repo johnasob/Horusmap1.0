@@ -112,6 +112,31 @@ SoporteHorusMap@gmail.com.</string>
         <item>opción perfil</item>
 
     </string-array>
+
+    <string-array name="comand_interior">
+        <item>Navegación interior</item>
+        <item>navegación interior</item>
+        <item>abrir navegación interior</item>
+        <item>Abrir navegación interior</item>
+        <item>abre navegación interior</item>
+        <item>ir a navegación interior</item>
+        <item>estoy adentro</item>
+        <item>Estoy adentro</item>
+        <item>ya estoy en la facultad</item>
+    </string-array>
+
+    <string-array name="comand_edit">
+        <item>editar información</item>
+        <item>Editar información</item>
+        <item>Actualizar información</item>
+        <item>actualizar información</item>
+        <item>ir a editar perfil</item>
+        <item>Ir a editar perfíl</item>
+        <item>Abre editar perfíl</item>
+        <item>abre editar perfil</item>
+        <item>abre actualizar información</item>
+    </string-array>
+
     <string-array name="comand_question">
         <item>Preguntas frecuentes</item>
         <item>preguntas frecuentes</item>
@@ -123,6 +148,51 @@ SoporteHorusMap@gmail.com.</string>
         <item>necesito información</item>
         <item>preguntas</item>
     </string-array>
+
+    <string-array name="comand_alert">
+        <item>configurar alertas</item>
+        <item>abrir configuración de alertas</item>
+        <item>configuración de alertas</item>
+        <item>modificar alertas</item>
+        <item>Modificar alertas</item>
+        <item>Abrir configuración de alertas</item>
+        <item>alertas</item>
+        <item>Alertas</item>
+        <item>actualizar alertas</item>
+    </string-array>
+
+    <string-array name="comand_finish">
+        <item>terminar</item>
+        <item>Terminar</item>
+        <item>guardar</item>
+        <item>Guardar</item>
+        <item>Finalizar</item>
+        <item>finalizar</item>
+        <item>ir a terminar</item>
+        <item>presiona terminar</item>
+        <item>Presionar terminar</item>
+    </string-array>
+
+    <string-array name="comand_rute2">
+        <item>ir a ingeniería</item>
+        <item>quiero ir a ingeniería</item>
+        <item>ingeniería</item>
+        <item>ruta portería ingeniería</item>
+        <item>Ingeniería</item>
+    </string-array>
+    <string-array name="comand_sonidos">
+        <item>configurar alertas sonoras</item>
+        <item>configurar sonidos</item>
+        <item>alertas de sonido</item>
+        <item>Alertas de sonido</item>
+        <item>Notificaciones de sonido</item>
+        <item>notificaciones de sonido</item>
+        <item>sonidos</item>
+        <item>Sonidos</item>
+        <item>configuración de sonidos</item>
+    </string-array>
+
+
 
     <string name="title_activity_start_route">StartRouteActivity</string>
     <string name="questions">¿Preguntas?</string>

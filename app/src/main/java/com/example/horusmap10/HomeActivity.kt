@@ -12,12 +12,14 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
+import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
 class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,SettingsFragment.ComunicadorFragments3
@@ -33,7 +35,8 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
     private val soundFragment = SoundFragment()
     private lateinit var thisActivity: HomeActivity
     private lateinit var back:Button
-
+    private lateinit var relativeLayout: RelativeLayout
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         /**parametros iniciales con biding*/
         super.onCreate(savedInstanceState)
@@ -48,6 +51,9 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         back.setOnClickListener {
             replaceFragment(homeFragment)
             back.visibility = View.INVISIBLE
+        }
+        mic_button.setOnClickListener {
+            askSpeechInput()
         }
 
     }
@@ -79,6 +85,10 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         val list4 = resources.getStringArray(R.array.comand_sos)
         val list5 = resources.getStringArray(R.array.comand_back)
         val list6 = resources.getStringArray(R.array.comand_off)
+        val profile = resources.getStringArray(R.array.comand_profile)
+        val edit = resources.getStringArray(R.array.comand_edit)
+        val sonidos = resources.getStringArray(R.array.comand_sonidos)
+        val alertas = resources.getStringArray(R.array.comand_alert)
 
         //start routes
         for (i in list1.indices) {
@@ -91,9 +101,7 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         //star settings
         for (i in list2.indices) {
             if (input == list2[i]) {
-                /*val intent = Intent(this, ProfileActivity::class.java)
-                intent.putExtra("apikey", apikey)
-                startActivity(intent)*/
+                replaceFragment(settingsFragment)
             }
         }
         //start logout
@@ -126,6 +134,33 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
                 onDestroy()
             }
         }
+
+        //Perfil
+        for (i in profile.indices) {
+            if (input == profile[i]) {
+                replaceFragment(profileFragment)
+            }
+        }
+
+        //Editar perfil
+        for (i in edit.indices) {
+            if (input == edit[i]) {
+                replaceFragment(editProfileFragment)
+            }
+        }
+        //Configurar alertas
+        for (i in alertas.indices) {
+            if (input == alertas[i]) {
+                replaceFragment(alertFragment)
+            }
+        }
+        //configurar sonidos
+        for (i in sonidos.indices) {
+            if (input == sonidos[i]) {
+                replaceFragment(soundFragment)
+            }
+        }
+
     }
 
     @SuppressLint("ObsoleteSdkInt")
@@ -187,12 +222,6 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         }
     }
 
-    override fun mic(dato: Boolean) {
-        if(dato==true){
-            askSpeechInput()
-        }
-    }
-
     override fun logout(dato: Boolean) {
         if(dato==true){
             val login = Intent(this, MainActivity::class.java)
@@ -212,6 +241,7 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
     override fun devolverDato5(dato: Boolean) {
         if(dato==true){
             replaceFragment(alertFragment)
+
         }
     }
 

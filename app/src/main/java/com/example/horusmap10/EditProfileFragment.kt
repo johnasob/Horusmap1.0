@@ -100,7 +100,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
-    private fun validation() {
+    fun validation() {
         val result = arrayOf(validateUser(), validateEmail())
         if (false in result) {
             return

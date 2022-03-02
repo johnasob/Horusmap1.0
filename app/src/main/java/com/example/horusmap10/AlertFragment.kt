@@ -74,4 +74,13 @@ class AlertFragment : Fragment() {
         actividadContenedora  = null
     }
 
+    fun saveState(){
+        Toast.makeText(requireContext(),"Esta entrando",Toast.LENGTH_SHORT).show()
+
+        if((state=="Activdado")||(state=="Desativado")) {
+            prefs.saveAlert(state)
+        }else{
+            Toast.makeText(requireContext(),"Debes de ingresar a la pantalla de ajuste del dato a guardar",Toast.LENGTH_SHORT).show()
+        }
+    }
 }

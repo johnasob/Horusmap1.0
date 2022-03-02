@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="micro_size">74dp</dimen>
+    <dimen name="design_fab_size_normal">90dp</dimen>
+    <dimen name="design_fab_size_mini">64dp</dimen>
 </resources>

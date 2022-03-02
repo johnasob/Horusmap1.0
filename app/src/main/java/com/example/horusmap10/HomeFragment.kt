@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 
 class HomeFragment : Fragment() {
@@ -46,10 +45,6 @@ class HomeFragment : Fragment() {
         logout.setOnClickListener {
             actividadContenedora!!.logout(true)
         }
-        val mic: ImageButton = requireView().findViewById(R.id.mic_button)
-        mic.setOnClickListener {
-            actividadContenedora!!.mic(true)
-        }
 
 
     }
@@ -58,7 +53,6 @@ class HomeFragment : Fragment() {
         fun starRoute(dato: Boolean)
         fun settings(dato: Boolean)
         fun sos(dato: Boolean)
-        fun mic(dato: Boolean)
         fun logout(dato:Boolean)
     }
     private var actividadContenedora : ComunicadorFragmentsHome? = null
