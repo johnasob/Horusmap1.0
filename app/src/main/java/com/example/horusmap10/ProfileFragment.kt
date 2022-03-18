@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 
@@ -35,7 +36,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        if(prefs.getAlert()!="Desactivado") {
+            Toast.makeText(
+                requireContext(),
+                "Usted se encuentra en la pestaña de perfíl",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 

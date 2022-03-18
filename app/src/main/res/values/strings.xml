@@ -62,6 +62,8 @@ SoporteHorusMap@gmail.com.</string>
         <item>ir a iniciar ruta</item>
         <item>rutas</item>
         <item>navegación exterior</item>
+        <item>navegacion</item>
+        <item>navegación</item>
         <item>ir a navegación exterior</item>
     </string-array>
     <string-array name="comand_logout">
@@ -116,6 +118,8 @@ SoporteHorusMap@gmail.com.</string>
     <string-array name="comand_interior">
         <item>Navegación interior</item>
         <item>navegación interior</item>
+        <item>navegacion interior</item>
+        <item>Navegacion interior</item>
         <item>abrir navegación interior</item>
         <item>Abrir navegación interior</item>
         <item>abre navegación interior</item>
@@ -177,9 +181,22 @@ SoporteHorusMap@gmail.com.</string>
         <item>ir a ingeniería</item>
         <item>quiero ir a ingeniería</item>
         <item>ingeniería</item>
+        <item>ingenieria</item>
         <item>ruta portería ingeniería</item>
         <item>Ingeniería</item>
     </string-array>
+
+    <string-array name="comand_rute1">
+        <item>ir a porteria</item>
+        <item>ir a portería</item>
+        <item>quiero ir a porteria</item>
+        <item>porteria</item>
+        <item>portería</item>
+        <item>ruta portería porteria</item>
+        <item>Porteria</item>
+        <item>Portería</item>
+    </string-array>
+
     <string-array name="comand_sonidos">
         <item>configurar alertas sonoras</item>
         <item>configurar sonidos</item>

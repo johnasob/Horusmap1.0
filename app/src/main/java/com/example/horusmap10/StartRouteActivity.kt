@@ -14,6 +14,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.speech.RecognizerIntent
 import android.widget.Button
 import android.widget.RemoteViews
@@ -56,6 +57,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private lateinit var notificationCustomStyle: Notification
     private var notificationCustomStyleID = 5
     private var notificationCustomStyleID2 = 2
+    private var ruta: String = "cualquier cosa"
 
 
     //lateinit var back: Button
@@ -112,26 +114,19 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     }
 
     public fun shownotify(cadena:String){
-
-        buildNotificationCustomStyle(cadena)
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(notificationCustomStyleID, notificationCustomStyle)
-    }
-    public fun shownotify2(cadena:String){
-
-        buildNotificationCustomStyle(cadena)
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(notificationCustomStyleID2, notificationCustomStyle)
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            buildNotificationCustomStyle(cadena)
+            val notificationManager = NotificationManagerCompat.from(this)
+            notificationManager.notify(notificationCustomStyleID, notificationCustomStyle)
+        }, 6000)
     }
 
     private fun replaceFragment(fragment: Fragment){
-        if(fragment !=null){
             val transition = supportFragmentManager.beginTransaction()
             transition.addToBackStack(null)
             transition.replace(R.id.fragmentContainerView, fragment)
             transition.commit()
-
-        }
     }
     // VERIFICACIÓN DE ENTRADA DE AUDIO
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -166,13 +161,13 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         val edit = resources.getStringArray(R.array.comand_edit)
         val interior = resources.getStringArray(R.array.comand_interior)
         val terminar = resources.getStringArray(R.array.comand_finish)
-        val ruta1 = resources.getStringArray(R.array.comand_rute2)
-
+        val ruta1 = resources.getStringArray(R.array.comand_rute1)
+        val ruta2=resources.getStringArray(R.array.comand_rute2)
         //start routes
         for (i in list1.indices) {
             if (input == list1[i]) {
                 replaceFragment(routesFragment)
-            }
+                 }
         }
         //star settings
         for (i in list2.indices) {
@@ -243,10 +238,16 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         }
         for (i in ruta1.indices) {
             if (input == ruta1[i]) {
-
+                ruta="porteria"
             }
         }
-        
+
+        for (i in ruta2.indices) {
+            if (input == ruta2[i]) {
+                ruta="ingenieria"
+            }
+        }
+
 
     }
 
@@ -290,8 +291,6 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     override fun devolverDato7(dato: Boolean) {
         TODO("Not yet implemented")
     }
-
-
     override fun devolverDato9(dato: Boolean) {
         if(dato==true){
 
@@ -299,13 +298,11 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
         }
     }
-
     override fun sounds(dato: Boolean) {
         if(dato==true){
             replaceFragment(settingsFragment)
         }
     }
-
     override fun devolversounds(dato: Boolean) {
         if(dato==true){
             replaceFragment(soundFragment)
@@ -384,25 +381,14 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         }.build()
     }
 
-    private fun buildNotificationCustomStyle2(cadena:String) {
-        val notificationLayout = RemoteViews(packageName, R.layout.notification_small)
-        val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_expanded)
-        notificationLayout.setTextViewText(R.id.textViewTitle,"HORUSMAP")
-        notificationLayout.setTextViewText(R.id.textViewText,cadena)
-        notificationLayoutExpanded .setTextViewText(R.id.textViewText,"HORUSMAP")
-        notificationLayoutExpanded .setTextViewText(R.id.textViewText,cadena)
-        notificationCustomStyle = NotificationCompat.Builder(this, channelId2).also {
-            it.setSmallIcon(R.drawable.ic_horus_eye_edit)
-            //it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            it.setCustomContentView(notificationLayout)
-            it.setCustomBigContentView(notificationLayoutExpanded)
-        }.build()
-    }
-
     fun InDoorNotification(){
         val InDoor = Intent(this, InDoor::class.java)
         startActivity(InDoor)
-        onPause()
+        onDestroy()
+    }
+
+    fun rutas():String{
+        return (ruta)
     }
 
 }

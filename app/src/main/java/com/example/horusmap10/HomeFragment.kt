@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.horusmap10.Horusmap1.Horusmap
 
 class HomeFragment : Fragment() {
 
@@ -27,7 +29,13 @@ class HomeFragment : Fragment() {
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        if(Horusmap.prefs.getAlert()!="Desactivado") {
+            Toast.makeText(
+                requireContext(),
+                "Usted se encuentra en el menú de la pantalla principal",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
         val contrast: Button = requireView().findViewById(R.id.routes_button)
         contrast.setOnClickListener {

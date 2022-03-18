@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.core.util.PatternsCompat
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap
+import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.databinding.FragmentEditProfileBinding
-
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -39,6 +39,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        if(prefs.getAlert()!="Desactivado") {
+            Toast.makeText(
+                requireContext(),
+                "Usted esta en la pestaña de edición de perfil",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         _binding = FragmentEditProfileBinding.inflate(layoutInflater, container,false )
         ip = Horusmap.prefs.getIp()
         apikey = Horusmap.prefs.getApikey()

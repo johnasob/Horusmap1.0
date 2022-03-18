@@ -21,6 +21,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        if(prefs.getAlert()!="Desactivado") {
+            Toast.makeText(
+                this,
+                "Usted se encuentra iniciando sesión",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity=this

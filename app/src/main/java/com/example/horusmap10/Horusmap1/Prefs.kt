@@ -10,7 +10,7 @@ class Prefs(val context: Context) {
         state.edit().putString("apikey",apikey).apply()
     }
     fun getIp():String{
-        return "192.168.1.14:8080"
+        return "192.168.1.5:8080"
     }
     fun getApikey():String{
         return state.getString("apikey","")!!

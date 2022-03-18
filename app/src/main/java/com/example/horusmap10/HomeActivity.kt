@@ -57,6 +57,8 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         }
 
     }
+
+
     // VERIFICACIÓN DE ENTRADA DE AUDIO
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

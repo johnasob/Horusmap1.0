@@ -23,6 +23,13 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(prefs.getAlert()!="Desactivado") {
+            Toast.makeText(
+                this,
+                "Usted se encuentra en la pantalla de registro",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         thisActivity= this
