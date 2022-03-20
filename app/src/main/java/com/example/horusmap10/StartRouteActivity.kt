@@ -161,8 +161,11 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         val edit = resources.getStringArray(R.array.comand_edit)
         val interior = resources.getStringArray(R.array.comand_interior)
         val terminar = resources.getStringArray(R.array.comand_finish)
-        val ruta1 = resources.getStringArray(R.array.comand_rute1)
-        val ruta2=resources.getStringArray(R.array.comand_rute2)
+        val alert = resources.getStringArray(R.array.comand_alert)
+        val ruta1 = resources.getStringArray(R.array.comand_rute2)
+        val ruta2=resources.getStringArray(R.array.comand_rute1)
+        val acti=resources.getStringArray(R.array.comand_activated)
+        val noacti=resources.getStringArray(R.array.comand_noactivated)
         //start routes
         for (i in list1.indices) {
             if (input == list1[i]) {
@@ -210,6 +213,11 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
                 replaceFragment(profileFragment)
             }
         }
+        for (i in alert.indices) {
+            if (input == alert[i]) {
+                replaceFragment(alertFragment)
+            }
+        }
         //Preguntas  y respuestas
         for (i in preguntas.indices) {
             if (input == preguntas[i]) {
@@ -245,6 +253,20 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         for (i in ruta2.indices) {
             if (input == ruta2[i]) {
                 ruta="ingenieria"
+            }
+        }
+        for (i in acti.indices) {
+            if (input == acti[i]) {
+                val bundle = Bundle()
+                bundle.putString("comand","activar")
+                alertFragment.arguments = bundle
+            }
+        }
+        for (i in noacti.indices) {
+            if (input == noacti[i]) {
+                val bundle = Bundle()
+                bundle.putString("comand","desactivar")
+                alertFragment.arguments = bundle
             }
         }
 

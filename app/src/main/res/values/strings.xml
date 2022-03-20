@@ -114,7 +114,6 @@ SoporteHorusMap@gmail.com.</string>
         <item>opción perfil</item>
 
     </string-array>
-
     <string-array name="comand_interior">
         <item>Navegación interior</item>
         <item>navegación interior</item>
@@ -138,6 +137,10 @@ SoporteHorusMap@gmail.com.</string>
         <item>Ir a editar perfíl</item>
         <item>Abre editar perfíl</item>
         <item>abre editar perfil</item>
+        <item>editar</item>
+        <item>abre editar</item>
+        <item>editar perfil</item>
+        <item>editar perfíl</item>
         <item>abre actualizar información</item>
     </string-array>
 
@@ -198,19 +201,31 @@ SoporteHorusMap@gmail.com.</string>
     </string-array>
 
     <string-array name="comand_sonidos">
-        <item>configurar alertas sonoras</item>
-        <item>configurar sonidos</item>
-        <item>alertas de sonido</item>
-        <item>Alertas de sonido</item>
-        <item>Notificaciones de sonido</item>
-        <item>notificaciones de sonido</item>
-        <item>sonidos</item>
-        <item>Sonidos</item>
-        <item>configuración de sonidos</item>
+    <item>configurar alertas sonoras</item>
+    <item>configurar sonidos</item>
+    <item>alertas de sonido</item>
+    <item>Alertas de sonido</item>
+    <item>Notificaciones de sonido</item>
+    <item>notificaciones de sonido</item>
+    <item>sonidos</item>
+    <item>Sonidos</item>
+    <item>configuración de sonidos</item>
     </string-array>
 
+    <string-array name="comand_activated">
+        <item>activar</item>
+        <item>Activar</item>
+        <item>presiona activar</item>
+        <item>Presiona activar</item>
+    </string-array>
 
+    <string-array name="comand_noactivated">
+        <item>desactivar</item>
+        <item>Desactivar</item>
+        <item>presiona desactivar</item>
+        <item>Presiona desactivar</item>
 
+    </string-array>
     <string name="title_activity_start_route">StartRouteActivity</string>
     <string name="questions">¿Preguntas?</string>
     <string name="settings">Configuración</string>

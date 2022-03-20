@@ -16,6 +16,7 @@ import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 class AlertFragment : Fragment() {
 
     private lateinit var state: String
+    var comand: String ="lo que sea"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,6 +38,7 @@ class AlertFragment : Fragment() {
     @SuppressLint("UseRequireInsteadOfGet", "UseSwitchCompatOrMaterialCode", "CutPasteId")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         state = prefs.getAlert()
         Toast.makeText(requireContext(),"EL estado actual de las alertas es:  "+prefs.getAlert(),Toast.LENGTH_SHORT).show()
 
@@ -53,6 +55,7 @@ class AlertFragment : Fragment() {
         {
             requireView().findViewById<Switch>(R.id.switch_alert).isChecked =false
         }
+
         noti.setOnCheckedChangeListener {buttonView, isChecked ->
             if(isChecked){
                 Toast.makeText(requireContext(),"Alertas activadas",Toast.LENGTH_SHORT).show()
@@ -89,5 +92,21 @@ class AlertFragment : Fragment() {
         }else{
             Toast.makeText(requireContext(),"Debes de ingresar a la pantalla de ajuste del dato a guardar",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(arguments!=null){
+            comand = arguments!!.getString("comand").toString()
+        }
+        if(comand== "activar"){
+            requireView().findViewById<Switch>(R.id.switch_alert).isChecked =true
+            state="Activado"
+        }else if(comand == "desactivar")
+        {
+            requireView().findViewById<Switch>(R.id.switch_alert).isChecked =false
+            state="Desactivado"
+        }
+
     }
 }

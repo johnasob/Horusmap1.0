@@ -22,14 +22,14 @@ public class line {
     public Polyline Ruta1;
     private static final int COLOR_BLACK_ARGB = 0xFD0000;
     private static final int PRIORITY_HIGH_ACCURACY = 100;
-    public static final LatLng ingenieria = new LatLng(4.5559181642264654, -75.66006419127707);
-    public static final LatLng porteria = new LatLng(4.556286, -75.658436);
-    public static final LatLng biblioteca = new LatLng(4.5565694, -75.6596335);
+    public static final LatLng ingenieria = new LatLng(4.5560932, -75.6601713);
+    public static final LatLng porteria = new LatLng(4.556319, -75.658436);
+    public static final LatLng biblioteca = new LatLng(4.556486, -75.659639);
     public static final LatLng medicina = new LatLng(4.55646, -75.65904);
     public static final LatLng cajero = new LatLng(4.55638, -75.65871);
     public static final LatLng capilla = new LatLng(4.55642, -75.65933);
     public static final LatLng escaleras = new LatLng(4.55630, -75.65995);
-    public static final LatLng maria = new LatLng(4.5564872, -75.6593398);
+    public static final LatLng maria = new LatLng(4.5564851, -75.659308);
     public static final int PORTERIA = 0;
     public static final int CAJERO = 1;
     public static final int MEDICINA = 2;
@@ -70,7 +70,6 @@ public class line {
         googleMap.addMarker(new MarkerOptions().position(escaleras).title("Escaleras").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_escaleras)));
         googleMap.addMarker(new MarkerOptions().position(biblioteca).title("Biblioteca").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_biblioteca)));
         googleMap.addMarker(new MarkerOptions().position(medicina).title("Facultad de medicina").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_medicine)));
-        googleMap.addMarker(new MarkerOptions().position(maria).title("Laboratorio al aire libre Maria Cano").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_artes)));
 
         return googleMap;
     }

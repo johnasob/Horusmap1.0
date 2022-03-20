@@ -36,6 +36,8 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
     private lateinit var thisActivity: HomeActivity
     private lateinit var back:Button
     private lateinit var relativeLayout: RelativeLayout
+
+
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         /**parametros iniciales con biding*/
@@ -91,6 +93,8 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         val edit = resources.getStringArray(R.array.comand_edit)
         val sonidos = resources.getStringArray(R.array.comand_sonidos)
         val alertas = resources.getStringArray(R.array.comand_alert)
+        val acti=resources.getStringArray(R.array.comand_activated)
+        val noacti=resources.getStringArray(R.array.comand_noactivated)
 
         //start routes
         for (i in list1.indices) {
@@ -160,6 +164,20 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
         for (i in sonidos.indices) {
             if (input == sonidos[i]) {
                 replaceFragment(soundFragment)
+            }
+        }
+        for (i in acti.indices) {
+            if (input == acti[i]) {
+                val bundle = Bundle()
+                bundle.putString("comand","activar")
+                alertFragment.arguments = bundle
+            }
+        }
+        for (i in noacti.indices) {
+            if (input == noacti[i]) {
+                val bundle = Bundle()
+                bundle.putString("comand","desactivar")
+                alertFragment.arguments = bundle
             }
         }
 
@@ -295,6 +313,5 @@ class HomeActivity : AppCompatActivity(),HomeFragment.ComunicadorFragmentsHome,S
             replaceFragment(soundFragment)
         }
     }
-
 
 }
