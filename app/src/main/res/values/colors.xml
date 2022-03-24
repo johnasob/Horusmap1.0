@@ -15,5 +15,6 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="green_focused">#07EC00</color>
     <color name="red">#FD0000</color>
+    <color name="greenhorus_claro">#B9639761</color>
 
 </resources>

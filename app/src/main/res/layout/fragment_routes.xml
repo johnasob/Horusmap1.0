@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:contentDescription="Pantalla de navegación exterior"
     android:layout_height="match_parent"
     tools:context=".RoutesFragment">
 
@@ -51,7 +52,7 @@
             android:layout_marginEnd="12dp"
             android:background="@drawable/custom_imput"
             app:endIconMode="dropdown_menu"
-            android:hint="DALE CLICK PARA ESCOJER UNA RUTA"
+            android:hint="DALE CLICK PARA ESCOGER UNA RUTA"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/navegation_textView">

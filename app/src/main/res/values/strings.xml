@@ -104,6 +104,8 @@ SoporteHorusMap@gmail.com.</string>
     <string-array name="comand_profile">
         <item>perfíl</item>
         <item>Perfíl</item>
+        <item>Perfil</item>
+        <item>perfil</item>
         <item>ir a perfíl</item>
         <item>ir a perfil</item>
         <item>pantalla de perfil</item>
@@ -164,6 +166,8 @@ SoporteHorusMap@gmail.com.</string>
         <item>Modificar alertas</item>
         <item>Abrir configuración de alertas</item>
         <item>alertas</item>
+        <item>alerta</item>
+        <item>Alerta</item>
         <item>Alertas</item>
         <item>actualizar alertas</item>
     </string-array>
@@ -233,9 +237,9 @@ SoporteHorusMap@gmail.com.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="map">Navegación</string>
-    <string name="navegation_out">Navegación Interior</string>
-    <string name="choice_route">Escoje una ruta</string>
-    <string name="title_terms">Terminos y condiciones</string>
+    <string name="navegation_out">Navegación Exterior</string>
+    <string name="choice_route">Escoge una ruta</string>
+    <string name="title_terms">Términos y condiciones</string>
     <string name="sos_number">123</string>
     <string-array name="routes">
         <item>Porteria a Facultad de ingenieria</item>
@@ -255,10 +259,10 @@ SoporteHorusMap@gmail.com.</string>
     <string name="level4">Cuarto Nivel</string>
     <string name="facult">Facultad de Ingeniería</string>
     <string name="close_places"><u>Lugares cercanos</u></string>
-    <string name="inge1">* Oficina IEEE\n* Escaleras aulas 101 a la 103\n* Escaleras al nivel dos \n</string>
-    <string name="inge2">* Decanatura de ingeniería\n* Oficina de ingeniería Civil\n* Aulas de diseño\n</string>
-    <string name="inge3">* Oficina de Ing. Electrónica\n* Laboratorio de telemática\n* Oficina de Ing. sistemas\n</string>
-    <string name="inge4">* Aulas cuarto piso\n* Lab. de Electrónica\n* Unidad de Extension\n</string>
+    <string name="inge1">Oficina IEEE.\n Escaleras aulas 101 a la 103.\n Escaleras al nivel dos.\n</string>
+    <string name="inge2">Decanatura de ingeniería.\n Oficina de ingeniería Civil.\n Aulas de diseño.\n</string>
+    <string name="inge3">Oficina de Ingeniería Electrónica.\nLaboratorio de telemática.\nOficina de Ingeniería de sistemas.\n</string>
+    <string name="inge4">Aulas cuarto piso.\nLaboratorio de Electrónica.\nUnidad de Extension.\n</string>
     <string name="end_route">Terminar Ruta</string>
 
 </resources>

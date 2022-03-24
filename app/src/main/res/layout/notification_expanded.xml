@@ -22,7 +22,7 @@
             android:layout_weight="5">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Título de mi notificación"
@@ -30,6 +30,7 @@
                 style="@style/TextAppearance.Compat.Notification.Title" />
 
             <TextView
+                android:id="@+id/textView1a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contenido de la notificación\nCon mayor contenido de texto..."

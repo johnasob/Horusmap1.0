@@ -211,6 +211,7 @@ class InDoor : AppCompatActivity() {
                         if(address =="DC:0D:30:00:18:F2"){
                             level_actual.text = getString(string.level3)
                             multi2.text = getString(string.inge3)
+                            multi2.contentDescription =  getString(string.inge3)
                             Handler(Looper.getMainLooper()).postDelayed(
                                 {
 
@@ -222,6 +223,7 @@ class InDoor : AppCompatActivity() {
                         }else{
                             level_actual.text = getString(string.level4)
                             multi2.text = getString(string.inge4)
+                            multi2.contentDescription = getString(string.inge4)
                             Handler(Looper.getMainLooper()).postDelayed(
                                 {
 

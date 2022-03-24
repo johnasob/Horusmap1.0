@@ -9,6 +9,7 @@
     <item
         android:id="@+id/questions_fragment"
         android:title="@string/questions"
+        android:contentDescription="Presiona para ir a pantalla de preguntas"
         android:iconTint="@color/black"
         android:icon="@drawable/ic_help"/>
     <item
@@ -19,12 +20,14 @@
     <item
         android:id="@+id/settings_fragment"
         android:title="@string/settings"
+        android:contentDescription="Presiona para ir a pantalla de configuración"
         android:iconTint="@color/black"
         android:icon="@drawable/ic_settings"/>
     <item
         android:id="@+id/profile_fragment"
         android:title="@string/profile"
         android:iconTint="@color/black"
+        android:contentDescription="Presiona para ir a pantalla de perfil"
         android:icon="@drawable/ic_user" />
 
 </menu>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_toast_ok"
+    android:layout_width="wrap_content"
+    android:background="@drawable/back_ground_green"
+    android:layout_height="wrap_content"
+    android:padding="20sp"
+    style="@style/Theme.MaterialComponents.NoActionBar"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/horusito"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_horus_eye_edit"></ImageView>
+<TextView
+    android:paddingStart="10sp"
+    android:id="@+id/cadena"
+    style="@style/Theme.MaterialComponents.NoActionBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Navegación"
+    android:textStyle="bold">
+
+</TextView>
+
+</LinearLayout>

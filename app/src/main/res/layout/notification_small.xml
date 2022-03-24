@@ -16,15 +16,15 @@
         android:padding="4dp">
 
         <TextView
-            android:id="@+id/textViewTitle"
+            android:id="@+id/textViewTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Título de mi notificación"
+            android:text="HORUSMAP"
             android:textSize="16sp"
             style="@style/TextAppearance.Compat.Notification.Title" />
 
         <TextView
-            android:id="@+id/textViewText"
+            android:id="@+id/textViewText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contenido de la notificación"

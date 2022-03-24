@@ -104,8 +104,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\horus-default.png" />
-                                                <entry key="scalingPercent" value="71" />
+                                                <entry key="imagePath" value="C:\Users\JOHN\Downloads\trabajo de grado\horus\imagenes\horus-eye.svg" />
+                                                <entry key="scalingPercent" value="75" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -141,7 +141,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="outputName" value="ic_horus_default" />
+                                      <entry key="outputName" value="ic_horus_icono" />
                                     </map>
                                   </option>
                                 </PersistentState>

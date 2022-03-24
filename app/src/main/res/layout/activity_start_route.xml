@@ -31,6 +31,7 @@
         app:backgroundTint="@color/white"
         app:fabAlignmentMode="center"
         app:fabCradleMargin="6dp"
+        android:contentDescription="Barra de navegación"
         app:fabCradleRoundedCornerRadius="30dp"
         app:fabCradleVerticalOffset="6dp"
         app:navigationIconTint="@color/white">
@@ -60,11 +61,13 @@
         android:src="@drawable/ic_micro"
         android:theme="@style/Theme.start"
         app:fabCustomSize="@dimen/micro_size"
+        android:contentDescription="Botón de microfono"
         app:layout_anchor="@id/bottom_app_bar"
         app:maxImageSize="@dimen/micro_size" />
     <Button
         android:id="@+id/back_home_button"
         android:layout_width="36dp"
+        android:contentDescription="Botón para volver"
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
         android:layout_marginStart="2dp"

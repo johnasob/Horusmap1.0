@@ -16,6 +16,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.speech.RecognizerIntent
+import android.view.Gravity
 import android.widget.Button
 import android.widget.RemoteViews
 import android.widget.Toast
@@ -25,11 +26,15 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 import com.example.horusmap10.SettingsFragment.ComunicadorFragments3
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_start_route.*
+import kotlinx.android.synthetic.main.custom_toast_ok.*
+import kotlinx.android.synthetic.main.custom_toast_ok.view.*
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -333,6 +338,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
     @SuppressLint("ObsoleteSdkInt")
     private fun requestPermission(){
+        Toast.makeText(this,"LLamando a emergencias",Toast.LENGTH_LONG).show()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when {
                 ContextCompat.checkSelfPermission(
@@ -391,28 +397,41 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private fun buildNotificationCustomStyle(cadena:String) {
         val notificationLayout = RemoteViews(packageName, R.layout.notification_small)
         val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_expanded)
-        notificationLayout.setTextViewText(R.id.textViewTitle,"HORUSMAP")
-        notificationLayout.setTextViewText(R.id.textViewText,cadena)
-        notificationLayoutExpanded .setTextViewText(R.id.textViewText,"HORUSMAP")
-        notificationLayoutExpanded .setTextViewText(R.id.textViewText,cadena)
+        notificationLayout.setTextViewText(R.id.textViewTitle2,"horusmap")
+        notificationLayout.setTextViewText(R.id.textViewText2,cadena)
+        notificationLayoutExpanded.setTextViewText(R.id.textView1,"horusmap")
+        notificationLayoutExpanded.setTextViewText(R.id.textView1a,cadena)
+
         notificationCustomStyle = NotificationCompat.Builder(this, channelId).also {
             it.setSmallIcon(R.drawable.ic_horus_eye_edit)
             //it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
             it.setCustomContentView(notificationLayout)
             it.setCustomBigContentView(notificationLayoutExpanded)
+            it.setPriority(0)
         }.build()
     }
 
     fun InDoorNotification(){
         val InDoor = Intent(this, InDoor::class.java)
         startActivity(InDoor)
-        onDestroy()
+        finish()
     }
 
     fun rutas():String{
         return (ruta)
     }
+    fun toteitor(msg: String?) {
+        val layout2 = layoutInflater.inflate(R.layout.custom_toast_ok,custom_toast_ok)
+        val myToast = Toast(this)
+        layout2.cadena.text = msg
+        myToast.duration = Toast.LENGTH_LONG
+        myToast.setGravity(Gravity.BOTTOM, 0, 200)
+        myToast.view = layout2//setting the view of custom toast layout
+        lifecycleScope.launch{
+            myToast.show()
+        }
 
+    }
 }
 
 

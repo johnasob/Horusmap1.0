@@ -22,6 +22,7 @@
             android:background="@color/transparent"
             app:icon="@drawable/ic_back"
             app:iconTint="#000000"
+            android:contentDescription="Botón de volver"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +48,7 @@
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_micro"
         android:theme="@style/Theme.start"
+        android:contentDescription="Botón de microfono"
         app:fabCustomSize="@dimen/micro_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

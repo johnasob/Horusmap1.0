@@ -27,15 +27,15 @@
         android:name=".Horusmap1.Horusmap"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:icon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_horus_icono"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_horus_icono"
         android:supportsRtl="true"
         android:theme="@style/Theme.login"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".InDoor"
-            android:exported="true" />
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -45,7 +45,7 @@
             android:name=".StartRouteActivity"
             android:allowBackup="true"
             android:exported="false"
-            android:label="@string/title_activity_start_route"
+            android:label="PANTALLA DE NAVEGACIÓN"
             android:supportsRtl="true"
             android:theme="@style/Theme.start"
             tools:ignore="RtlEnabled" >
