@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
+/**PANTALLA DE PREGUNTAS FRECUENTES*/
 public class QuestionsFragment extends Fragment {
     private ExpandableListView expLV;
     private ExpLVAdapter adapter;

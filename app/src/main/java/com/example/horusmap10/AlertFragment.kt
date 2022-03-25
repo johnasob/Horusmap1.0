@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.horusmap10.Horusmap1.Horusmap.Companion.prefs
 
-
+/**PANTALLA DE CONFIGURACIÓN DE ALERTAS*/
 class AlertFragment : Fragment() {
 
     private lateinit var state: String

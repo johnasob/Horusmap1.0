@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.custom_toast_ok.view.*
 import kotlinx.coroutines.launch
 import java.util.*
 
-
+/**PANTALLA DE NAVEGACIÓN EXTERIOR Y SUS RESPECTIVAS PESTAÑAS*/
 class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragments,EditProfileFragment.ComunicadorFragments2,
     ComunicadorFragments3,AlertFragment.ComunicadorFragments6,SoundFragment.ComunicadorFragmentsSounds{
     private val  RQ_SPEECH_REC = 102
@@ -63,11 +63,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
     private var notificationCustomStyleID = 5
     private var notificationCustomStyleID2 = 2
     private var ruta: String = "cualquier cosa"
-
-
-    //lateinit var back: Button
-
-
+    //NAVEGACIÓN E INICIALIZACIÓN DE LA VISTA DEL FRAGMENTO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_route)
@@ -117,7 +113,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
         }
 
     }
-
+    //IMPRESIÓN DE LA NOTIFICACIÓN DESPLEGABLE
     public fun shownotify(cadena:String){
         val handler = Handler()
         handler.postDelayed(Runnable {
@@ -277,7 +273,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
 
 
     }
-
+/**MÉTODOS PARA NAVEGAR ENTRE FRAGMENTS DEL ACTIVITY*/
     override fun devolverDato(dato: Boolean) {
         if(dato==true){
             replaceFragment(editProfileFragment)
@@ -335,7 +331,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
             replaceFragment(soundFragment)
         }
     }
-
+    /**SOLICITUD DEL PERMISO DE MICROFONO*/
     @SuppressLint("ObsoleteSdkInt")
     private fun requestPermission(){
         Toast.makeText(this,"LLamando a emergencias",Toast.LENGTH_LONG).show()
@@ -353,6 +349,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
             call()
         }
     }
+    /**LLAMADO AL 123*/
     private fun call() {
         startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:${getString(R.string.sos_number)}")))
     }
@@ -393,7 +390,7 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
             manager.createNotificationChannel(channel)
         }
     }
-
+    /**CREACIÓN NOTIFICACIONES DESPLEGABLES PERSONALIZADAS POR NOSOTROS*/
     private fun buildNotificationCustomStyle(cadena:String) {
         val notificationLayout = RemoteViews(packageName, R.layout.notification_small)
         val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_expanded)
@@ -410,16 +407,17 @@ class StartRouteActivity : AppCompatActivity(), ProfileFragment.ComunicadorFragm
             it.setPriority(0)
         }.build()
     }
-
+    /**INICIAR NAVEGACIÓN INTERIOR*/
     fun InDoorNotification(){
         val InDoor = Intent(this, InDoor::class.java)
         startActivity(InDoor)
         finish()
     }
-
+    //Se envia la ruta dicha en el microfono
     fun rutas():String{
         return (ruta)
     }
+    /**CREACIÓN DE MENSAJE TOAST PERSONALIZADO POR NOSOTROS*/
     fun toteitor(msg: String?) {
         val layout2 = layoutInflater.inflate(R.layout.custom_toast_ok,custom_toast_ok)
         val myToast = Toast(this)

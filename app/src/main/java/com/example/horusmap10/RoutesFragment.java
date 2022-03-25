@@ -70,7 +70,7 @@ import java.util.Objects;
 import kotlinx.coroutines.Delay;
 import kotlinx.coroutines.Dispatchers;
 import kotlinx.coroutines.GlobalScope;
-
+/**NAVEGACIÓN EXTERIOR*/
 public class RoutesFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     View vista;
     Activity actividad;
@@ -97,7 +97,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         public void onLocationChanged(Location location) {
             myPosition= new LatLng(location.getLatitude(),location.getLongitude());
         }
-
+/**LLAMADO AL MAPA DE GOOGLE MAPS*/
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
 
@@ -115,51 +115,33 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+            //ACTIVACIÓN DEL LA UBICACIÓN EN TIEMPO REAL
             mMap.setMyLocationEnabled(true);
+            //PETICIÓN DEL PERMISO GPS
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-
+            /**GRAFICADOR DEL MAPA, LOS PUNTOS DE INTERES, LOS MENSAJES Y LA RUTA DE NAVEGACIÓN*/
             mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                 @Override
                 public void onMyLocationChange(@NonNull Location location) {
                     mMap.clear();
+                    //IGUALACIÓN DE LA UBICACIÓN ACTUAL A LA VARIABLE GLOBAL QUE LA GUARDARÁ
                     myPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap = marker.addMarkers(mMap);
-                    //mMap.addMarker(new MarkerOptions().position(myPosition));
-
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18),100, null);
-
+                    //LLAMADO A LA RUTA DE NAVEGACIÓN Y LA GRÁFICA DE SU RUTA
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         choiseOption(myPosition);
                     }
                 }
             });
-/*
-            LocationManager locationManager = (LocationManager) requireContext().getSystemService(LOCATION_SERVICE);
-            LocationListener locationListener = new LocationListener() {
-                @SuppressLint("MissingPermission")
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onLocationChanged(Location location) {
-                    // se accede a las opciones de ubicación
-                   //Toast.makeText(requireContext(), "POSICIÓN: "+myPosition.latitude+", "+myPosition.longitude+"\nESTATION:"+stations, Toast.LENGTH_LONG).show();
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            choiseOption(myPosition);
-                        }
-                    });
-
-                }
-            };
-
- */}
+}
 
 
     };
-
+    //SOLICITUD DEL PERMISO FINE_LOCATION
     private void getLocationPermision() {
         int permiso = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         if (permiso == PackageManager.PERMISSION_DENIED) {
@@ -170,6 +152,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         }
     }
 
+    /**CALCULADOR DE LA DISTANCIA ENTRE DOS COORDENADAS GEOGRÁFICAS*/
     public double getDistance(LatLng StartP, LatLng EndP) {
         int Radius = 6371;// radio de la tierra en  kilómetros
         double lat1 = StartP.latitude;
@@ -191,7 +174,6 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         int meterInDec = Integer.valueOf(newFormat.format(meter));
         Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
                 + " Meter   " + meterInDec);
-
         return Radius * c*1000;
     }
     @Nullable
@@ -200,9 +182,11 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         getLocationPermision();
+        //Igualación de la vista con el parametro binding para facilitar la edición de la vista
         _binding = FragmentRoutesBinding.inflate(getLayoutInflater());
         vista = _binding.getRoot();
         prefs.saveMostrador("inicio");
+        // CREACIÓN DEL LA BARRA DESPLEGABLE PARA ESCOJER RUTA
         spinner = _binding.options;
         spinner.setOnItemSelectedListener(this);
         String[] route = vista.getResources().getStringArray(R.array.routes);
@@ -235,7 +219,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> parent) {
     }
     /**
-     * Metodo que encuentra la distancia entre dos coordenadas
+     * Metodo para definir la estación o sección del mapa en la que se encuentra
      */
 
     private void getStation(LatLng myPosition){
@@ -361,12 +345,15 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         }
       }
 
+      /**SELECTOR DE RUTA Ó NAVEGACIÓN INTERIOR*/
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void choiseOption(LatLng myPosition){
         String opcion=((StartRouteActivity) Objects.requireNonNull(getActivity())).rutas();
+        // Se cargan los datos guardado en la app, para saber si mostrar las notificaciones
         mostrador = prefs.getMostrador();
         notificacion = prefs.getAlert();
         sounds  = prefs.getSounds();
+        //Se selecciono ruta portería a facultad de ingeniería
         if ((_binding.options.getText().toString().equals("Porteria a Facultad de ingenieria"))||(opcion=="porteria")){
 
             if(mostrador != "porteria") {
@@ -381,9 +368,10 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 mostrador = "porteria";
                 prefs.saveMostrador(mostrador);
                     }
-
+            // Se gráfica la ruta y se muestran los mensajes acordes a la ruta escojida y a la posición actual
             creatRoutePorteria(myPosition);
         }
+        //Se selecciono ruta ingeniería a portería
         if ((_binding.options.getText().toString().equals("Facultad de ingenieria a porteria"))||(opcion=="ingenieria")){
             if (mostrador != "ingenieria") {
                 if(prefs.getAlert()!="Desativado"){
@@ -396,15 +384,17 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 mostrador = "ingenieria";
                 prefs.saveMostrador(mostrador);
             }
-
+            // Se gráfica la ruta y se muestran los mensajes acordes a la ruta escojida y a la posición actual
             creatRouteIngenieria(myPosition);
 
         }
+        //Se inicia la navegación interior
         if (_binding.options.getText().toString().equals("Navegación Interna")){
             ((StartRouteActivity) Objects.requireNonNull(getActivity())).toteitor("Iniciando navegación interior");
             ((StartRouteActivity) Objects.requireNonNull(getActivity())).InDoorNotification();
         }
     }
+    //Reproductor de sonidos según se lo requiera
     private void playsound(String archivo) {
 
         switch (archivo) {
@@ -426,6 +416,8 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         }
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
     }
+
+    /**RUTA PORTERÍA A INGENIERÍA*/
     private void creatRoutePorteria(LatLng start){
 
         closerPoint(myPosition);
@@ -434,6 +426,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         int distanceFinish = 0;
         String aviso="";
         getStation(myPosition);
+        //Según sea el punto más cercano se gráfica la ruta de acuerdo a las coordenada y se muestra el mensaje
         switch (closePoint.name()) {
             case "porteria":
 
@@ -601,6 +594,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 break;
         }
 
+        //Según la estación actual se muestra la distancia al proximo punto de interes
         switch (stations){
             case 0:
                 if (getDistance(myPosition,line.porteria) >= 80) {
@@ -637,10 +631,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                     aviso=aviso+"Usted esta fuera de la Universidad del Quindío\n";
                 break;
         }
+
+        //Siempre que se encuentre dentro de la universidad de muestra la distancia a ingeniería
         if((distanceFinish>=0)&&(getDistance(posAnterior,myPosition)<=10)) {
             aviso = aviso + " Usted se encuentra a: " +   distanceFinish + " metros de Ingeniería\n";
 
         }
+
+        //Si cambio o no la estación actual, se verifica cuando mostrar el mensaje de navegación
         if(notificacion != "Desactivado") {
             counter++;
             if ((lastStation != stations)&&counter==1) {
@@ -663,21 +661,21 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             }
         }
         aviso="";
+        //Se actualiza la posición y estación anterior
         posAnterior =myPosition;
         lastStation =stations;
 
     }
+    /**RUTA INGENIERÍA A PORTERÍA*/
     private void creatRouteIngenieria(LatLng start){
-        /*alertas = new Alerts();
-        alertas.RunThread("COMPROBADO",requireContext(),requireActivity(),myPosition,mMap,start);
-        */
+
         closerPoint(myPosition);
         Polyline Ruta2;
         int distance=0;
         int distanceFinish = 0;
         String aviso="";
         getStation(myPosition);
-        // switch close point
+        // Según el punto más cercano se muestra el mensaje y se dibuja la ruta con respecto a la posición actual
         switch (closePoint.name()){
             case "ingenieria":
 
@@ -827,7 +825,7 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             default:
                 break;
         }
-
+        //Según la estación se muestra la distancia al próximo punto de interes más cercano
         switch (stations){
             case 6:
                 if (getDistance(myPosition,line.ingenieria) >= 100) {
@@ -865,9 +863,11 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
                 aviso=aviso+"Debes acercarte al campus de la Universidad del Quindío \n";
                 break;
         }
+        // Sí esta dentro de la Universidad se muestra la distancia a portería
         if((distanceFinish>=6)&&(getDistance(posAnterior,myPosition)<=10)) {
             aviso = aviso + "Usted se encuentra a: " + (distanceFinish-5) + " metros de la Porteria";
         }
+        //Se verifica si se cambio la posición actual y de acuerdo a esto se muestran los mensajes
         if(notificacion != "Desactivado") {
             counter++;
             if ((lastStation != stations)&&counter==1) {
@@ -890,12 +890,14 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
             }
         }
         aviso="";
+
+        //Se actualizan la posición y estación anterior con la posición actual
         posAnterior = myPosition;
         lastStation =stations;
 
 
     }
-
+    /**CREACIÓN DE NOTIFICACIONES*/
     void notification(String cadena){
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -905,8 +907,5 @@ public class RoutesFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
     }
-
-
-
 
 }

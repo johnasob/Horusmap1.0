@@ -30,7 +30,7 @@ import timber.log.Timber
 
 private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 private const val LOCATION_PERMISSION_REQUEST_CODE = 2
-
+//Clase necesaria para la lectura de un dispositvo bluetooth de baja latencia
 class InDoor : AppCompatActivity() {
 
     /*******************************************

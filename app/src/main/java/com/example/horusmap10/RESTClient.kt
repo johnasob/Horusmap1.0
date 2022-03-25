@@ -1,13 +1,11 @@
-import android.widget.Toast
-import com.example.horusmap10.R
+
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
-
+/**CONEXIÓN CON EL SERVIDOR*/
 class RESTClient(private var apiurl: String) {
 
     private lateinit var deferred: Deferred<String>

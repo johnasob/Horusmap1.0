@@ -39,7 +39,6 @@ SoporteHorusMap@gmail.com.</string>
     <string name="nothing">Ninguna discapacidad visual</string>
     <string name="user_exist">El usuario ya existe</string>
 
-
     <string-array name="diseases">
         <item>Ceguera</item>
         <item>Deterioro visual leve</item>

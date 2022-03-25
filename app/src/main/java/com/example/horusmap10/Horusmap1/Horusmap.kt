@@ -1,7 +1,7 @@
 package com.example.horusmap10.Horusmap1
 
 import android.app.Application
-
+//Clase con el numbre de la app para verificar que parametros preestablecidos estan abiertos
 class Horusmap:Application() {
 
     companion object{
